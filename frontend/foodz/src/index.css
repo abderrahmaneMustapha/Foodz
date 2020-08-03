@@ -20,3 +20,10 @@ code {
 .curve{
   border-radius: 0 0 240px 50%/60px;
 }
+
+.bg-c-white{
+  background-color :#F9F6F5;
+}
+.w-10{
+  width: 10%;
+}

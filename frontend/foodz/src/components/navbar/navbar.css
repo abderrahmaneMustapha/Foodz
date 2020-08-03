@@ -21,11 +21,22 @@ div.navbar{
 }
 
 .navbar *{
-    color: #20232A;
+    color: #20232A;   
 }
 
 ul.navbar-nav , li.nav-item, a.nav-link{
     min-height: 100%;
+}
+
+.black-link{
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.black-link:hover{
+  font-size: 1.2rem;
+  color: #20232A; 
+  transition: ease-in-out;
 }
 
 a.nav-link{

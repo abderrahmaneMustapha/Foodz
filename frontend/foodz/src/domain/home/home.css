@@ -7,7 +7,19 @@
 
 .site-intro{
   position: absolute;
-  left: 20%;
-  top: 40%;
+  left: 23%;
+  top: 20%;
   bottom: auto;
+  z-index: 2;
+}
+
+.site-intro-font-1{
+  font-size: 8rem;
+  
+}
+
+
+.site-intro-font-2{
+  font-size: 9rem;
+  margin-left: 1rem;
 }
