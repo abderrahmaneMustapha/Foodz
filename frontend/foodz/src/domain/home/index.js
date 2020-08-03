@@ -4,23 +4,24 @@ import './home.css';
 import NavBar from '../../components/navbar/index'
 function Home() {
   return (
-    <div className="App">
+    <header className="bg-c-white">
         <NavBar></NavBar>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <section className="container-fluid" >
+        <div className="row">
+            <div className="col-6 curve"> 
+              <header className="site-intro">
+                <span>Cool</span>
+                <span>Foodz</span>
+              </header>
+            </div>
+            <div className="col-6">
+              <div className="header-img-container">
+                  <img className="d-block w-100" src="https://ceremonycoffee.com/wp-content/uploads/ecommslider3.jpg" />
+              </div>
+            </div>
+        </div>
+      </section>
+    </header>
   );
 }
 
