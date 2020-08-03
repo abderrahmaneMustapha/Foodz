@@ -19,4 +19,4 @@ function SearchBar(){
 
 
 
-export default SearchBa;
+export default SearchBar;
