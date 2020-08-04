@@ -36,7 +36,7 @@ ul.navbar-nav , li.nav-item, a.nav-link{
 .black-link:hover{
   font-size: 1.2rem;
   color: #20232A; 
-  transition: ease-in-out;
+  transition: all;
 }
 
 a.nav-link{

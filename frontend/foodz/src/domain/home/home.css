@@ -1,9 +1,10 @@
 .header-img-container{
-  min-height: 100vh;
+  min-height: 45rem;
 }
 .header-img-container img{
-  min-height: 100vh;
+  min-height: 45rem;
 }
+
 
 .site-intro{
   position: absolute;

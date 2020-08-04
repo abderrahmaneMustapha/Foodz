@@ -12,6 +12,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.container-custome-middle{
+  max-width: 70%;
+  margin: 10% auto 10% auto;
+}
+
+.index-5{
+  z-index: 5;
+}
+
+
 
 .vh-100{
   min-height: 100vh;
@@ -19,6 +29,10 @@ code {
 
 .curve{
   border-radius: 0 0 240px 50%/60px;
+}
+
+.bg-c-grey{
+  background-color: #EAE9E5;
 }
 
 .bg-c-white{

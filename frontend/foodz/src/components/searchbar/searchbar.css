@@ -1,0 +1,12 @@
+#search-form .border{
+    border-radius: 3%;
+}
+#search-form .input-group-text , #search-form .form-control{
+    border: none;
+    background-color: inherit;
+}
+
+#search-form .form-control{
+    box-shadow: none;
+    transition: none;
+}
