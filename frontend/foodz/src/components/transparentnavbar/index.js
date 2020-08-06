@@ -4,7 +4,7 @@ import logo from '../../assets/images/logo.svg';
 import './navbar.css'
 
 
-class NavBar extends React.Component{
+class TNavBar extends React.Component{
   
   render(){
     return (
@@ -37,4 +37,4 @@ class NavBar extends React.Component{
 
 
 
-export default NavBar;
+export default TNavBar;

@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../../assets/images/logo.svg';
 import './home.css';
 
-import NavBar from '../../components/navbar/index'
+import TNavBar from '../../components/transparentnavbar/index'
 import SearchBar from '../../components/searchbar/index'
 import Card from '../../components/card/index'
 import CardPromotions from '../../components/promotionsCard/index'
@@ -13,7 +13,7 @@ class Home extends React.Component {
     return (
       <>
       <header className="bg-c-white site-header">
-          <NavBar></NavBar>
+          <TNavBar></TNavBar>
         <section className="container-fluid" >
           <div className="row">
               <div className="col-md-6 col-sm-12 curve"> 
