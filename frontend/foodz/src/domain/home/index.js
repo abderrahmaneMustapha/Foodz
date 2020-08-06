@@ -15,6 +15,16 @@ import Footer from '../../components/footer/index'
 
 class Home extends React.Component {
   
+
+    // Handlers 
+    handleSearch = (e)=>{
+        // please page dont refresh 
+        e.preventDefault()
+
+        // allow redirect to search page
+        this.setState({ search_redirect : true})
+        
+    }
   render(){
     return (
       <>

@@ -1,12 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router,Route, Switch } from "react-router";
+import { createBrowserHistory } from "history";
+
+
 import './index.css';
 import Home from './domain/home/index';
+import Search from "./domain/search/index"
 import * as serviceWorker from './serviceWorker';
+
+const history = createBrowserHistory();
 
 ReactDOM.render(
   <React.StrictMode>
-    <Home />
+    <Router history={history}>
+    <Switch>
+    <Route path='/search'>
+          <Search />
+    </Route>
+    <Route path='/'>
+      <Home />
+    </Route>
+    </Switch>
+    
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
