@@ -2,11 +2,17 @@ import React from 'react';
 import logo from '../../assets/images/logo.svg';
 import './home.css';
 
+// components
 import TNavBar from '../../components/transparentnavbar/index'
 import SearchBar from '../../components/searchbar/index'
 import Card from '../../components/card/index'
 import CardPromotions from '../../components/promotionsCard/index'
 import Footer from '../../components/footer/index'
+
+// helper
+//...
+
+
 class Home extends React.Component {
   
   render(){
@@ -23,8 +29,12 @@ class Home extends React.Component {
                   <div className="text-muted w-75">
                     lipsum as it is sometimes known, is dummy text used in laying out print, 
                     graphic or web designs. The passage is attributed to an unknown typesetter in the 15th 
+
+                    
                   </div>
-                  <SearchBar></SearchBar>
+                  <SearchBar >
+                    
+                  </SearchBar>
                 </header>
 
               </div>
