@@ -5,6 +5,8 @@ import './home.css';
 import NavBar from '../../components/navbar/index'
 import SearchBar from '../../components/searchbar/index'
 import Card from '../../components/card/index'
+import CardPromotions from '../../components/promotionsCard/index'
+import Footer from '../../components/footer/index'
 class Home extends React.Component {
   
   render(){
@@ -14,7 +16,7 @@ class Home extends React.Component {
           <NavBar></NavBar>
         <section className="container-fluid" >
           <div className="row">
-              <div className="col-6 curve"> 
+              <div className="col-md-6 col-sm-12 curve"> 
               <div className="container-fluid">
                 <header className="site-intro">
                   <span className="site-intro-font-1">Cool</span><span className="site-intro-font-2">Foodz</span>
@@ -27,9 +29,9 @@ class Home extends React.Component {
 
               </div>
               </div>
-              <div className="col-6">
+              <div className="col-md-6">
                 <div className="header-img-container">
-                    <img className="d-block w-100" src="https://ceremonycoffee.com/wp-content/uploads/ecommslider3.jpg" />
+                    <img className="d-block w-100 hide-mobile" src="https://ceremonycoffee.com/wp-content/uploads/ecommslider3.jpg" />
                 </div>
               </div>
           </div>
@@ -38,18 +40,47 @@ class Home extends React.Component {
 
       <main>
         <section id="services">
-          <div class="container-custome-middle bg-c-grey ">
-            <header class="text-center pt-5">
-              <h3 class="h3">What we offer</h3>
+          <div className="container-custome-middle bg-c-grey ">
+            <header className="text-center pt-5">
+              <h3 className="h3">What we offer</h3>
             </header>
-            <div class="row justify-content-center align-items-center m-5 p-5">
+            <div className="row justify-content-center align-items-center m-md-5 p-md-5">
               <Card></Card>
               <Card></Card>
               <Card></Card>
             </div>
           </div>
         </section>
+
+        <section id="promotions">
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-md-4 col-sm-12 intro-container">
+                  <div className="container-fluid text-center intro">
+                    <header><h2 className="h2">Promotions</h2><br></br></header>
+                    <p className="text-muted"> 
+                    An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. 
+                    He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be
+                    <br></br></p>
+
+                    <a className="black-link-c" href="#"> See more of this promotions &gt;&gt; </a>
+                  </div>
+                </div>
+                <div className="col-md-8 col-sm-12">
+                  <div className="w-100">
+                    <div className="row">
+                    <CardPromotions src="https://foodetective-production.s3.amazonaws.com/uploads/picture/photo/0d039b24-09c4-4e21-82c0-ef9868db029e/tablet_el_perro_salvaje_6184_745x497.jpg"></CardPromotions> 
+                    <CardPromotions  src="//cms.chobanifoodservice.com/assets/_squarethumb700/FS_DAksland_May17_CoconutCurry_07_018_200511_145746.jpg" ></CardPromotions>
+                    <CardPromotions src="https://foodetective-production.s3.amazonaws.com/uploads/picture/photo/0d039b24-09c4-4e21-82c0-ef9868db029e/tablet_el_perro_salvaje_6184_745x497.jpg"></CardPromotions> 
+                    <CardPromotions  src="//cms.chobanifoodservice.com/assets/_squarethumb700/FS_DAksland_May17_CoconutCurry_07_018_200511_145746.jpg" ></CardPromotions>                                    
+                    </div>
+                  </div>                 
+                </div>
+              </div>
+            </div>
+        </section>
       </main>
+      <Footer></Footer>
       </>
     );
   }

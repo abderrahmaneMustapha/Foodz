@@ -20,7 +20,19 @@
 }
 
 
+
+
 .site-intro-font-2{
   font-size: 9rem;
   margin-left: 1rem;
+}
+
+/* promotions */
+#pormotions #intro-container{
+  position: relative;
+}
+
+#promotions .intro{
+  position: sticky;
+  top:10%;
 }

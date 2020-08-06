@@ -41,3 +41,25 @@ code {
 .w-10{
   width: 10%;
 }
+.w-70 {
+  min-width: 70%;
+}
+
+a.black-link-c{
+  color: black;
+  font-size: 1em;
+}
+
+a.black-link-c:hover{
+  color: rgb(65, 63, 63);
+
+}
+
+
+
+@media  only screen and (max-width:700px){
+  .hide-mobile{
+    display: none;
+  }
+}
+

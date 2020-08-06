@@ -11,7 +11,7 @@ class SearchBar extends React.Component {
         return (
             <>
                 <form  id="search-form" className="form-inline my-lg-0">
-                <div className="input-group mb-3 w-75 mt-5 border p-3">
+                <div className="input-group mb-3 w-70 mt-5 border p-3">
                     <div className="input-group-prepend ">
                         <span className="input-group-text" id="basic-addon2">
                             <i className="fas fa-search"></i>
