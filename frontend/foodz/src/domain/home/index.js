@@ -51,7 +51,7 @@ class Home extends React.Component {
               </div>
               <div className="col-md-6 ">
                 <div className="header-img-container">
-                    <img className=" d-block w-100 " src="https://ceremonycoffee.com/wp-content/uploads/ecommslider3.jpg" />
+                    <img className=" d-block" src="https://ceremonycoffee.com/wp-content/uploads/ecommslider3.jpg" />
                 </div>
               </div>
           </div>

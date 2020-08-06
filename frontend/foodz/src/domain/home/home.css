@@ -3,7 +3,12 @@
 }
 .header-img-container img{
   min-height: 45rem;
+  width: 100%;
 }
+.site-header{
+  min-height: 45rem;
+}
+
 
 
 .site-intro{
@@ -18,11 +23,6 @@
   font-size: 8rem;
   
 }
-
-
-
-
-
 
 .site-intro-font-2{
   font-size: 9rem;
@@ -39,13 +39,28 @@
   top:10%;
 }
 
-@media  only screen and (max-width:700 px){
+@media  only screen and (max-width:700px){
   .header-img-container{
     max-height: 0;
     display: none;
   }
   .header-img-container img{
+    width: 0;
     max-height: 0;
     display: none;
+  }
+  .header-img-container img.d-block{
+    display: none;
+  }
+
+  .site-intro-font-1{
+    font-size: 3rem;
+    display: block;
+    
+  }
+  
+  .site-intro-font-2{
+    font-size: 4rem;
+    margin-left: 0rem;
   }
 }
