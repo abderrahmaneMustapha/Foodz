@@ -4,11 +4,11 @@ import { Router,Route, Switch } from "react-router";
 import { createBrowserHistory } from "history";
 
 
-import './index.css';
+
 import Home from './domain/home/index';
 import Search from "./domain/search/index"
 import * as serviceWorker from './serviceWorker';
-
+import './index.css';
 const history = createBrowserHistory();
 
 ReactDOM.render(
@@ -16,7 +16,7 @@ ReactDOM.render(
     <Router history={history}>
     <Switch>
     <Route path='/search'>
-          <Search />
+      <Search />
     </Route>
     <Route path='/'>
       <Home />

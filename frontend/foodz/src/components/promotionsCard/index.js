@@ -9,7 +9,7 @@ class Card extends React.Component{
             <div className="card  bg-transparent  border-0">
               <div className="card-body">            
                   <img className="w-100 h-100 shadow"  src={this.props.src}></img>
-                <div class="card-text">
+                <div className="card-text">
                 Restaurantes Vegetarianos En Barcelona<br></br>
                 <p > 
                 is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy

@@ -6,7 +6,7 @@ function Card(){
     return(
         <div className="col-md-4 col-sm-8 ">
             <div className="shadow bg-white m-1 ">
-            <div classs="card">
+            <div className="card">
                 <div className="card-body">
                 <div className="card-text text-muted">
                 Some quick example text to build on the card title and make up the bulk of the card's content.

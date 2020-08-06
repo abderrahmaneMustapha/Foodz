@@ -22,6 +22,8 @@
 
 
 
+
+
 .site-intro-font-2{
   font-size: 9rem;
   margin-left: 1rem;
@@ -35,4 +37,15 @@
 #promotions .intro{
   position: sticky;
   top:10%;
+}
+
+@media  only screen and (max-width:700 px){
+  .header-img-container{
+    max-height: 0;
+    display: none;
+  }
+  .header-img-container img{
+    max-height: 0;
+    display: none;
+  }
 }

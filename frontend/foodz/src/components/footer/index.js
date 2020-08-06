@@ -3,9 +3,9 @@ import './footer.css'
 
 function Footer(){
     return(
-        <footer class="footer">
-      <div class="container text-center">
-        <span class="text-muted ">All rights resrved   © Cool Foodz 2020</span>
+        <footer className="footer">
+      <div className="container text-center">
+        <span className="text-muted ">All rights resrved   © Cool Foodz 2020</span>
       </div>
     </footer>
     )

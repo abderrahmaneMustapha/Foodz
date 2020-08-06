@@ -4,7 +4,7 @@ import logo from '../../assets/images/logo.svg';
 import './searchbar.css'
 
 // helper
-import addJs from '../../utilities/addStatic/addJs.js'
+//..
 
 // router
 import RedirectToResearch from '../../routes/redirect/index'
@@ -25,9 +25,7 @@ class SearchBar extends React.Component {
     }
 
     componentDidMount(){
-        // add search bar javascript file to the bottom of the body element
-        addJs('/searchbar.js')
-
+    
         // get citys from ip stack api
         fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=true&key=AIzaSyAQFVDHbMUfKv_fUSNey5h3FWnt5V7TP1o')
         .then(res=> res.json())

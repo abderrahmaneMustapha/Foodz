@@ -55,11 +55,10 @@ a.black-link-c:hover{
 
 }
 
-
-
-@media  only screen and (max-width:700px){
-  .hide-mobile{
-    display: none;
-  }
+.hide-mobile{
+  display: block;
 }
+
+
+
 
