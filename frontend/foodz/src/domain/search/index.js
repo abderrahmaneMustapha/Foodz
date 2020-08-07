@@ -2,12 +2,23 @@ import React from "react"
 import logo from '../../assets/images/logo.svg';
 import './search.css'
 
+import WNavBar from '../../components/whitenavbar/index'
+
 
 class Search extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            city : 'Tiaret'
+        }
+    }
     render(){
         return (
             <>
-             <h1>welcome to search</h1>
+            <header>
+                <WNavBar city={this.state.city} />
+            </header>
+        
             </>
         )
     }

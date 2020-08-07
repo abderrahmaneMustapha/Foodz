@@ -1,0 +1,26 @@
+#w-seach-form .input-group div.input-group-prepend{
+ background-color: white;
+}
+#w-seach-form .input-group-text {
+    border-right: none;
+    background-color: inherit;
+}
+
+#w-seach-form .form-control{
+    box-shadow: none;
+    transition: none;
+    border-left: 0;
+}
+#w-seach-form{
+    min-width:50%;
+
+}
+
+
+@media (max-width:780px){
+    #w-seach-form{
+        
+        margin:1em auto 0.5em auto;
+        width: 85%;
+    }
+}

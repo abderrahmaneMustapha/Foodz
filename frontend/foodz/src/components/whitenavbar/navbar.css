@@ -1,0 +1,39 @@
+
+.text-black{
+ color: #20232A;
+}
+
+
+.navbar *{
+    color: #20232A;   
+}
+
+
+.black-link{
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.black-link:hover{
+  font-size: 1.2rem;
+  color: #20232A; 
+  transition: all;
+}
+
+a.nav-link:hover{
+    border-bottom: solid 0.4em black;
+}
+
+.navbar{
+  height: auto;
+  padding: 1em;
+}
+
+
+
+
+@media only screen and  (max-width:780){
+  .collapse div{
+    margin-left: 1rem;
+  }
+}

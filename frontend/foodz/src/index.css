@@ -45,6 +45,16 @@ code {
   min-width: 70%;
 }
 
+*.blue-link-c, .blue-link-c i {
+  color: #4C6EF5;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+*.blue-link-c:hover, *.blue-link-c:hover i{
+  color: #153cd8;
+}
+
 a.black-link-c{
   color: black;
   font-size: 1em;

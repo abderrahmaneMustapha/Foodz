@@ -1080,8 +1080,17 @@ pre code {
     margin-left: 91.666667%;
   }
 }
+@media (min-width: 768px) and (max-width: 900px){
+  #services .col-md-4{
+    flex: 0 0 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+}
+
 
 @media (min-width: 768px) {
+
   .col-md {
     -ms-flex-preferred-size: 0;
     flex-basis: 0;

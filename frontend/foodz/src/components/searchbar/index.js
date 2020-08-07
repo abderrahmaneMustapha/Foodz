@@ -8,7 +8,7 @@ import './searchbar.css'
 
 // router
 import RedirectToResearch from '../../routes/redirect/index'
-import { Redirect } from 'react-router'
+
 
 class SearchBar extends React.Component {
 
