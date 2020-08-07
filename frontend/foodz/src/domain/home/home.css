@@ -52,15 +52,33 @@
   .header-img-container img.d-block{
     display: none;
   }
-
+  .site-header{
+    min-height: 110vh;
+  }
+  
   .site-intro-font-1{
-    font-size: 3rem;
+    font-size: 4rem;
     display: block;
     
   }
   
   .site-intro-font-2{
-    font-size: 4rem;
+    font-size: 5rem;
     margin-left: 0rem;
+  }
+
+  .site-intro{
+    position: absolute;
+    left: auto;
+    right: auto;
+    width: 80%;
+    top: 100px;
+    bottom: -50%;
+    z-index: 2;
+  }
+
+  #promotions header{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 }

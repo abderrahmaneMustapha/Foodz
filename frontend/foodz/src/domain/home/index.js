@@ -75,9 +75,9 @@ class Home extends React.Component {
         <section id="promotions">
             <div className="container-fluid">
               <div className="row">
-                <div className="col-md-4 col-sm-12 intro-container">
+                <header className="col-md-4 col-sm-12 intro-container">
                   <div className="container-fluid text-center intro">
-                    <header><h2 className="h2">Promotions</h2><br></br></header>
+                    <header><h2 className="h2">Promotions</h2></header>
                     <p className="text-muted"> 
                     An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. 
                     He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be
@@ -85,10 +85,10 @@ class Home extends React.Component {
 
                     <a className="black-link-c" href="#"> See more of this promotions &gt;&gt; </a>
                   </div>
-                </div>
+                </header>
                 <div className="col-md-8 col-sm-12">
                   <div className="w-100">
-                    <div className="row">
+                    <div className="row justify-content-center">
                     <CardPromotions src="https://foodetective-production.s3.amazonaws.com/uploads/picture/photo/0d039b24-09c4-4e21-82c0-ef9868db029e/tablet_el_perro_salvaje_6184_745x497.jpg"></CardPromotions> 
                     <CardPromotions  src="//cms.chobanifoodservice.com/assets/_squarethumb700/FS_DAksland_May17_CoconutCurry_07_018_200511_145746.jpg" ></CardPromotions>
                     <CardPromotions src="https://foodetective-production.s3.amazonaws.com/uploads/picture/photo/0d039b24-09c4-4e21-82c0-ef9868db029e/tablet_el_perro_salvaje_6184_745x497.jpg"></CardPromotions> 

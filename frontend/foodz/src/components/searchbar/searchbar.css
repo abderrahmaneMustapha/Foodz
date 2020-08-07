@@ -10,3 +10,15 @@
     box-shadow: none;
     transition: none;
 }
+
+@media  only screen and (max-width:700px){
+    nav.navbar{
+        padding-left: 0;
+        padding-right: 0;
+    }
+    nav .w-10{
+        display: inline-block;
+        min-width: max-content;
+    }
+
+}

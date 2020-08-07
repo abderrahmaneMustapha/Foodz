@@ -1,3 +1,11 @@
 #services div.card{
     background-color: white;
 }
+
+@media  only screen and  (max-width:800px){
+    #services .col-md-4{
+        flex: 0 0 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+}

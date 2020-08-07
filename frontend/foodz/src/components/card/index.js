@@ -4,7 +4,7 @@ import React from 'react';
 function Card(){
 
     return(
-        <div className="col-md-4 col-sm-8 ">
+        <div className="col-md-4 col-sm-12 ">
             <div className="shadow bg-white m-1 ">
             <div className="card">
                 <div className="card-body">

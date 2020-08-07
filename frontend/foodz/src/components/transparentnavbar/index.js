@@ -15,9 +15,9 @@ class TNavBar extends React.Component{
             <i className="fas fa-bars text-black"></i>
           </button>
 
-          <a className="navbar-brand ml-auto" href="#">Logo</a>    
+          <a className="navbar-brand ml-md-auto " href="#">Logo</a>    
 
-          <ul className="navbar-nav d-flex flex-row  ml-auto w-10 ">
+          <ul className="navbar-nav d-flex flex-row ml-md-auto  w-10 ">
             <li className="nav-item mx-3"><a className="nav-link black-link  p-0 " href="#">Login</a></li>
             <li className="nav-item mx-3"><a className="nav-link black-link p-0" href="#">Signup</a></li>
           </ul>
