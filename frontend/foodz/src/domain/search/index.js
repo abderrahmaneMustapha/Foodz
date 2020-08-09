@@ -3,7 +3,7 @@ import logo from '../../assets/images/logo.svg';
 import './search.css'
 
 import WNavBar from '../../components/whitenavbar/index'
-
+import FilterSideBar from './filtersidbar/index'
 
 class Search extends React.Component {
     constructor(props){
@@ -18,7 +18,12 @@ class Search extends React.Component {
             <header>
                 <WNavBar city={this.state.city} />
             </header>
-        
+            <main className="container-fluid">
+                <div className="row">
+                    <FilterSideBar />
+                    <section id="main-search-result" className="col-md-9 col-sm-12"></section>
+                </div>
+            </main>        
             </>
         )
     }
