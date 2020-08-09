@@ -1,7 +1,7 @@
 import React from "react"
 import './navbar.css'
 
-import  WNavSearch from "../wnavsearchbar/index"
+import  WNavSearch from "./wnavsearchbar/index"
 
 class WNavBar extends React.Component {
     
