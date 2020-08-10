@@ -2,8 +2,12 @@ import React from "react"
 import logo from '../../assets/images/logo.svg';
 import './search.css'
 
+// outer components
 import WNavBar from '../../components/navbars/whitenavbar/index'
+
+// inner components
 import FilterSideBar from './filtersidbar/index'
+import FoodsList from './foodsList/index'
 
 class Search extends React.Component {
     constructor(props){
@@ -21,10 +25,8 @@ class Search extends React.Component {
             <main className="container-fluid">
                 <div className="row">
                     <FilterSideBar />
-                    <section id="main-search-result" className="col-md-9 col-sm-12">
-                        <div id="foods-list">
-
-                        </div>
+                    <section id="main-search-result" className="col-md-9 col-sm-12">                        
+                         <FoodsList  />
                     </section>
                 </div>
             </main>        
