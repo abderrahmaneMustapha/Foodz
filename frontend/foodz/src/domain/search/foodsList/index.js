@@ -1,35 +1,57 @@
 import React from "react"
 
-// Import Swiper React components
+import "./list.css"
+
+// import componets 
+import FoodCircle from "../../../components/circles/foodcircle/index"
+
+// import Swiper core and required components
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/swiper.scss';
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
+import 'swiper/components/scrollbar/scrollbar.scss';
 
+// install Swiper components
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 class FoodList extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            foods_list : []
+            foods_list : this.props.foods_list
         }
     }
 
+
     render(){
+        
         return(
-            <div id="foods-list">
-            <Swiper
-            spaceBetween={50}
-            slidesPerView={3}
-            onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}
-          >
-            <SwiperSlide>Slide 1</SwiperSlide>
-            <SwiperSlide>Slide 2</SwiperSlide>
-            <SwiperSlide>Slide 3</SwiperSlide>
-            <SwiperSlide>Slide 4</SwiperSlide>
-            
-            
-          </Swiper>
+            <div  id="foods-list">
+                <Swiper
+                spaceBetween={1}
+                slidesPerView={"auto"}
+                navigation
+                CSSWidthAndHeight= {true}
+                pagination={{ clickable: true }}
+             
+                onSwiper={(swiper) => console.log(this.state.foods_list)}
+                onSlideChange={() => console.log('slide change')}
+                >
+               
+                    {this.state.foods_list.map(
+                        (element)=>(
+                            <SwiperSlide>
+                            <FoodCircle photo={element.photo} width="50%" height="100%" />
+                                {element.title}
+                            </SwiperSlide>
+                            )
+                        )
+                    }
+     
+                </Swiper>
           </div>
         )
     }

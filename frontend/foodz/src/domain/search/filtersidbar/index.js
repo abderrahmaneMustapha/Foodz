@@ -1,6 +1,6 @@
 import React from "react"
-import CheckBoxes from "../../../components/checkboxes/index"
-import ButtonRadio from '../../../components/buttonradio/index'
+import CheckBoxes from "../../../components/inputs/checkboxes/index"
+import ButtonRadio from '../../../components/inputs/buttonradio/index'
 import OneStart from '../../../components/stars/onestart/index'
 class FilterSideBar extends React.Component{
 
