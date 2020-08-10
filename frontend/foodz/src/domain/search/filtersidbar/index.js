@@ -62,17 +62,17 @@ class FilterSideBar extends React.Component{
                             </div>
 
                             <div id="features" className="my-5">
-                                <header id="features-header">
+                                <header id="features-header mb-2">
                                     <h5 class="h5">Features</h5>
                                 </header>
                                 {add_checkboxes()}
                             </div>
 
                             <div id="rating" className="my-5">
-                                <header id="features-header">
+                                <header id="features-header mb-2">
                                     <h5 class="h5">Rating</h5>
                                 </header>
-                                <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                                <div className="btn-group btn-group-toggle"  data-toggle="buttons">
                                     {add_stars()}
                                 </div>
                             </div>

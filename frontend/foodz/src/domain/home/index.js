@@ -3,10 +3,10 @@ import logo from '../../assets/images/logo.svg';
 import './home.css';
 
 // components
-import TNavBar from '../../components/transparentnavbar/index'
+import TNavBar from '../../components/navbars/transparentnavbar/index'
 import SearchBar from '../../components/searchbar/index'
-import Card from '../../components/card/index'
-import CardPromotions from '../../components/promotionsCard/index'
+import Card from '../../components/cards/card/index'
+import CardPromotions from '../../components/cards/promotionsCard/index'
 import Footer from '../../components/footer/index'
 
 // helper

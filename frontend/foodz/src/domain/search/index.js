@@ -2,7 +2,7 @@ import React from "react"
 import logo from '../../assets/images/logo.svg';
 import './search.css'
 
-import WNavBar from '../../components/whitenavbar/index'
+import WNavBar from '../../components/navbars/whitenavbar/index'
 import FilterSideBar from './filtersidbar/index'
 
 class Search extends React.Component {
@@ -21,7 +21,11 @@ class Search extends React.Component {
             <main className="container-fluid">
                 <div className="row">
                     <FilterSideBar />
-                    <section id="main-search-result" className="col-md-9 col-sm-12"></section>
+                    <section id="main-search-result" className="col-md-9 col-sm-12">
+                        <div id="foods-list">
+
+                        </div>
+                    </section>
                 </div>
             </main>        
             </>
