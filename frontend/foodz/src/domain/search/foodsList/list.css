@@ -16,3 +16,7 @@
     border-radius: 50%;
     width: auto;
 }
+
+#foods-list {
+    border-bottom: 1px solid rgb(207, 189, 189);
+}

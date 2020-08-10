@@ -1,8 +1,19 @@
 
-* .swiper-slide img{
+
+#foods-list .swiper-slide img{
     border-radius: 50%;
     max-width: 100%;
     min-height: 150%;
+    opacity: 0.9;
+}
+
+#foods-list .swiper-slide img:hover{
+    border-radius: 50%;
+    max-width: 100%;
+    min-height: 150%;
+    opacity: 0.5;
+    cursor: pointer;
+
 
 }
 

@@ -3,9 +3,9 @@
  color: #20232A;
 }
 #white-navbar{
-  -webkit-box-shadow: 0px 5px 33px -10px rgb(190, 178, 190);
-  -moz-box-shadow: 0px 5px 33px -10px rgb(190, 178, 190);
-  box-shadow: 0px 5px 33px -10px rgb(190, 178, 190);
+  -webkit-box-shadow: 0px 5px 33px -10px black;
+  -moz-box-shadow: 0px 5px 33px -10px black;
+  box-shadow: 0px 5px 33px -10px black;
 }
 .navbar *{
     color: #20232A;   
