@@ -7,7 +7,7 @@ class WNavBar extends React.Component {
     
     render(){
         return (
-            <nav className="navbar  navbar-expand-lg navbar-white bg-white "> 
+            <nav id="white-navbar" className="navbar  navbar-expand-lg navbar-white bg-white "> 
                  
                 <button className="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarTogglerWhiteSearch" aria-controls="navbarTogglerWhiteSearch" aria-expanded="false" aria-label="Toggle navigation">
                 <i className="fas fa-bars text-black"></i>
