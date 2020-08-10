@@ -6,5 +6,13 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    max-width: 50%;
+    max-width: 20%;
+    font-weight: 700;
+
+}
+
+#foods-list  .swiper-button-prev,#foods-list  .swiper-button-next{
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    width: auto;
 }

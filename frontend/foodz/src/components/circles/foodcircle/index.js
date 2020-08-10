@@ -16,7 +16,7 @@ class FoodCircle extends React.Component{
 
         return(
             
-            <img src={this.state.photo} style={{width:this.state.width,height:this.state.height}}></img>
+            <img src={this.state.photo} ></img>
         
         )
     }

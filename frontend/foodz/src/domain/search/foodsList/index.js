@@ -31,7 +31,7 @@ class FoodList extends React.Component{
         return(
             <div  id="foods-list">
                 <Swiper
-                spaceBetween={1}
+                spaceBetween={15}
                 slidesPerView={"auto"}
                 navigation
                 CSSWidthAndHeight= {true}
@@ -44,8 +44,8 @@ class FoodList extends React.Component{
                     {this.state.foods_list.map(
                         (element)=>(
                             <SwiperSlide>
-                            <FoodCircle photo={element.photo} width="50%" height="100%" />
-                                {element.title}
+                            <FoodCircle photo={element.photo}  />
+                                <div className="text-muted my-2">{element.title}</div>
                             </SwiperSlide>
                             )
                         )
