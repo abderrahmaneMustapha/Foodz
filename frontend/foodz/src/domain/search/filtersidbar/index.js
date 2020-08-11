@@ -50,7 +50,7 @@ class FilterSideBar extends React.Component{
 
       
         return(
-            <aside  id="sidebar-filter" className="col-md-3">
+            <aside  id="sidebar-filter" className="col-md-3 col-sm-10">
                         <div className="container">
                             <header  id="fitlers-header" class="mb-5 mt-4"> 
                              <h3 class="h3">Filters</h3>

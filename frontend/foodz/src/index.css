@@ -69,6 +69,15 @@ a.black-link-c:hover{
   display: block;
 }
 
+* .d-sm-none{
+  display: block;
+}
+
+@media only screen and (max-width:700px){
+  * .d-sm-none{
+      display: none;
+  }
+}
 
 
 

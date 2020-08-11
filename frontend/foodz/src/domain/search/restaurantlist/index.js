@@ -1,4 +1,8 @@
 import React from "react"
+
+import StarRatings from 'react-star-ratings';
+
+
 import "./restaurant.css"
 class RestaurantList extends React.Component{
     constructor(props){
@@ -14,9 +18,9 @@ class RestaurantList extends React.Component{
                 <table className="table table-hover">
                     <caption>{this.props.title}</caption>
                     <colgroup>
-                        <col span="1" style={{width:"25%"}} />
-                        <col span="2" style={{width:"55%"}}/>
-                        <col span="3" style={{width:"20%"}} />
+                        <col id="image-col" span="1"  />
+                        <col id="name-col"  span="2" />
+                        <col id="rating-col" span="3"  />
                     </colgroup>
                     <thead >  
                   
@@ -35,9 +39,21 @@ class RestaurantList extends React.Component{
                         {this.state.restaurants_list.map(element=>(
                         <tr>
                             <td ><img className="search-restaurant-img" src={element.photo}></img></td>
-                            <td className="font-weight-bold">{element.name}</td>
-                            <td>{element.rating}<br></br> 
-                             <span className="text-muted">{element.total_rating} ratings</span>
+                            <td className="font-weight-bold">{element.name}<br></br>
+                            <p className="text-muted d-sm-none ">
+                            img elements must have an alt prop, either with meaningful text, or an empty string for decorative images 
+                            </p></td>
+                            <td className="text-center">
+                            <StarRatings 
+                                rating={parseFloat(element.rating)}
+                                starRatedColor="blue"
+                                numberOfStars={5}
+                                name='rating'
+                                starDimension="1.5em"
+                                starSpacing="1px"
+                            ></StarRatings>
+                            <br></br> 
+                             <span className="text-muted ">{element.total_rating} ratings</span>
                             </td>
                         </tr>
                         ))}
