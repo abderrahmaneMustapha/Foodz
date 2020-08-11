@@ -12,7 +12,7 @@ class WNavBar extends React.Component {
                 <button className="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarTogglerWhiteSearch" aria-controls="navbarTogglerWhiteSearch" aria-expanded="false" aria-label="Toggle navigation">
                 <i className="fas fa-bars text-black"></i>
                 </button>                               
-                <div className=" blue-link-c mx-md-1 mb-1">
+                <div className=" blue-link-c mx-2 mb-1">
                             <i className="fas fa-map-marker-alt mx-md-1"></i>
                             {this.props.city}
                 </div>  
