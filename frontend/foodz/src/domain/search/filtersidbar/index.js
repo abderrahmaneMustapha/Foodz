@@ -3,7 +3,24 @@ import CheckBoxes from "../../../components/inputs/checkboxes/index"
 import ButtonRadio from '../../../components/inputs/buttonradio/index'
 import OneStart from '../../../components/stars/onestart/index'
 class FilterSideBar extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
 
+        }
+    }
+
+    // hide filter sidebar
+    handleFiltersClose = ()=>{
+        let filterbar_classlist = document.getElementById("sidebar-filter").firstChild.classList
+        // check if the filter sidebar is not already hidden
+        if (!filterbar_classlist.contains("hide-sm")){
+            filterbar_classlist.add("hide-sm")
+        }
+        
+    }
+
+    
 
     render(){
         
@@ -50,8 +67,11 @@ class FilterSideBar extends React.Component{
 
       
         return(
-            <aside  id="sidebar-filter" className="col-md-3 col-sm-10">
-                        <div className="container">
+            <aside  id="sidebar-filter" className="col-md-3 col-sm-10 ">
+                        <div className="container hide-sm">
+                            <div onClick={this.handleFiltersClose} class="col-12 close mt-2 ">
+                                <i class="fas fa-times float-right"></i>
+                            </div>
                             <header  id="fitlers-header" class="mb-5 mt-4"> 
                              <h3 class="h3">Filters</h3>
                             </header>

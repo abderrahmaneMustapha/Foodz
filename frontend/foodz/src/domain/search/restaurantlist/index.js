@@ -12,6 +12,11 @@ class RestaurantList extends React.Component{
         }
     }
 
+    // show filter sidebar
+    handleFiltersShow = (e)=>{
+        document.getElementById("sidebar-filter").firstChild.classList.remove("hide-sm")
+    }
+
     render(){
         return(
             <div className="table-responsive">
@@ -22,17 +27,23 @@ class RestaurantList extends React.Component{
                         <col id="name-col"  span="2" />
                         <col id="rating-col" span="3"  />
                     </colgroup>
-                    <thead >  
-                  
-                        <div  id="filter-options-select"   className="my-2 ">
-                            <label for="filters-select"></label>
-                            <select className="custom-select" id="filters-select">
-                            <option value="volvo">New</option>
-                            <option value="saab">Old</option>
-                            <option value="opel">Best</option>
-                            <option value="audi">Worste</option>
-                            </select>                                  
-                        </div>                    
+                    <thead class="w-100">  
+                        <div  className="d-flex flex-row justify-content-between  align-items-center">
+                            <div   id="filter-options-select"   className="my-2 ">
+                                <label for="filters-select"></label>
+                                <select className="custom-select" id="filters-select">
+                                <option value="volvo">New</option>
+                                <option value="saab">Old</option>
+                                <option value="opel">Best</option>
+                                <option value="audi">Worste</option>
+                                </select>                                  
+                            </div>  
+                            <div  id="filter-show" onClick={this.handleFiltersShow}  className="ml-5 hide-lg" span="3">
+                                <i class="fas fa-filter"></i> 
+                                filter
+                            </div>
+                        </div>
+                                         
                                      
                     </thead>
                     <tbody>
@@ -46,8 +57,9 @@ class RestaurantList extends React.Component{
                             <td className="text-center">
                             <StarRatings 
                                 rating={parseFloat(element.rating)}
-                                starRatedColor="blue"
+                                starRatedColor="#FFBF00"
                                 numberOfStars={5}
+                            
                                 name='rating'
                                 starDimension="1.5em"
                                 starSpacing="1px"

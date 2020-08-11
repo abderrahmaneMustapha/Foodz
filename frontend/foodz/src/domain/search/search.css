@@ -9,13 +9,33 @@ aside{
     background-color: white;
 }
 
+#sidebar-filter .close{
+    display: none;
+
+}
+
+
 
 @media only screen and (max-width:700px){
     aside{
-        
+        border-right: 1px solid rgb(207, 189, 189);
         position: relative;
+        z-index: 2;
     }
+    #sidebar-filter .container{
+        position: fixed;
+        background-color: white;
+        width: 75%;
+        height: 110vh;
+        
+    }
+    #sidebar-filter .close{
+       display: inherit; 
+    }
+
+   
     * .d-sm-none{
         display: none;
     }
+    
 }
