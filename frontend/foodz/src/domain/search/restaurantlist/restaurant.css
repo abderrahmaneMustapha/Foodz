@@ -12,6 +12,22 @@
 #rating-col{
     width: 20%;
 }
+
+table.table .link-tr {
+    display: table-row;
+}
+a.link-tr .font-weight-bold{
+    color: black;
+    
+}
+a.link-tr:hover .font-weight-bold{
+    color: grey;
+    text-decoration: underline;
+}
+
+a.link-tr:hover img{
+    opacity: 0.8;
+}
 @media only screen and (max-width:800px){
     .search-restaurant-img{
         display: block;

@@ -2,6 +2,7 @@ import React from "react"
 
 import StarRatings from 'react-star-ratings';
 
+import { Link } from 'react-router-dom';
 
 import "./restaurant.css"
 class RestaurantList extends React.Component{
@@ -17,7 +18,10 @@ class RestaurantList extends React.Component{
         document.getElementById("sidebar-filter").firstChild.classList.remove("hide-sm")
     }
 
+    
+
     render(){
+       
         return(
             <div className="table-responsive">
                 <table className="table table-hover">
@@ -48,7 +52,11 @@ class RestaurantList extends React.Component{
                     </thead>
                     <tbody>
                         {this.state.restaurants_list.map(element=>(
-                        <tr>
+                        
+                        
+                        
+                        <Link  class="link-tr" to={`restaurant/${element.name}`}>
+                        
                             <td ><img className="search-restaurant-img" src={element.photo}></img></td>
                             <td className="font-weight-bold">{element.name}<br></br>
                             <p className="text-muted d-sm-none ">
@@ -59,7 +67,6 @@ class RestaurantList extends React.Component{
                                 rating={parseFloat(element.rating)}
                                 starRatedColor="#FFBF00"
                                 numberOfStars={5}
-                            
                                 name='rating'
                                 starDimension="1.5em"
                                 starSpacing="1px"
@@ -67,7 +74,10 @@ class RestaurantList extends React.Component{
                             <br></br> 
                              <span className="text-muted ">{element.total_rating} ratings</span>
                             </td>
-                        </tr>
+                        </Link>
+                    
+                        
+                        
                         ))}
                         
                     </tbody>

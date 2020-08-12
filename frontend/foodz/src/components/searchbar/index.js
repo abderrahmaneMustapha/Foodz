@@ -7,7 +7,7 @@ import './searchbar.css'
 //..
 
 // router
-import RedirectToResearch from '../../routes/redirect/index'
+import RedirectToResearch from '../../routes/Searchredirect/index'
 
 
 class SearchBar extends React.Component {
@@ -39,15 +39,18 @@ class SearchBar extends React.Component {
     handleSearch = (e)=>{
         // please page dont refresh 
         e.preventDefault()
-
+        let search = document.getElementById('search').value
         // allow redirect to search page
-        this.setState({ search_redirect : true})
+        if (search){
+            this.setState({ search_redirect : true, city : search})
+        }
+        
         
     }
 
     render(){
         if (this.state.search_redirect){
-            return <RedirectToResearch></RedirectToResearch>
+            return <RedirectToResearch query = {this.state.city}></RedirectToResearch>
         }
         return (
             <>
