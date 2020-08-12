@@ -11,7 +11,7 @@ class WNavSearch extends React.Component{
                         <i className="fas fa-search"></i>
                     </span>
                 </div>
-                <input className="form-control " type="search" placeholder="Search" aria-label="Search" /> 
+                <input className="form-control " type="search" placeholder="Search" aria-label="Search" value={this.props.city}/> 
             </div>   
             </form>
         )

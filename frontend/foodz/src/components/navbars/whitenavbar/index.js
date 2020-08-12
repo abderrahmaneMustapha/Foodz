@@ -19,11 +19,11 @@ class WNavBar extends React.Component {
                 <div className="collapse navbar-collapse " id="navbarTogglerWhiteSearch">
 
                       
-                        <WNavSearch ></WNavSearch> 
+                        <WNavSearch city={this.props.city} ></WNavSearch> 
                 
                 </div>
 
-                <a className="navbar-brand ml-md-auto " href="#">Logo</a>
+                <a className="navbar-brand ml-md-auto " href="/">Logo</a>
                              
             </nav>
         )
