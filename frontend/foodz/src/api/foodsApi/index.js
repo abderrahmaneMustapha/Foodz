@@ -80,7 +80,7 @@ let foods =  [{
 
 }]
 
-fetchFoods =  () =>{
+let fetchFoods =  () =>{
     return foods
 }
 

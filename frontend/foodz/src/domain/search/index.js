@@ -11,30 +11,41 @@ import FoodsList from './foodsList/index'
 import RestaurantList from './restaurantlist/index'
 
 /// api fetchs
-import fetchReastarant  from "../../api/restaurantApi/index"
+import fetchRestaurant  from "../../api/restaurantApi/index"
 import fetchFoods from "../../api/foodsApi/index"
 
 
+// redux
+import {getRestaurants, getRestaurantsPending, getRestaurantsError} from "../../reducer/Restaurants/restaurantsReducer"
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class Search extends React.Component {
     constructor(props){
         super(props)
         this.state = {
             city : 'Tiaret',
-            foods_list : foods,
-            restaurants_list : restaurants
+            foods_list:fetchFoods(),
             
         }
     }
 
     componentDidMount(){
-        // fetch data from api
-        this.setState({foods_list : fetchFoods()})
-        this.setState({restaurants_list : fetchReastarant()})
+        // fetch data from api    
+        const {fetchRestaurant} = this.props
+        fetchRestaurant()
+    }
+
+    shouldComponentRender() {
+        const {pending} = this.props;
+        if(this.pending === false) return false;
+        // more tests
+        return true;
     }
 
 
     render(){
+        const {restaurants, error, pending} = this.props
         return (
             <>
             <header>
@@ -45,7 +56,7 @@ class Search extends React.Component {
                     <FilterSideBar />
                     <section id="main-search-result" className="col-md-9 col-sm-12">                        
                          <FoodsList foods_list={this.state.foods_list}  />
-                         <RestaurantList restaurants_list={this.state.restaurants_list}/>
+                         <RestaurantList restaurants_list={this.props.restaurants}/>
                     </section>
                 </div>
             </main>        
@@ -54,4 +65,18 @@ class Search extends React.Component {
     }
 }
 
-export default Search
+const mapStateToProps = state =>({
+    error : getRestaurantsError(state),
+    products : getRestaurants(state),
+    pending : getRestaurantsPending(state)
+})
+
+const mapDispatchToProps = state =>({
+    fetchRestaurant  : fetchRestaurant
+})
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Search);

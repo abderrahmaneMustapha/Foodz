@@ -36,8 +36,8 @@ let restaurants = [
         rating : "3", total_rating : "200"
     },
 ]
-fetchReastarant  = ()=>{
+let fetchReastarant  = ()=>{
     return restaurants
 }
 
-export default fetchReastarants
+export default fetchReastarant

@@ -4,6 +4,12 @@ import { Router,Route, Switch } from "react-router";
 import { createBrowserHistory } from "history";
 
 
+import { applyMiddleware, createStore } from 'redux';
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk';
+
+
+
 
 import Home from './domain/home/index';
 import Search from "./domain/search/index"
@@ -13,8 +19,12 @@ import * as serviceWorker from './serviceWorker';
 import './index.css';
 const history = createBrowserHistory();
 
+const middlewares = [thunk];
+const store = createStore(applyMiddleware(...middlewares));
+
 ReactDOM.render(
   <React.StrictMode>
+  <Provider store={store}>
     <Router history={history}>
     <Switch>
     <Route path="/restaurant/:name">
@@ -30,6 +40,7 @@ ReactDOM.render(
     </Switch>
     
     </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
