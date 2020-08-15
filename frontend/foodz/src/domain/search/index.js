@@ -12,7 +12,7 @@ import RestaurantList from './restaurantlist/index'
 
 /// api fetchs
 import fetchReastarant  from "../../api/restaurantApi/index"
-
+import fetchFoods from "../../api/foodsApi/index"
 
 
 
@@ -29,8 +29,8 @@ class Search extends React.Component {
 
     componentDidMount(){
         // fetch data from api
-        this.setState({foods_list : foods})
-        this.setState({restaurants_list : fetchReastarant})
+        this.setState({foods_list : fetchFoods()})
+        this.setState({restaurants_list : fetchReastarant()})
     }
 
 
