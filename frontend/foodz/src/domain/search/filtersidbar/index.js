@@ -69,11 +69,11 @@ class FilterSideBar extends React.Component{
         return(
             <aside  id="sidebar-filter" className="col-md-3 col-sm-10 ">
                         <div className="container hide-sm">
-                            <div onClick={this.handleFiltersClose} class="col-12 close mt-2 ">
-                                <i class="fas fa-times float-right"></i>
+                            <div onClick={this.handleFiltersClose} className="col-12 close mt-2 ">
+                                <i className="fas fa-times float-right"></i>
                             </div>
-                            <header  id="fitlers-header" class="mb-5 mt-4"> 
-                             <h3 class="h3">Filters</h3>
+                            <header  id="fitlers-header" className="mb-5 mt-4"> 
+                             <h3 className="h3">Filters</h3>
                             </header>
                             <div id="deliver-pick-reserve" className="my-5">
                                 <div className="btn-group btn-group-toggle" data-toggle="buttons">
@@ -83,14 +83,14 @@ class FilterSideBar extends React.Component{
 
                             <div id="features" className="my-5">
                                 <header id="features-header mb-2">
-                                    <h5 class="h5">Features</h5>
+                                    <h5 className="h5">Features</h5>
                                 </header>
                                 {add_checkboxes()}
                             </div>
 
                             <div id="rating" className="my-5">
                                 <header id="features-header mb-2">
-                                    <h5 class="h5">Rating</h5>
+                                    <h5 className="h5">Rating</h5>
                                 </header>
                                 <div className="btn-group btn-group-toggle"  data-toggle="buttons">
                                     {add_stars()}

@@ -8,11 +8,10 @@ import "./restaurant.css"
 class RestaurantList extends React.Component{
     constructor(props){
         super(props)
-        this.state = {
-            restaurants_list:  this.props.restaurants_list
-        }
+       
     }
 
+ 
     // show filter sidebar
     handleFiltersShow = (e)=>{
         document.getElementById("sidebar-filter").firstChild.classList.remove("hide-sm")
@@ -51,7 +50,7 @@ class RestaurantList extends React.Component{
                                      
                     </thead>
                     <tbody>
-                        {this.state.restaurants_list.map(element=>(
+                        {this.props.restaurants.map(element=>(
                         
                         
                         

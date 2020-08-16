@@ -2,11 +2,11 @@ import {FETCH_RESTAURANTS_PENDING, FETCH_RESTAURANTS_SUCCESS, FETCH_RESTAURANTS_
 
 const initialState = {
     pending : false,
-    products : [],
+    restaurants : [],
     error : null
 }
 
-export function restaurantsReducer (state = initialState, action){
+export  function restaurantsReducer (state = initialState, action){
     switch(action.type){
         case FETCH_RESTAURANTS_PENDING: 
             return {
@@ -14,16 +14,17 @@ export function restaurantsReducer (state = initialState, action){
                 pending : true
             }
         case FETCH_RESTAURANTS_SUCCESS:
+            console.log("this is an action ", action)
             return{
                 ...state,
                 pending:false,
-                restaurants : action.payload
+                restaurants : action.restaurants
             }
         case FETCH_RESTAURANTS_ERROR:
             return{
                 ...state,
                 pending:false,
-                restaurants:action.payload
+                restaurants: action.restaurants
             }
         default : 
             return state

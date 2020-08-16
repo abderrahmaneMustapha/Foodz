@@ -1,3 +1,5 @@
+import {fetchRestaurantsError, fetchRestaurantsPending, fetchRestaurantsSuccess} from "../../reducer/Restaurants/restaurantsActions"
+
 
 let restaurants = [
     {
@@ -36,8 +38,15 @@ let restaurants = [
         rating : "3", total_rating : "200"
     },
 ]
-let fetchReastarant  = ()=>{
-    return restaurants
+let fetchRestaurant  = ()=>{
+    
+    return dispatch => {
+    
+        dispatch(fetchRestaurantsPending());       
+        dispatch(fetchRestaurantsSuccess(restaurants))
+        return restaurants
+    }
+    
 }
 
-export default fetchReastarant
+export default fetchRestaurant

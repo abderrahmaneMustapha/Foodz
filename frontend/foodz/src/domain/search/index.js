@@ -11,7 +11,7 @@ import FoodsList from './foodsList/index'
 import RestaurantList from './restaurantlist/index'
 
 /// api fetchs
-import fetchRestaurant  from "../../api/restaurantApi/index"
+import  fetchRestaurantsAction  from "../../api/restaurantApi/index"
 import fetchFoods from "../../api/foodsApi/index"
 
 
@@ -38,7 +38,7 @@ class Search extends React.Component {
 
     shouldComponentRender() {
         const {pending} = this.props;
-        if(this.pending === false) return false;
+        if( pending == false) return false;
         // more tests
         return true;
     }
@@ -46,6 +46,8 @@ class Search extends React.Component {
 
     render(){
         const {restaurants, error, pending} = this.props
+        console.log("this is a restaurant list ",this.props)
+        if(this.shouldComponentRender()) return <div>aaaa</div>
         return (
             <>
             <header>
@@ -55,8 +57,8 @@ class Search extends React.Component {
                 <div className="row">
                     <FilterSideBar />
                     <section id="main-search-result" className="col-md-9 col-sm-12">                        
-                         <FoodsList foods_list={this.state.foods_list}  />
-                         <RestaurantList restaurants_list={this.props.restaurants}/>
+                    <RestaurantList restaurants={restaurants} ></RestaurantList>
+                         
                     </section>
                 </div>
             </main>        
@@ -67,13 +69,13 @@ class Search extends React.Component {
 
 const mapStateToProps = state =>({
     error : getRestaurantsError(state),
-    products : getRestaurants(state),
+    restaurants : getRestaurants(state),
     pending : getRestaurantsPending(state)
 })
 
-const mapDispatchToProps = state =>({
-    fetchRestaurant  : fetchRestaurant
-})
+const mapDispatchToProps = dispatch => bindActionCreators({
+    fetchRestaurant : fetchRestaurantsAction 
+}, dispatch)
 
 
 export default connect(
