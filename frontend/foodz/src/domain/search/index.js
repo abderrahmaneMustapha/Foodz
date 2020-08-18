@@ -12,40 +12,44 @@ import RestaurantList from './restaurantlist/index'
 
 /// api fetchs
 import  fetchRestaurantsAction  from "../../api/restaurantApi/index"
-import fetchFoods from "../../api/foodsApi/index"
+import fetchFoodsAction from "../../api/foodsApi/index"
 
 
 // redux
 import {getRestaurants, getRestaurantsPending, getRestaurantsError} from "../../reducer/Restaurants/restaurantsReducer"
+import {getFoods, getFoodsPending, getFoodsError} from "../../reducer/Foods/foodsReducer"
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import fetchFood from "../../api/foodsApi/index";
 
 class Search extends React.Component {
     constructor(props){
         super(props)
         this.state = {
             city : 'Tiaret',
-            foods_list:fetchFoods(),
             
         }
     }
 
     componentDidMount(){
         // fetch data from api    
-        const {fetchRestaurant} = this.props
+        const {fetchRestaurant, fetchFood} = this.props
+        fetchFood()
         fetchRestaurant()
+        
+        console.log('im fetching fooods',fetchFood())
     }
 
     shouldComponentRender() {
-        const {pending} = this.props;
-        if( pending == false) return false;
-        // more tests
-        return true;
+        const {pending_food, pending_restaurant} = this.props;
+      
+        return pending_food && pending_restaurant;
     }
 
 
     render(){
-        const {restaurants, error, pending} = this.props
+        const {foods, restaurants, foods_error} = this.props
+        
         console.log("this is a restaurant list ",this.props)
         if(this.shouldComponentRender()) return <div>aaaa</div>
         return (
@@ -56,9 +60,9 @@ class Search extends React.Component {
             <main className="container-fluid">
                 <div className="row">
                     <FilterSideBar />
-                    <section id="main-search-result" className="col-md-9 col-sm-12">                        
-                    <RestaurantList restaurants={restaurants} ></RestaurantList>
-                         
+                    <section id="main-search-result" className="col-md-9 col-sm-12"> 
+                    <FoodsList foods={foods} />                                             
+                    <RestaurantList restaurants={restaurants} ></RestaurantList>                  
                     </section>
                 </div>
             </main>        
@@ -68,13 +72,17 @@ class Search extends React.Component {
 }
 
 const mapStateToProps = state =>({
-    error : getRestaurantsError(state),
-    restaurants : getRestaurants(state),
-    pending : getRestaurantsPending(state)
+    error_restaurant : getRestaurantsError(state.restaurant),
+    restaurants : getRestaurants(state.restaurant),
+    pending_restaurant : getRestaurantsPending(state.restaurant),
+    foods_error: getFoodsError(state.food),
+    foods : getFoods(state.food),
+    foods_pending : getFoodsPending(state.food)
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    fetchRestaurant : fetchRestaurantsAction 
+    fetchRestaurant : fetchRestaurantsAction ,
+    fetchFood : fetchFoodsAction
 }, dispatch)
 
 

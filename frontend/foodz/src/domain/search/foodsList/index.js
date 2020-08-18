@@ -20,9 +20,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 class FoodList extends React.Component{
     constructor(props){
         super(props)
-        this.state = {
-            foods_list : this.props.foods_list
-        }
+        
     }
 
     
@@ -38,11 +36,11 @@ class FoodList extends React.Component{
                 CSSWidthAndHeight= {true}
                 pagination={{ clickable: true }}
              
-                onSwiper={(swiper) => console.log(this.state.foods_list)}
+                onSwiper={(swiper) => console.log("")}
                 onSlideChange={() => console.log('slide change')}
                 >
                
-                    {this.state.foods_list.map(
+                    {this.props.foods.map(
                         (element)=>(
                             <SwiperSlide>
                             <FoodCircle photo={element.photo}  />

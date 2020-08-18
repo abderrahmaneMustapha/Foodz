@@ -81,7 +81,7 @@ let foods =  [{
 
 }]
 
-let fetchFoods =  () =>{
+let fetchFood =  () =>{
     return (dispatch)=>{
         dispatch(fetchFoodsPending());       
         dispatch(fetchFoodsSuccess(foods))
@@ -90,4 +90,4 @@ let fetchFoods =  () =>{
     
 }
 
-export default fetchFoods
+export default fetchFood

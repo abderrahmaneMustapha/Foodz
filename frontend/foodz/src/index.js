@@ -4,9 +4,9 @@ import { Router,Route, Switch } from "react-router";
 import { createBrowserHistory } from "history";
 
 
-import { applyMiddleware, createStore } from 'redux';
+
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk';
+import {store} from "./store"
 
 
 
@@ -16,13 +16,11 @@ import Search from "./domain/search/index"
 import Restaurant from './domain/restaurant/index'
 
 import * as serviceWorker from './serviceWorker';
-import {restaurantsReducer} from './reducer/Restaurants/restaurantsReducer'
+
 import './index.css';
 const history = createBrowserHistory();
+console.log(store.getState())
 
-const middlewares = [thunk];
-
-let store = createStore(restaurantsReducer, applyMiddleware(...middlewares));
 
 ReactDOM.render(
   <React.StrictMode>
