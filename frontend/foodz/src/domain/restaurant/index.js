@@ -12,11 +12,15 @@ class Restaurant extends  React.Component{
         return(
             <>
             <header>
-                <WNavBar city={this.state.city} />
+                <WNavBar city="Tiaret" />
+                <section id="profile-header">
+                        <img  src="" alt=""></img>
+                </section>
             </header>
-            <div>
-                Restaurant page 
-            </div>
+            <main>
+              
+               
+            </main>
             </>
         )
     }

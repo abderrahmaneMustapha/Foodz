@@ -1,3 +1,4 @@
+import {fetchFoodsError, fetchFoodsPending, fetchFoodsSuccess} from "../../reducer/Foods/foodsActions"
 let foods =  [{
     title: "Food1",
     photo : "https://hips.hearstapps.com/vidthumb/images/delish-keto-crack-chicken-still003-1553543868.jpg?crop=1.00xw:0.891xh;0,0.0571xh&resize=480:*",
@@ -81,7 +82,12 @@ let foods =  [{
 }]
 
 let fetchFoods =  () =>{
-    return foods
+    return (dispatch)=>{
+        dispatch(fetchFoodsPending());       
+        dispatch(fetchFoodsSuccess(foods))
+        return foods
+    }
+    
 }
 
 export default fetchFoods
