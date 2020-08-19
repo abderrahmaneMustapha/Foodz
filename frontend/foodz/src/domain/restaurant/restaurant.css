@@ -49,6 +49,23 @@
     margin-left: 10px;
 }
 
+@media only screen and (max-width:1100px) and (min-width:801px){
+    #profile-header-info{
+     
+        background: linear-gradient(180deg,transparent 20% , white 20% 60%);
+        height: 40%;
+    
+    }
+
+    #profile-header{
+        position: relative;
+        height: 30vh;
+        max-height: 30vh;
+        min-height: 30vh;
+    }
+    
+}
+
 @media only screen and (max-width:800px){
     #profile-header-info{
         position: absolute;
@@ -74,6 +91,15 @@
     }
     
 }
+
+
+
+@media (min-width:700px) and (max-width:800px){
+    #profile-header-info{
+        height: 30%;
+    }
+}
+
 @media (max-width:350px){
     #profile-header-info{
         height: 30%;
@@ -93,12 +119,5 @@
 @media (min-width:300px) and (max-width:800px){
     #profile-contact{
         margin-top: 3%;
-    }
-}
-
-
-@media (min-width:700px) and (max-width:800px){
-    #profile-header-info{
-        height: 30%;
     }
 }
