@@ -1,0 +1,6 @@
+#food-menu .card{
+    padding:0;
+}
+#food-menu .card-img-top {
+    min-width: 100%;
+}

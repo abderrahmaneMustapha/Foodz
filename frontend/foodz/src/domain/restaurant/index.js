@@ -4,6 +4,8 @@ import './restaurant.css'
 import StarRatings from 'react-star-ratings';
 // outer components
 import WNavBar from '../../components/navbars/whitenavbar/index'
+import Menu from "./menu/index"
+
 
 let cover_src= 'https://drivendata-prod-public.s3.amazonaws.com/images/project-conservation.png'
 let profile_src = 'https://scontent-mrs2-1.xx.fbcdn.net/v/t1.0-9/16196015_10154888128487744_6901111466535510271_n.png?_nc_cat=103&_nc_sid=85a577&_nc_ohc=hwwp88BW_cYAX-zZpa_&_nc_ht=scontent-mrs2-1.xx&oh=3ded93f2ca4a9ce8a3ea2ceaebd0be58&oe=5F5F9917'
@@ -83,8 +85,7 @@ class Restaurant extends  React.Component{
                 </section>
             </header>
             <main>
-              
-               
+            <Menu />
             </main>
             </>
         )
