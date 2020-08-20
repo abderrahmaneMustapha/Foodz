@@ -8,7 +8,7 @@ class TNavBar extends React.Component{
   
   render(){
     return (
-      <div className="pos-f-t fixed-top index-5 ">  
+      <div id="transparent-nav" className="pos-f-t fixed-top index-5 ">  
            
         <nav className="navbar   navbar-transparent bg-transparent  ">
           <button className="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">

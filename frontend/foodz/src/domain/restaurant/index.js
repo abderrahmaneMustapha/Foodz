@@ -3,8 +3,11 @@ import './restaurant.css'
 
 // outer components
 import WNavBar from '../../components/navbars/whitenavbar/index'
+
+// inner compenents
 import Menu from "./menu/index"
 import ProfileHeaderInfo from "./profileheaderinfo/index"
+import HeaderNav from "./headernav/index"
 
 
 let cover_src= 'https://drivendata-prod-public.s3.amazonaws.com/images/project-conservation.png'
@@ -42,6 +45,7 @@ class Restaurant extends  React.Component{
                     <img id="conver-image" src={cover_src} alt=""></img>
                     
                     <ProfileHeaderInfo/>
+                    <HeaderNav />
                 </section>
 
             </header>

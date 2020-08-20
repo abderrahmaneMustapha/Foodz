@@ -39,13 +39,14 @@ ul.navbar-nav , li.nav-item, a.nav-link{
   transition: all;
 }
 
-a.nav-link{
+#transparent-nav a.nav-link{
     display: flex;
+    display: -webkit-flex;
     min-height: 100%;
     justify-content: center;
     align-items: center;
 }
-a.nav-link:hover{
+#transparent-nav a.nav-link:hover{
     border-bottom: solid 0.4em black;
 }
 

@@ -1,0 +1,31 @@
+#profile-header-nav .nav-link:hover{
+    border: none;
+    color: rgb(41, 40, 40);
+}
+
+#profile-header-nav .nav-link{
+    border: none;
+    color: rgb(160, 160, 160);
+    font-weight: 900;
+}
+
+
+#profile-header-nav a.active{
+
+    color: black;
+    
+}
+
+
+#profile-header-nav{
+    padding-top:0.5em;
+    padding-bottom:0.5em;
+    display: block;
+    background-color: white;
+}
+
+#profile-header-nav {
+    display: flex;
+    justify-content:center;
+
+}
