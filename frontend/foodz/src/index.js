@@ -28,7 +28,7 @@ ReactDOM.render(
     <Router history={history}>
 
       <Switch>
-      <Route path="/restaurant/:name">
+      <Route path="/restaurants/:name" >
         <Restaurant/>
       </Route>
       <Route path='/search'>

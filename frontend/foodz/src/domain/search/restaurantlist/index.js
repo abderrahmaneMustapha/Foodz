@@ -50,11 +50,10 @@ class RestaurantList extends React.Component{
                                      
                     </thead>
                     <tbody>
-                        {this.props.restaurants.map(element=>(
+                        {this.props.restaurants.map(element=>(                        
                         
                         
-                        
-                        <Link  class="link-tr" to={`restaurant/${element.name}`}>
+                        <Link  class="link-tr" to={`/restaurants/${element.slug}?path=Menu`}>
                         
                             <td ><img className="search-restaurant-img" src={element.photo}></img></td>
                             <td className="font-weight-bold">{element.name}<br></br>
