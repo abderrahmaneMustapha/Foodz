@@ -13,14 +13,12 @@ class Menu extends React.Component{
                     <h2 className="h2 font-weight-bold">Menu</h2>
                 </header>
                 <div className="row mt-5">
-                <FoodCard
-                    foodimage={src}  
-                    foodname={"Burger"} 
-                    foodtext={"some text about the burger"}
-                    foodprice={"200$"}
-                />
-
-
+                    <FoodCard
+                        foodimage={src}  
+                        foodname={"Burger"} 
+                        foodtext={"some text about the burger"}
+                        foodprice={"200$"}
+                    />
                 </div>
             </div>
          
