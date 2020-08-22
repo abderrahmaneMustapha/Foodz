@@ -1,0 +1,36 @@
+div#comment-container{
+    height:50%;
+    max-height: 50%;
+    margin: 1rem 0 1rem 0;
+}
+
+div#comment-container img{
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+#comment-utils i{
+   margin: 0 0.2em 0 0.5em;  
+}
+
+#comment-utils div span.text-muted{
+    font-size:0.8em;
+}
+
+@media (min-width:750px) and (max-width:1000px){
+    
+    div#comment-container img{
+        min-width: 200%;
+        max-height: auto;
+        margin-bottom: 1rem;
+    }
+    }
+
+@media (max-width:750px){
+    
+div#comment-container img{
+    max-width: 40%;
+    max-height: auto;
+    margin-bottom: 1rem;
+}
+}
