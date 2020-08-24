@@ -63,7 +63,7 @@ class ReplyExistingComment extends React.Component{
         return(
             <div  className=" comment reply-exisiting-comment-container container">
             <div className="row">
-                <div className="col-md-1 col-sm-4">
+                <div className="col-md-1 col-sm-3">
                     <img className="rounded-circle" src={this.props.photo}></img>
                 </div>
                 <div className=" col-md-11 col-sm-8">

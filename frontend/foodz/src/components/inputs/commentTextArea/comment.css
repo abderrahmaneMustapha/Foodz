@@ -35,8 +35,14 @@ div.comment img{
 @media (max-width:750px){
     
 div.comment img{
-    max-width: 40%;
+    max-width: 20%;
     max-height: auto;
     margin-bottom: 1rem;
+}
+
+div.comment{
+    height:50%;
+    max-height: 50%;
+    margin: 0rem 0 0rem 0;
 }
 }

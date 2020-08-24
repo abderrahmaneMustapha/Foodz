@@ -11,7 +11,7 @@ class Reviews extends React.Component{
 
     render(){
         return(
-            <div className=" container mt-7 p-5 bg-white">
+            <div className=" container mt-7 p-md-5 p-sm-0 bg-white">
                   <CommentList  commentList={comments}/>
             </div>
           
