@@ -25,7 +25,7 @@ div.comment img{
 
 @media (min-width:750px) and (max-width:1000px){
     
-    div#comment-container img{
+    div.comment img{
         min-width: 200%;
         max-height: auto;
         margin-bottom: 1rem;
@@ -34,7 +34,7 @@ div.comment img{
 
 @media (max-width:750px){
     
-div#comment-container img{
+div.comment img{
     max-width: 40%;
     max-height: auto;
     margin-bottom: 1rem;

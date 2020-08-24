@@ -3,10 +3,18 @@ import "./comment.css"
 import StarRatings from 'react-star-ratings';
 
 class MainExistingComment extends  React.Component {
-      
+        constructor(props){
+            super(props)
+            this.handleReply = this.handleReply.bind()
+        }
+
+        handleReply  = (event)=>{
+            console.log(event.target.value)
+        }
+
         render(){
             return(
-                <div   className="container comment main-exisiting-comment-container">
+                <div  key={this.props.key} className="container comment main-exisiting-comment-container">
                 <div className="row">
                     <div className="col-md-1 col-sm-4">
                         <img className="rounded-circle" src={this.props.photo}></img>
@@ -35,7 +43,7 @@ class MainExistingComment extends  React.Component {
                                 <span className="text-muted">33 </span>
                             </div>
                             . 
-                            <div title="reply">
+                            <div onClick={this.handleReply} title="reply">
                                 <i className="fas fa-reply"></i>
                             </div>
                             <span className="ml-auto"> see all </span>
