@@ -8,7 +8,34 @@ class ExistingComment extends  React.Component {
         }
 
     
+        handleReply = (event)=>{
+            let main_comment_li  = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+            let main_comment_replys = main_comment_li.getElementsByClassName('comment-list-reply')[0]
 
+            if(!main_comment_replys.firstChild.className.includes("comment-temp-add")){
+                let list_element  = document.createElement('li')
+                list_element.className = "list-group-item comment-temp-add"
+                
+                let comment_text_area_container = document.createElement('div')  
+                comment_text_area_container.className  = "w-100 p-1" 
+                let text_area = document.createElement('textarea')
+    
+                text_area.className = "w-100 from-control border-0"
+                text_area.placeholder = "add comment here "
+                let button_share = document.createElement('button')
+                button_share.className = "btn btn-link text-dark"
+                button_share.innerText = "share"
+               
+                comment_text_area_container.appendChild(text_area)
+                comment_text_area_container.appendChild(button_share)
+                list_element.appendChild(comment_text_area_container)
+                
+               
+                main_comment_replys.insertBefore(list_element, main_comment_replys.firstChild);
+            }
+           
+      
+        }
         render(){
             return(
                 <div  key={this.props.key} className={"container comment "+this.props.classPlus}>
