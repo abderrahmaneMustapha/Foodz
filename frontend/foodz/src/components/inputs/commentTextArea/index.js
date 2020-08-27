@@ -2,6 +2,8 @@ import React from "react"
 import "./comment.css"
 import StarRatings from 'react-star-ratings';
 
+let current_username  = "Mustapha"
+let current_userimage = "https://scontent-mrs2-1.xx.fbcdn.net/v/t1.0-1/p240x240/91818612_100248741644513_2244727394118139904_n.jpg?_nc_cat=109&_nc_sid=dbb9e7&_nc_ohc=Jh8mckF5fyYAX889OWa&_nc_ht=scontent-mrs2-1.xx&tp=6&oh=3809d73d2fd0904a2ae191f08e2ead08&oe=5F6DEDF1"
 class ExistingComment extends  React.Component {
         constructor(props){
             super(props)
@@ -13,24 +15,36 @@ class ExistingComment extends  React.Component {
             let main_comment_replys = main_comment_li.getElementsByClassName('comment-list-reply')[0]
 
             if(!main_comment_replys.firstChild.className.includes("comment-temp-add")){
-                let list_element  = document.createElement('li')
-                list_element.className = "list-group-item comment-temp-add"
                 
-                let comment_text_area_container = document.createElement('div')  
-                comment_text_area_container.className  = "w-100 p-1" 
-                let text_area = document.createElement('textarea')
-    
-                text_area.className = "w-100 from-control border-0"
-                text_area.placeholder = "add comment here "
-                let button_share = document.createElement('button')
-                button_share.className = "btn btn-link text-dark"
-                button_share.innerText = "share"
-               
-                comment_text_area_container.appendChild(text_area)
-                comment_text_area_container.appendChild(button_share)
-                list_element.appendChild(comment_text_area_container)
-                
-               
+                // create new element in the list 
+                // by cloning the first child (li) of the replys list
+                let list_element =  main_comment_replys.firstChild.cloneNode(true)
+                // edit the comment text
+                list_element.classList.add('comment-temp-add')
+                let comment_text_area = list_element.getElementsByClassName('comment-text')[0]
+                comment_text_area.innerText = "Comment here"
+                // make the div editable
+                comment_text_area.contentEditable = true
+                // set the image to the current user image 
+                list_element.getElementsByTagName('img')[0].src = current_userimage
+                // set the user name to the current user username
+                list_element.getElementsByTagName('h5')[0].innerText = current_username
+                // get the comment utils   
+                let comment_utils = list_element.getElementsByClassName('comment-utils')[0]
+                comment_utils.remove()
+
+                // create a share button
+                let share_button = document.createElement("button")
+                share_button.className = "d-block btn btn-link text-black"
+                share_button.innerText = "share"
+                // add classs and style
+                share_button.addEventListener("click", event=>{
+                    share_button.replaceWith(comment_utils)
+                    comment_text_area.contentEditable = false
+                })
+                list_element.getElementsByClassName('col-md-11')[0].appendChild(share_button)
+
+                // remove the comment utils            
                 main_comment_replys.insertBefore(list_element, main_comment_replys.firstChild);
             }
            
@@ -58,7 +72,7 @@ class ExistingComment extends  React.Component {
                         <></>
                         }
                         </header>
-                        <div className="font-weight-light m-2">{this.props.text}</div>
+                        <div className="font-weight-light m-2 comment-text">{this.props.text}</div>
                         <div  className="comment-utils d-flex flex-row align-items-center mt-3">
                             <div title="up vote">
                                 <i className="fas fa-chevron-up"></i>
