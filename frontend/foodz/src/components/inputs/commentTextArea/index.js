@@ -55,9 +55,9 @@ class NewComment extends React.Component{
 
 
 class ExistingComment extends  React.Component {
-        constructor(props){
-            super(props)
-        }
+    constructor(props){
+        super(props)
+    }
 
     
         handleReply = (event)=>{
@@ -119,7 +119,7 @@ class ExistingComment extends  React.Component {
 
         render(){
             return(
-                <div  key={this.props.key} className={"bg-white container comment "+this.props.classPlus}>
+                <div   key={this.props.key} className={"bg-white container comment "+this.props.classPlus}>
                 <div className="row">
                     <div className="col-md-1 col-sm-4">
                         <img className="rounded-circle" src={this.props.photo}></img>
@@ -139,11 +139,11 @@ class ExistingComment extends  React.Component {
                         <></>
                         }
                         </header>
-                        <div className="font-weight-light m-2 comment-text">{this.props.text}</div>
-                        <div  className="comment-utils d-flex flex-row align-items-center mt-3">
-                            <div title="up vote">
-                                <i className="fas fa-chevron-up"></i>
-                                <span className="text-muted">33 </span>
+                        <div  className="font-weight-light m-2 comment-text">{this.props.text}</div>
+                        <div      className="comment-utils d-flex flex-row align-items-center mt-3">
+                            <div  title="up vote">
+                                <i  className="fas fa-chevron-up"></i>
+                                <span  className="text-muted">33 </span>
                             </div> 
                             . 
                             <div title="down vote">
@@ -151,8 +151,12 @@ class ExistingComment extends  React.Component {
                                 <span className="text-muted">33 </span>
                             </div>
                             { this.props.review ?
-                            <div onClick={this.handleReply} title="reply">
-                                <i className="fas fa-reply"></i>
+                            <div 
+                                key={this.props.data_key}
+                                data-key={this.props.data_key}
+                                onClick={this.props.handleAddReply} 
+                                title="reply">
+                                <i  className="fas fa-reply"></i>
                             </div>:
                             <></>
                             }
@@ -167,6 +171,8 @@ class ExistingComment extends  React.Component {
         
 
 }
+
+
 
 
 export {ExistingComment, NewComment }
