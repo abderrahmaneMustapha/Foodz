@@ -14,7 +14,7 @@ import HeaderNav from "./headernav/index"
 // router 
 import { Route} from "react-router-dom";
 let cover_src= 'https://drivendata-prod-public.s3.amazonaws.com/images/project-conservation.png'
-let photos_list = [{},{}, {}, {}, {}]
+let photos_list = [{id:"222"},{id:"292"}, {id:"242"}, {id:"422"}, {id:"202"}]
 class Restaurant extends  React.Component{
 
 

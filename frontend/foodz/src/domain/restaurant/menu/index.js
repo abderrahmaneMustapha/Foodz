@@ -12,11 +12,11 @@ class Menu extends React.Component{
       
         return(        
             
-            <div id="food-menu" className="container-fluid p-5">
-                <header className="mb-5 mt-2"> 
+            <div id="food-menu" className="container-fluid px-5">
+                <header className="mb-4"> 
                     <h2 className="h2 font-weight-bold">Menu</h2>
                 </header>
-                <div className="row mt-5">
+                <div className="row">
                     <FoodCard
                         foodimage={src}  
                         foodname={"Burger"} 

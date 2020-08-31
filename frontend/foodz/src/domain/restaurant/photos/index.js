@@ -12,10 +12,20 @@ class Photos extends React.Component{
     }
     render(){
         return(
-            <div id="photos-list" className="container">
+            <div id="photos-list" className="container-fluid px-5">
+                <header className="mb-4"> 
+                    <h2 className="h2 font-weight-bold">Restaurants Photos</h2>
+                </header>
                 <div className="row justify-content-center">
                     {this.state.photos_list.map(element =>(
-                    <Card  src={image_src}/>
+                    <Card
+                        show_text={false} 
+                        md="col-md-4" 
+                        sm="col-sm-12" 
+                        key={element.id} 
+                        index={element.id} 
+                        src={image_src} 
+                    />
                     ))}
                 </div>                
             </div>

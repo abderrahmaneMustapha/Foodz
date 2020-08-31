@@ -11,7 +11,7 @@ import Footer from '../../components/footer/index'
 
 // helper
 //...
-
+let image_src = "https://foodetective-production.s3.amazonaws.com/uploads/picture/photo/0d039b24-09c4-4e21-82c0-ef9868db029e/tablet_el_perro_salvaje_6184_745x497.jpg"
 
 class Home extends React.Component {
   
@@ -89,10 +89,26 @@ class Home extends React.Component {
                 <div className="col-md-8 col-sm-12">
                   <div className="w-100">
                     <div className="row justify-content-center">
-                    <CardPromotions src="https://foodetective-production.s3.amazonaws.com/uploads/picture/photo/0d039b24-09c4-4e21-82c0-ef9868db029e/tablet_el_perro_salvaje_6184_745x497.jpg"></CardPromotions> 
-                    <CardPromotions  src="//cms.chobanifoodservice.com/assets/_squarethumb700/FS_DAksland_May17_CoconutCurry_07_018_200511_145746.jpg" ></CardPromotions>
-                    <CardPromotions src="https://foodetective-production.s3.amazonaws.com/uploads/picture/photo/0d039b24-09c4-4e21-82c0-ef9868db029e/tablet_el_perro_salvaje_6184_745x497.jpg"></CardPromotions> 
-                    <CardPromotions  src="//cms.chobanifoodservice.com/assets/_squarethumb700/FS_DAksland_May17_CoconutCurry_07_018_200511_145746.jpg" ></CardPromotions>                                    
+                    <CardPromotions 
+                      show_text={true} 
+                      md="col-md-6" 
+                      sm="col-sm-12" 
+                      src={image_src}
+                    />
+                    <CardPromotions   show_text={true} 
+                      md="col-md-6" 
+                      sm="col-sm-12" 
+                      src={image_src} />
+                    <CardPromotions  
+                      show_text={true} 
+                      md="col-md-6" 
+                      sm="col-sm-12" 
+                      src={image_src} /> 
+                    <CardPromotions   
+                      show_text={true} 
+                      md="col-md-6" 
+                      sm="col-sm-12" 
+                      src={image_src} />                                    
                     </div>
                   </div>                 
                 </div>
