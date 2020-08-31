@@ -14,9 +14,6 @@ class ReplyList extends React.Component{
         
     }
 
-   
-
-
     render(){
         return(
             <ul  className="list-group comment-list-reply">
@@ -63,7 +60,7 @@ class CommentList extends React.Component{
         let current_review  = document.getElementById('new-comment-container').getElementsByClassName('star-ratings')[0].title[0]
         console.log(current_review)
         let tempCommentList = this.state.commentList 
-        tempCommentList.push({
+        tempCommentList.unshift({
             text: textarea, username : current_username, photo : current_userimage, review : current_review, replys :[]
         })
         console.log(tempCommentList)
@@ -128,7 +125,7 @@ class CommentList extends React.Component{
         let updateReplys = (id, comment, username, photo)=>{
             commentList.map(element=>{
                 if(element.id==id){
-                     element.replys.push({text:comment, username : username, photo : photo})
+                     element.replys.unshift({text:comment, username : username, photo : photo})
                 }
             })
         }

@@ -7,7 +7,6 @@ import WNavBar from '../../components/navbars/whitenavbar/index'
 // inner compenents
 import Menu from "./menu/index"
 import Photos from "./photos/index"
-import QuestionandAnswer from "./questionandanswer/index"
 import Reviews from "./reviews/index"
 import ProfileHeaderInfo from "./profileheaderinfo/index"
 import HeaderNav from "./headernav/index"
@@ -15,7 +14,7 @@ import HeaderNav from "./headernav/index"
 // router 
 import { Route} from "react-router-dom";
 let cover_src= 'https://drivendata-prod-public.s3.amazonaws.com/images/project-conservation.png'
-
+let photos_list = [{},{}, {}, {}, {}]
 class Restaurant extends  React.Component{
 
 
@@ -67,17 +66,12 @@ class Restaurant extends  React.Component{
                 
             </Route>
             <Route strict path="/restaurants/:name"  render = {({match})=>{
-                if (window.location.href.includes("?page=Photos")) return <Photos />
+                if (window.location.href.includes("?page=Photos")) return <Photos photos_list={photos_list} />
                 else return null 
             }}  >
                 
             </Route>
-            <Route  strict path="/restaurants/:name"  render = {({match})=>{
-                if (window.location.href.includes("?page=qa")) return  <QuestionandAnswer />
-                else return null 
-            }}>
-               
-            </Route>
+        
             
             </main>
             </>

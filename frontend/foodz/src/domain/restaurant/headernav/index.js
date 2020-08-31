@@ -10,7 +10,6 @@ class HeaderNav extends React.Component{
                 <ListItemLink to="?page=Menu" >Menu</ListItemLink>
                 <ListItemLink  to="?page=Reviews" >Reviews</ListItemLink>
                 <ListItemLink  to="?page=Photos" >Photos</ListItemLink>
-                <ListItemLink to="?page=qa"  >Q&A</ListItemLink>
             </nav>
         )
     }
