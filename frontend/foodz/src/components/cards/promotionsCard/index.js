@@ -6,15 +6,29 @@ import Modal from "./modal/index"
 class Card extends React.Component{
   constructor(props){
     super(props)
-    
+    this.state = {
+      isopen : false
+    }
+    this.handleOpen = this.handleOpen.bind()
   }
-  
+  handleOpen = (event)=>{
+    this.setState({
+        isopen:true
+    })
+  }
+
+  handleClose = (event)=>{
+    this.setState({
+        isopen:false
+    })      
+  }
+
+
     render(){
         return(
           <>
             <div  
-              
-              data-toggle="modal" 
+              onClick={this.handleOpen}
               data-target={"#modal-promotion-"+this.props.index}   
               className={`promotions-card  mb-2 px-1  bg-transparent ${this.props.md} ${this.props.sm} `}>
               <div className="card  bg-transparent  border-0">
@@ -33,7 +47,12 @@ class Card extends React.Component{
                 </div>
               </div>
           </div>
-          <Modal index = {this.props.index}/>
+          <Modal
+            handleClose = {this.handleClose}
+            isopen = {this.state.isopen}
+            index = {this.props.index}
+            imagesrc = {this.props.src}
+          />
           </>
         )
     }
