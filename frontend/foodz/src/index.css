@@ -83,6 +83,10 @@ a.black-link-c:hover{
   display: none; 
 }
 
+button.close:focus{
+  outline: none;
+  border: none;
+}
 
 .mt-7{
   margin-top:5rem;

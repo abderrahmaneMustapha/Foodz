@@ -1,7 +1,43 @@
+.modal-promotion {
+  
+   border: none;
+   display: block;
+}
+.ReactModal__Overlay  {
+   z-index: 5;
+}
+
+.modal-promotion .modal-body  {
+   overflow: scroll;
+   background-color: white;
+}
+
 .modal-body .close{
    position: absolute;
    bottom: auto;
    top: 0;
    left:auto;
    right: 0;
+}
+
+.modal-body section div{
+   width: 75%;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.modal-body img{
+   display: block;
+   max-width: 100%;
+   min-width: 100%;
+   height: 60%;
+   max-height: 60%;
+}
+
+@media (max-width:800px){
+   .modal-body section div{
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+   }
 }

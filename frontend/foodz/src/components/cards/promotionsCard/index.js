@@ -52,6 +52,7 @@ class Card extends React.Component{
             isopen = {this.state.isopen}
             index = {this.props.index}
             imagesrc = {this.props.src}
+           
           />
           </>
         )
