@@ -1,14 +1,24 @@
 .modal-promotion {
-  
+  outline: none;
    border: none;
    display: block;
+  
+}
+.modal-promotion *{
+   border:none;
+   outline: none;
 }
 .ReactModal__Overlay  {
-   z-index: 5;
+   z-index: 5;  
+   border: none;
+   outline: none;
 }
 
 .modal-promotion .modal-body  {
-   overflow: scroll;
+   overflow: auto;
+   width: 80%;
+   height: 80vh;
+   margin: 5% auto 5% auto;
    background-color: white;
 }
 
@@ -17,13 +27,10 @@
    bottom: auto;
    top: 0;
    left:auto;
-   right: 0;
+   right: 1em;
 }
-
-.modal-body section div{
-   width: 75%;
-   margin-left: auto;
-   margin-right: auto;
+section .col-md-5{
+   height:50%;
 }
 
 .modal-body img{
@@ -35,9 +42,20 @@
 }
 
 @media (max-width:800px){
+   
    .modal-body section div{
       width: 100%;
       margin-left: auto;
       margin-right: auto;
    }
+ 
+   .modal-promotion .modal-body  {
+      overflow: scroll;
+      width: 95%;   
+      height: 100vh;     
+      margin: auto auto auto auto;
+      background-color: white;
+   }
+
+   
 }

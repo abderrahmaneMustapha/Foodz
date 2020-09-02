@@ -15,12 +15,14 @@ class Card extends React.Component{
     this.setState({
         isopen:true
     })
+    document.body.style.position= "fixed"
   }
 
   handleClose = (event)=>{
     this.setState({
         isopen:false
     })      
+    document.body.style.position= "unset"
   }
 
 
@@ -34,12 +36,11 @@ class Card extends React.Component{
               <div className="card  bg-transparent  border-0">
                 <div className="card-body">            
                     <img className="w-100 h-100 shadow"  src={this.props.src}></img>
-                  { this.props.show_text ?
+                  {this.props.show_text ?
                     <div className="card-text">
-
-                    Restaurantes Vegetarianos En Barcelona<br></br>
-                    <p > 
-                    is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                    {this.props.title}<br></br>
+                    <p> 
+                    {this.props.details}
                     </p>
                     </div>
                     : <></>
@@ -52,7 +53,9 @@ class Card extends React.Component{
             isopen = {this.state.isopen}
             index = {this.props.index}
             imagesrc = {this.props.src}
-           
+            title = {this.props.title}
+            details = {this.props.details}
+            slug = {this.props.slug}
           />
           </>
         )

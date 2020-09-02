@@ -12,7 +12,7 @@ import Footer from '../../components/footer/index'
 // helper
 //...
 let image_src = "https://foodetective-production.s3.amazonaws.com/uploads/picture/photo/0d039b24-09c4-4e21-82c0-ef9868db029e/tablet_el_perro_salvaje_6184_745x497.jpg"
-
+let details= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nisl lectus, vulputate sed iaculis in, fermentum sed ante. Morbi blandit varius ipsum vel vestibulum. Quisque laoreet ipsum ut urna accumsan, ut tristique magna feugiat. Nulla tristique dignissim augue et convallis. Quisque at ultrices ligula, at ornare elit. Integer eu condimentum sem"
 class Home extends React.Component {
   
 
@@ -42,9 +42,9 @@ class Home extends React.Component {
 
                     
                   </div>
-                  <SearchBar >
+                  <SearchBar />
                     
-                  </SearchBar>
+                  
                 </header>
 
               </div>
@@ -94,21 +94,34 @@ class Home extends React.Component {
                       md="col-md-6" 
                       sm="col-sm-12" 
                       src={image_src}
+                      title ="Food"
+                      details = {details}
+                      slug="restaurant-1"
                     />
                     <CardPromotions   show_text={true} 
                       md="col-md-6" 
                       sm="col-sm-12" 
-                      src={image_src} />
+                      src={image_src}
+                      title ="Food"
+                      details = {details}
+                      slug="restaurant-1" />
                     <CardPromotions  
                       show_text={true} 
                       md="col-md-6" 
                       sm="col-sm-12" 
-                      src={image_src} /> 
+                      src={image_src}
+                      title ="Food"
+                      details = {details} 
+                      slug="restaurant-1"
+                      /> 
                     <CardPromotions   
                       show_text={true} 
                       md="col-md-6" 
                       sm="col-sm-12" 
-                      src={image_src} />                                    
+                      src={image_src}
+                      title ="Food"
+                      details = {details}
+                      slug="restaurant-1" />                                    
                     </div>
                   </div>                 
                 </div>
