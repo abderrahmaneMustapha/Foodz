@@ -4,7 +4,28 @@ from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
 from .managers import CustomUserManager
-# Create your models here.
+
+from phonenumber_field.modelfields import PhoneNumberField
+
+class Photos(models.Model):
+    ImageField = models.ImageField(_('image field'), upload_to="photos/")
+
+class Locations(models.Model):
+    city = models.CharField("City name", max_length=80, null=True)
+    lang = models.CharField("Lang",max_length=50,  null=True)
+    lat = models.CharField("Lat",max_length=50,  null=True)
+    created_at = models.DateTimeField(_("Location created at"),  null=True)
+    updated_at = models.DateTimeField(_('Location updated at'),  null=True)
+    class Meta:
+        verbose_name = _("Lcation")            
+        verbose_name_plural = _("Locations")
+    def save(self, *args, **kwargs):
+            ''' On save, update timestamps '''
+            if not self.id:
+                self.created = timezone.now()
+            self.modified = timezone.now()
+            return super(RestaurantCalendar, self).save(*args, **kwargs)
+
 ## user models
 class CustomUser(AbstractUser):
     username = None
@@ -14,7 +35,8 @@ class CustomUser(AbstractUser):
     email = models.EmailField(_('email adress'), unique=True)
     adress = models.CharField(_("adress"), max_length=500, default="", null=True, blank=True)
     wilayas = models.CharField( verbose_name=_("Wilaya in algeria"),  max_length=500)
-
+    current_location = models.ForeignKey(Locations, verbose_name=_('user current location'), related_name="user_current_location", on_delete=models.CASCADE, null=True, blank=True)
+    last_location = models.ForeignKey(Locations, verbose_name=_('user last location'),related_name="user_last_location", on_delete=models.CASCADE, null=True, blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -29,16 +51,60 @@ class CustomUser(AbstractUser):
 
 
 
-class Locations(models.Model):
-    pass
-class Reviews(models.Model):
-    pass
 class Restaurant(models.Model):
-    pass
+    name = models.CharField("Restaurant name",max_length=200,null=True)
+    verified = models.BooleanField('Verified restaurant', default=False)
+    rank = models.IntegerField("Restaurant rank", default=-1)
+    restaurant_type = models.CharField('Restaurant type', max_length=250, null=True)
+    restaurant_open = models.BooleanField('Restaurant boolean', default=False)
+    phone_number = PhoneNumberField(null=True)
+    location = models.ForeignKey(Locations, verbose_name="Restaurant location", on_delete=models.CASCADE, null=True)
+    photos = models.ManyToManyField(Photos, verbose_name="Restaurant photos")
+    created_at = models.DateTimeField(_("Restaurant created at"), null=True)
+    updated_at = models.DateTimeField(_('Restaurant updated at'),  null=True)
+    class Meta:
+        verbose_name = _("Restaurant")            
+        verbose_name_plural = _("Restaurants")
+    def save(self, *args, **kwargs):
+            ''' On save, update timestamps '''
+            if not self.id:
+                self.created = timezone.now()
+            self.modified = timezone.now()
+            return super(RestaurantCalendar, self).save(*args, **kwargs)
+
+
+class Reviews(models.Model):
+    user = models.ForeignKey(CustomUser, verbose_name=_('user who reviewed'), on_delete=models.CASCADE,  null=True)
+    restaurant  = models.ForeignKey(Restaurant, verbose_name=_('reviewed restaurant'), on_delete=models.CASCADE, null=True)
+    number = models.FloatField("number of reviews", null=True)
+    created_at = models.DateTimeField(_("Location created at"), null=True)
+    updated_at = models.DateTimeField(_('Location updated at'),  null=True)
+    class Meta:
+        verbose_name = _("Lcation")            
+        verbose_name_plural = _("Locations")
+    def save(self, *args, **kwargs):
+            ''' On save, update timestamps '''
+            if not self.id:
+                self.created = timezone.now()
+            self.modified = timezone.now()
+            return super(RestaurantCalendar, self).save(*args, **kwargs)
+
+
+
 
 class RestaurantCalendar(models.Model):
+        class SevenDaysOfWeek(models.TextChoices):
+            Sunday    = "Su", _('Sunday')
+            Monday    = "Mo", _('Monday')
+            Tuesday   = "Tu", _('Tuesday')
+            Wednesday = "We", _('Wednesday')
+            Thursday  = "Th", _('Thursday')
+            Friday    = "Fr", _('Friday')
+            Saturday  = "Sa", _('Saturday')
+
+
         restaurant_name = models.ForeignKey(Restaurant,verbose_name=_("Restaurant name"),on_delete=models.CASCADE)
-        day = models.CharField(_("Day"), max_length=25)
+        day = models.CharField(_("Day"), max_length=5 ,choices=SevenDaysOfWeek.choices, default=SevenDaysOfWeek.Sunday )
         open_time = models.TimeField(_("Open time"))
         close_time = models.TimeField(_('Close time'))
         created_at = models.DateTimeField(_("Calendar created at"))
@@ -57,5 +123,21 @@ class RestaurantCalendar(models.Model):
         
         def __str__(self):
             return self.restaurant_name.name
+
 class Food(models.Model):
-    pass
+    name = models.CharField(_("Food name"), max_length=250,  null=True)
+    restaurant_name = models.ForeignKey(Restaurant,verbose_name=_("Restaurant name"),on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(_("Calendar created at"), null=True)
+    updated_at = models.DateTimeField(_('Clendar updated at'), null=True)
+        
+    class Meta:
+        verbose_name = _("Food")            
+        verbose_name_plural = _("Foods")
+
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        if not self.id:
+            self.created = timezone.now()
+        self.modified = timezone.now()
+        return super(RestaurantCalendar, self).save(*args, **kwargs)
+
