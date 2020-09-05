@@ -104,9 +104,35 @@ class Comment(models.Model):
             self.modified = timezone.now()
             return super(Comment, self).save(*args, **kwargs)
 
+
+class Reviews(models.Model):
+    user = models.ForeignKey(CustomUser, verbose_name=_('user who reviewed'), on_delete=models.CASCADE,  null=True)
+    number = models.FloatField("number of reviews", null=True)
+    created_at = models.DateTimeField(_("Location created at"), null=True)
+    updated_at = models.DateTimeField(_('Location updated at'),  null=True)
+    class Meta:
+        verbose_name = _("Review")            
+        verbose_name_plural = _("Reviews")
+    def save(self, *args, **kwargs):
+            ''' On save, update timestamps '''
+            if not self.id:
+                self.created = timezone.now()
+            self.modified = timezone.now()
+            return super( Reviews, self).save(*args, **kwargs)
+
+class RestraurantReview(models.Model):
+    review = models.ForeignKey(Reviews, verbose_name='retaurant review', on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(Restaurant,verbose_name='reviewed restaurant', on_delete=models.CASCADE)
+    class Meta:
+        verbose_name = _('Restaurant Review')
+        verbose_name_plural = _('Restaurants Reviews')
+    def __str__(self):
+        return str(self.restaurant.name)
+
 class RestraurantComments(models.Model):
     restaurant  = models.ForeignKey(Restaurant, verbose_name=_("Comment about this restaurant"), on_delete=models.CASCADE, null=True)
     comment = models.ForeignKey(Comment, verbose_name=_("Comment text"), on_delete=models.CASCADE, null=True)
+    review = models.ForeignKey(RestraurantReview, verbose_name=_("resturant review"), on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(_("Comment created at"), null=True)
     updated_at = models.DateTimeField(_('Comment updated at'),  null=True)
     class Meta:
@@ -118,25 +144,6 @@ class RestraurantComments(models.Model):
                 self.created = timezone.now()
             self.modified = timezone.now()
             return super(RestraurantComments, self).save(*args, **kwargs)
-
-class Reviews(models.Model):
-    user = models.ForeignKey(CustomUser, verbose_name=_('user who reviewed'), on_delete=models.CASCADE,  null=True)
-    restaurant  = models.ForeignKey(Restaurant, verbose_name=_('reviewed restaurant'), on_delete=models.CASCADE, null=True)
-    number = models.FloatField("number of reviews", null=True)
-    created_at = models.DateTimeField(_("Location created at"), null=True)
-    updated_at = models.DateTimeField(_('Location updated at'),  null=True)
-    class Meta:
-        verbose_name = _("Lcation")            
-        verbose_name_plural = _("Locations")
-    def save(self, *args, **kwargs):
-            ''' On save, update timestamps '''
-            if not self.id:
-                self.created = timezone.now()
-            self.modified = timezone.now()
-            return super( Reviews, self).save(*args, **kwargs)
-
-
-
 
 class RestaurantCalendar(models.Model):
         class SevenDaysOfWeek(models.TextChoices):
@@ -186,4 +193,13 @@ class Food(models.Model):
             self.created = timezone.now()
         self.modified = timezone.now()
         return super(Food, self).save(*args, **kwargs)
+
+class FoodReview(models.Model):
+    review = models.ForeignKey(Reviews, verbose_name='food review', on_delete=models.CASCADE)
+    food = models.ForeignKey(Food,verbose_name='reviewed food', on_delete=models.CASCADE)
+    class Meta:
+        verbose_name = _('Food Reiview')
+        verbose_name_plural = _('Foods Reviews')
+    def __str__(self):
+        return str(self.restaurant.name)
 
