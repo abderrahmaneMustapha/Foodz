@@ -48,6 +48,21 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
+class Food(models.Model):
+    name = models.CharField(_("Food name"), max_length=250,  null=True)
+    photo = models.ImageField('Food image ', null=True, blank=False)
+    created_at = models.DateTimeField(_("Calendar created at"),auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(_('Clendar updated at'),auto_now=True, null=True)
+        
+    class Meta:
+        verbose_name = _("Food")            
+        verbose_name_plural = _("Foods")
+
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        return super(Food, self).save(*args, **kwargs)
+
+
 
 class RestaurantService(models.Model):
     choice = models.CharField(max_length=50, unique=True, primary_key=True)
@@ -79,14 +94,17 @@ class RestaurantType(models.Model):
 
 class Restaurant(models.Model):
     name = models.CharField("Restaurant name",max_length=200,null=True)
+    photo = models.ImageField('Restaurant image ', null=True, blank=False)
     slug = models.SlugField("Restaurant slug", max_length=500, null=True)
     phone_number = PhoneNumberField(null=True)
     location = models.ForeignKey(Locations, verbose_name="Restaurant location", on_delete=models.CASCADE, null=True)
     verified = models.BooleanField('Verified restaurant', default=False)
     services = models.ManyToManyField(RestaurantService,verbose_name="Restraurant services",blank=True)
     restaurant_type = models.ManyToManyField(RestaurantType, related_name="restaurant_services",verbose_name="Restaurant type", max_length=250,blank=True)
+    foods = models.ManyToManyField(Food,verbose_name="Restraurant foods",blank=True)
     rank = models.IntegerField("Restaurant rank", default=-1)
     restaurant_open = models.BooleanField('Restaurant is open now', default=False)
+    total_review = models.IntegerField('Total restaurant reviews', default=0)
     photos = models.ManyToManyField(Photos, verbose_name="Restaurant photos", null=True,blank=True)
     created_at = models.DateTimeField(_("Restaurant created at"), auto_now_add=True,null=True)
     updated_at = models.DateTimeField(_('Restaurant updated at'), auto_now=True, null=True)
@@ -144,6 +162,11 @@ class RestraurantReview(models.Model):
     class Meta:
         verbose_name = _('Restaurant Review')
         verbose_name_plural = _('Restaurants Reviews')
+    def save(self, *args, **kwargs):
+            if not self.id :
+                self.restaurant.total_reviews += self.review.number
+                self.restaurant.save()
+            return super(RestaurantCalendar, self).save(*args, **kwargs)
     def __str__(self):
         return str(self.restaurant.name)
 
@@ -189,26 +212,14 @@ class RestaurantCalendar(models.Model):
         def __str__(self):
             return self.restaurant_name.name
 
-class Food(models.Model):
-    name = models.CharField(_("Food name"), max_length=250,  null=True)
-    restaurant_name = models.ForeignKey(Restaurant,verbose_name=_("Restaurant name"),on_delete=models.CASCADE, null=True)
-    created_at = models.DateTimeField(_("Calendar created at"),auto_now_add=True, null=True)
-    updated_at = models.DateTimeField(_('Clendar updated at'),auto_now=True, null=True)
-        
-    class Meta:
-        verbose_name = _("Food")            
-        verbose_name_plural = _("Foods")
-
-    def save(self, *args, **kwargs):
-        ''' On save, update timestamps '''
-        return super(Food, self).save(*args, **kwargs)
 
 class FoodReview(models.Model):
+    restaurant_name = models.ForeignKey(Restaurant, verbose_name='restaurant name',null=True, on_delete=models.CASCADE)
     review = models.ForeignKey(Reviews, verbose_name='food review', on_delete=models.CASCADE)
     food = models.ForeignKey(Food,verbose_name='reviewed food', on_delete=models.CASCADE)
     class Meta:
         verbose_name = _('Food Reiview')
         verbose_name_plural = _('Foods Reviews')
     def __str__(self):
-        return str(self.restaurant.name)
+        return self.restaurant_name.name
 
