@@ -56,10 +56,10 @@ class Restaurant(models.Model):
     verified = models.BooleanField('Verified restaurant', default=False)
     rank = models.IntegerField("Restaurant rank", default=-1)
     restaurant_type = models.CharField('Restaurant type', max_length=250, null=True)
-    restaurant_open = models.BooleanField('Restaurant boolean', default=False)
+    restaurant_open = models.BooleanField('Restaurant is open now', default=False)
     phone_number = PhoneNumberField(null=True)
     location = models.ForeignKey(Locations, verbose_name="Restaurant location", on_delete=models.CASCADE, null=True)
-    photos = models.ManyToManyField(Photos, verbose_name="Restaurant photos")
+    photos = models.ManyToManyField(Photos, verbose_name="Restaurant photos", null=True,blank=True)
     created_at = models.DateTimeField(_("Restaurant created at"), null=True)
     updated_at = models.DateTimeField(_('Restaurant updated at'),  null=True)
     class Meta:

@@ -14,7 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
     User = get_user_model()
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -23,7 +23,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 
 class LocationViewSet(viewsets.ModelViewSet):
@@ -32,34 +32,34 @@ class LocationViewSet(viewsets.ModelViewSet):
     """
     queryset = Locations.objects.all()
     serializer_class = LocationSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 class RestaurantViewSet(viewsets.ModelViewSet):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 class RestaurantPromotionViewSet(viewsets.ModelViewSet):
     queryset = RestaurantPromotion.objects.all()
     serializer_class = RestaurantPromotionSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 class RestaurantReviewViewSet(viewsets.ModelViewSet):
         queryset = Reviews.objects.all()
         serializer_class = RestaurantReviewSerializer
-        permission_classes = [permissions.IsAuthenticated]
+        permission_classes = [permissions.AllowAny]
 
 class FoodReviewViewSet(viewsets.ModelViewSet):
         queryset = Reviews.objects.all()
         serializer_class = FoodReviewSerializer
-        permission_classes = [permissions.IsAuthenticated]
+        permission_classes = [permissions.AllowAny]
 
 class RestaurantCalendarViewsSet(viewsets.ModelViewSet):
         queryset = RestaurantCalendar.objects.all()
         serializer_class = RestaurantCalendarSerializer
-        permission_classes = [permissions.IsAuthenticated]
+        permission_classes = [permissions.AllowAny]
 
 class FoodViewsSet(viewsets.ModelViewSet):
         queryset = Food.objects.all()
         serializer_class = FoodSerializer
-        permission_classes = [permissions.IsAuthenticated]
+        permission_classes = [permissions.AllowAny]
