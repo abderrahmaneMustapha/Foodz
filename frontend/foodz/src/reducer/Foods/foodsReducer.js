@@ -15,7 +15,6 @@ export  function foodsReducer (state = initialState, action){
                 foods_pending: true
             }
         case FETCH_FOODS_SUCCESS:
-            console.log("this is my state " ,state)
             return{
                 ...state,
                 foods_pending:false,

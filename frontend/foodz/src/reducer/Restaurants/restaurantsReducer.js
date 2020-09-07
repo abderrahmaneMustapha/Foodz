@@ -14,7 +14,6 @@ export  function restaurantsReducer (state = initialState, action){
                 pending : true
             }
         case FETCH_RESTAURANTS_SUCCESS:
-            console.log("this is an action ", action)
             return{
                 ...state,
                 pending:false,

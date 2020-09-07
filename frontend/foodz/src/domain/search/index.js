@@ -36,8 +36,6 @@ class Search extends React.Component {
         const {fetchRestaurant, fetchFood} = this.props
         fetchFood()
         fetchRestaurant()
-        
-        console.log('im fetching fooods',fetchFood())
     }
 
     shouldComponentRender() {
@@ -50,7 +48,6 @@ class Search extends React.Component {
     render(){
         const {foods, restaurants, foods_error} = this.props
         
-        console.log("this is a restaurant list ",this.props)
         if(this.shouldComponentRender()) return <div>aaaa</div>
         return (
             <>

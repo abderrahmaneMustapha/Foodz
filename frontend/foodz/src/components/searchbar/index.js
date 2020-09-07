@@ -24,8 +24,7 @@ class SearchBar extends React.Component {
         this.handleSearch = this.handleSearch.bind(this);
     }
 
-    componentDidMount(){
-    
+    componentDidMount(){    
         // get citys from ip stack api
         fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=true&key=AIzaSyAQFVDHbMUfKv_fUSNey5h3FWnt5V7TP1o')
         .then(res=> res.json())
@@ -39,7 +38,7 @@ class SearchBar extends React.Component {
     handleSearch = (e)=>{
         // please page dont refresh 
         e.preventDefault()
-        let search = document.getElementById('search').value
+        let search = document.getElementById('search').value || this.state.city
         // allow redirect to search page
         if (search){
             this.setState({ search_redirect : true, city : search})
@@ -66,11 +65,11 @@ class SearchBar extends React.Component {
                         name="search"
                         id="search"
                         className="form-control"
-                        placeholder="Search..."
+                        placeholder={this.state.city}
                         aria-label="Search..." 
                         aria-describedby="basic-addon2" 
-                        value={this.state.city}
-                        required={true}
+                        required={false}
+                    
                     />
                     <div >
                         <button onClick={this.handleSearch} type="submit" id="submite-search" className="btn btn-primary" >search</button>

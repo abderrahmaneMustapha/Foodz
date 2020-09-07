@@ -10,7 +10,6 @@ class RestaurantList extends React.Component{
         super(props)
        
     }
-
  
     // show filter sidebar
     handleFiltersShow = (e)=>{
@@ -18,7 +17,6 @@ class RestaurantList extends React.Component{
     }
 
     
-
     render(){
        
         return(
@@ -62,7 +60,7 @@ class RestaurantList extends React.Component{
                             </p></td>
                             <td className="text-center">
                             <StarRatings 
-                                rating={parseFloat(element.rating)}
+                                rating={parseFloat(element.total_review) || 0.0}
                                 starRatedColor="#FFBF00"
                                 numberOfStars={5}
                                 name='rating'
@@ -70,7 +68,7 @@ class RestaurantList extends React.Component{
                                 starSpacing="1px"
                             ></StarRatings>
                             <br></br> 
-                             <span className="text-muted ">{element.total_rating} ratings</span>
+                             <span className="text-muted ">20 ratings</span>
                             </td>
                         </Link>
                     
