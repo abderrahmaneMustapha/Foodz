@@ -23,7 +23,7 @@ class LocationSerializer(serializers.HyperlinkedModelSerializer):
 class RestaurantSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Restaurant
-        fields = ['url', 'name', 'slug','verified', 'services', 'rank', 'restaurant_type', 'restaurant_open', 'phone_number', 'location', 'photos', 'created_at']
+        fields = ['url', 'name','photo', 'slug','verified', 'services', 'rank', 'restaurant_type', 'restaurant_open', 'phone_number', 'location', 'photos', 'created_at']
 
 class RestaurantPromotionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -32,25 +32,25 @@ class RestaurantPromotionSerializer(serializers.HyperlinkedModelSerializer):
 
 class RestaurantCommentsPromotionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        models = RestraurantComments
+        model = RestraurantComments
         fields = ['url', 'restaurant', 'comment', 'created_at']
 
 class FoodReviewSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        models = FoodReview
-        fields = ['url',  'food']
+        model = FoodReview
+        fields = ['url', 'restaurant_name', 'review', 'food']
 
 class RestaurantReviewSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        models = RestraurantReview
+        model = RestraurantReview
         fields = ['url',  'food']
 
 class RestaurantCalendarSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        models = RestaurantCalendar
+        model = RestaurantCalendar
         fields = ['url', 'restaurant_name', 'day', 'open_time', 'close_time', 'created_at']
 
 class FoodSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        models = Food
-        fields = ['url', 'restaurant_name', 'created_at']
+        model = Food
+        fields = ['url','name','photo','created_at']

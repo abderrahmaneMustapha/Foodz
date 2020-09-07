@@ -40,11 +40,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'django_filters',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -80,6 +82,11 @@ REST_FRAMEWORK = {
     ]
 }
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+] # If this is used, then not need to use `CORS_ORIGIN_ALLOW_ALL = True
+
 WSGI_APPLICATION = 'foodz.wsgi.application'
 
 
@@ -95,6 +102,7 @@ DATABASES = {
 'PORT': '',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
