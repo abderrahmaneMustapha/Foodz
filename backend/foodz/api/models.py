@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+from datetime import datetime
 from django.utils.text import slugify
 from .managers import CustomUserManager
 
@@ -14,17 +15,15 @@ class Locations(models.Model):
     city = models.CharField("City name", max_length=80, null=True)
     lang = models.CharField("Lang",max_length=50,  null=True)
     lat = models.CharField("Lat",max_length=50,  null=True)
-    created_at = models.DateTimeField(_("Location created at"),  null=True)
-    updated_at = models.DateTimeField(_('Location updated at'),  null=True)
+    created_at = models.DateTimeField(_("Location created at"),auto_now_add=True,  null=True)
+    updated_at = models.DateTimeField(_('Location updated at'),auto_now=True,  null=True)
     class Meta:
         verbose_name = _("Lcation")            
         verbose_name_plural = _("Locations")
     def save(self, *args, **kwargs):
-            ''' On save, update timestamps '''
-            if not self.id:
-                self.created = timezone.now()
-            self.modified = timezone.now()
-            return super(Locations, self).save(*args, **kwargs)
+        ''' On save, update timestamps '''
+        
+        return super(Locations, self).save(*args, **kwargs)
 
 ## user models
 class CustomUser(AbstractUser):
@@ -52,8 +51,8 @@ class CustomUser(AbstractUser):
 
 class RestaurantService(models.Model):
     choice = models.CharField(max_length=50, unique=True, primary_key=True)
-    created_at = models.DateTimeField(_("Restaurant service created at"), null=True)
-    updated_at = models.DateTimeField(_('Restaurant service updated at'),  null=True)
+    created_at = models.DateTimeField(_("Restaurant service created at"),auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(_('Restaurant service updated at'), auto_now=True, null=True)
     class Meta:
         verbose_name = _("Restaurant service")            
         verbose_name_plural = _("Restaurants services")
@@ -62,16 +61,12 @@ class RestaurantService(models.Model):
         
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
-        if not self.id:
-            self.created = timezone.now()
-        self.modified = timezone.now()
-        
         return super(Restaurant, self).save(*args, **kwargs)
 
 class RestaurantType(models.Model):
     choice = models.CharField(max_length=125, unique=True, primary_key=True)
-    created_at = models.DateTimeField(_("Restaurant type created at"), null=True)
-    updated_at = models.DateTimeField(_('Restaurant type updated at'),  null=True)
+    created_at = models.DateTimeField(_("Restaurant type created at"),auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(_('Restaurant type updated at'),auto_now=True,  null=True)
     class Meta:
         verbose_name = _("Restaurant type")            
         verbose_name_plural = _("Restaurants types")
@@ -80,10 +75,6 @@ class RestaurantType(models.Model):
         
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
-        if not self.id:
-            self.created = timezone.now()
-        self.modified = timezone.now()
-        
         return super(Restaurant, self).save(*args, **kwargs)
 
 class Restaurant(models.Model):
@@ -92,73 +83,60 @@ class Restaurant(models.Model):
     phone_number = PhoneNumberField(null=True)
     location = models.ForeignKey(Locations, verbose_name="Restaurant location", on_delete=models.CASCADE, null=True)
     verified = models.BooleanField('Verified restaurant', default=False)
-    services = models.ManyToManyField(RestaurantService,verbose_name="Restraurant services")
-    restaurant_type = models.CharField(RestaurantType, max_length=250, null=True)
+    services = models.ManyToManyField(RestaurantService,verbose_name="Restraurant services",blank=True)
+    restaurant_type = models.ManyToManyField(RestaurantType, related_name="restaurant_services",verbose_name="Restaurant type", max_length=250,blank=True)
     rank = models.IntegerField("Restaurant rank", default=-1)
     restaurant_open = models.BooleanField('Restaurant is open now', default=False)
     photos = models.ManyToManyField(Photos, verbose_name="Restaurant photos", null=True,blank=True)
-    created_at = models.DateTimeField(_("Restaurant created at"), null=True)
-    updated_at = models.DateTimeField(_('Restaurant updated at'),  null=True)
+    created_at = models.DateTimeField(_("Restaurant created at"), auto_now_add=True,null=True)
+    updated_at = models.DateTimeField(_('Restaurant updated at'), auto_now=True, null=True)
     
     class Meta:
         verbose_name = _("Restaurant")            
         verbose_name_plural = _("Restaurants")
     def save(self, *args, **kwargs):
-            ''' On save, update timestamps '''
-            if not self.id:
-                self.created = timezone.now()
-                self.slug= slugify("{} {}".format(self.name,self.id))
-            self.modified = timezone.now()
-            
-            return super(Restaurant, self).save(*args, **kwargs)
+        ''' On save, update timestamps '''                
+        super(Restaurant, self).save(*args, **kwargs)
+        self.slug= slugify("{} {}".format(self.name,self.id))
 
 class RestaurantPromotion(models.Model):
     restaurant  = models.ForeignKey(Restaurant, verbose_name=_("promoted restaurant"), on_delete=models.CASCADE, null=True)
     title = models.CharField("Restraurant promotion title", max_length=50)
     text = models.TextField("Promotion description", null=True)
-    created_at = models.DateTimeField(_("Restaurant promotion created at"), null=True)
-    updated_at = models.DateTimeField(_('Restaurant promotion updated at'),  null=True)
+    created_at = models.DateTimeField(_("Restaurant promotion created at"),auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(_('Restaurant promotion updated at'), auto_now=True, null=True)
     class Meta:
         verbose_name = _(" Restaurant Promotion")            
         verbose_name_plural = _(" Restaurants Promotions ")
     def save(self, *args, **kwargs):
-            ''' On save, update timestamps '''
-            if not self.id:
-                self.created = timezone.now()
-            self.modified = timezone.now()
-            return super(RestaurantPromotion, self).save(*args, **kwargs)
+        ''' On save, update timestamps '''
+        return super(RestaurantPromotion, self).save(*args, **kwargs)
 class Comment(models.Model):
     user = models.ForeignKey(CustomUser, verbose_name=_('User who comment'), on_delete=models.CASCADE,  null=True)
     text = models.TextField("Comment text", null=True)
     replys  = models.ForeignKey("self",verbose_name="Comment replys", related_name="comment_replys", on_delete=models.SET_NULL, blank=True, null=True )
-    created_at = models.DateTimeField(_("Comment created at"), null=True)
-    updated_at = models.DateTimeField(_('Comment updated at'),  null=True)
+    created_at = models.DateTimeField(_("Comment created at"),auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(_('Comment updated at'), auto_now=True, null=True)
   
     class Meta:
         verbose_name = _("Comment")            
         verbose_name_plural = _("Comments")
     def save(self, *args, **kwargs):
-            ''' On save, update timestamps '''
-            if not self.id:
-                self.created = timezone.now()
-            self.modified = timezone.now()
-            return super(Comment, self).save(*args, **kwargs)
+        ''' On save, update timestamps '''
+        return super(Comment, self).save(*args, **kwargs)
 
 
 class Reviews(models.Model):
     user = models.ForeignKey(CustomUser, verbose_name=_('user who reviewed'), on_delete=models.CASCADE,  null=True)
     number = models.FloatField("number of reviews", null=True)
-    created_at = models.DateTimeField(_("Location created at"), null=True)
-    updated_at = models.DateTimeField(_('Location updated at'),  null=True)
+    created_at = models.DateTimeField(_("Location created at"),auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(_('Location updated at'),auto_now=True,  null=True)
     class Meta:
         verbose_name = _("Review")            
         verbose_name_plural = _("Reviews")
     def save(self, *args, **kwargs):
-            ''' On save, update timestamps '''
-            if not self.id:
-                self.created = timezone.now()
-            self.modified = timezone.now()
-            return super( Reviews, self).save(*args, **kwargs)
+        ''' On save, update timestamps '''
+        return super( Reviews, self).save(*args, **kwargs)
 
 class RestraurantReview(models.Model):
     review = models.ForeignKey(Reviews, verbose_name='retaurant review', on_delete=models.CASCADE)
@@ -173,16 +151,13 @@ class RestraurantComments(models.Model):
     restaurant  = models.ForeignKey(Restaurant, verbose_name=_("Comment about this restaurant"), on_delete=models.CASCADE, null=True)
     comment = models.ForeignKey(Comment, verbose_name=_("Comment text"), on_delete=models.CASCADE, null=True)
     review = models.ForeignKey(RestraurantReview, verbose_name=_("resturant review"), on_delete=models.CASCADE, null=True)
-    created_at = models.DateTimeField(_("Comment created at"), null=True)
-    updated_at = models.DateTimeField(_('Comment updated at'),  null=True)
+    created_at = models.DateTimeField(_("Comment created at"),auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(_('Comment updated at'), auto_now=True, null=True)
     class Meta:
         verbose_name = _("Comment")            
         verbose_name_plural = _("Comments")
     def save(self, *args, **kwargs):
             ''' On save, update timestamps '''
-            if not self.id:
-                self.created = timezone.now()
-            self.modified = timezone.now()
             return super(RestraurantComments, self).save(*args, **kwargs)
 
 class RestaurantCalendar(models.Model):
@@ -200,8 +175,8 @@ class RestaurantCalendar(models.Model):
         day = models.CharField(_("Day"), max_length=5 ,choices=SevenDaysOfWeek.choices, default=SevenDaysOfWeek.Sunday )
         open_time = models.TimeField(_("Open time"))
         close_time = models.TimeField(_('Close time'))
-        created_at = models.DateTimeField(_("Calendar created at"))
-        updated_at = models.DateTimeField(_('Clendar updated at'))
+        created_at = models.DateTimeField(_("Calendar created at"),auto_now_add=True)
+        updated_at = models.DateTimeField(_('Clendar updated at'),auto_now=True)
         
         class Meta:
             verbose_name = _("Reastaurant Calendar")            
@@ -209,9 +184,6 @@ class RestaurantCalendar(models.Model):
 
         def save(self, *args, **kwargs):
             ''' On save, update timestamps '''
-            if not self.id:
-                self.created = timezone.now()
-            self.modified = timezone.now()
             return super(RestaurantCalendar, self).save(*args, **kwargs)
         
         def __str__(self):
@@ -220,8 +192,8 @@ class RestaurantCalendar(models.Model):
 class Food(models.Model):
     name = models.CharField(_("Food name"), max_length=250,  null=True)
     restaurant_name = models.ForeignKey(Restaurant,verbose_name=_("Restaurant name"),on_delete=models.CASCADE, null=True)
-    created_at = models.DateTimeField(_("Calendar created at"), null=True)
-    updated_at = models.DateTimeField(_('Clendar updated at'), null=True)
+    created_at = models.DateTimeField(_("Calendar created at"),auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(_('Clendar updated at'),auto_now=True, null=True)
         
     class Meta:
         verbose_name = _("Food")            
@@ -229,9 +201,6 @@ class Food(models.Model):
 
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
-        if not self.id:
-            self.created = timezone.now()
-        self.modified = timezone.now()
         return super(Food, self).save(*args, **kwargs)
 
 class FoodReview(models.Model):
