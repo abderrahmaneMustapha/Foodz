@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
-
+from django.utils.text import slugify
 from .managers import CustomUserManager
 
 from phonenumber_field.modelfields import PhoneNumberField
@@ -50,18 +50,56 @@ class CustomUser(AbstractUser):
         return self.email
 
 
+class RestaurantService(models.Model):
+    choice = models.CharField(max_length=50, unique=True, primary_key=True)
+    created_at = models.DateTimeField(_("Restaurant service created at"), null=True)
+    updated_at = models.DateTimeField(_('Restaurant service updated at'),  null=True)
+    class Meta:
+        verbose_name = _("Restaurant service")            
+        verbose_name_plural = _("Restaurants services")
+    def __str__(self):
+        return self.choice
+        
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        if not self.id:
+            self.created = timezone.now()
+        self.modified = timezone.now()
+        
+        return super(Restaurant, self).save(*args, **kwargs)
+
+class RestaurantType(models.Model):
+    choice = models.CharField(max_length=125, unique=True, primary_key=True)
+    created_at = models.DateTimeField(_("Restaurant type created at"), null=True)
+    updated_at = models.DateTimeField(_('Restaurant type updated at'),  null=True)
+    class Meta:
+        verbose_name = _("Restaurant type")            
+        verbose_name_plural = _("Restaurants types")
+    def __str__(self):
+        return self.choice
+        
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        if not self.id:
+            self.created = timezone.now()
+        self.modified = timezone.now()
+        
+        return super(Restaurant, self).save(*args, **kwargs)
 
 class Restaurant(models.Model):
     name = models.CharField("Restaurant name",max_length=200,null=True)
-    verified = models.BooleanField('Verified restaurant', default=False)
-    rank = models.IntegerField("Restaurant rank", default=-1)
-    restaurant_type = models.CharField('Restaurant type', max_length=250, null=True)
-    restaurant_open = models.BooleanField('Restaurant is open now', default=False)
+    slug = models.SlugField("Restaurant slug", max_length=500, null=True)
     phone_number = PhoneNumberField(null=True)
     location = models.ForeignKey(Locations, verbose_name="Restaurant location", on_delete=models.CASCADE, null=True)
+    verified = models.BooleanField('Verified restaurant', default=False)
+    services = models.ManyToManyField(RestaurantService,verbose_name="Restraurant services")
+    restaurant_type = models.CharField(RestaurantType, max_length=250, null=True)
+    rank = models.IntegerField("Restaurant rank", default=-1)
+    restaurant_open = models.BooleanField('Restaurant is open now', default=False)
     photos = models.ManyToManyField(Photos, verbose_name="Restaurant photos", null=True,blank=True)
     created_at = models.DateTimeField(_("Restaurant created at"), null=True)
     updated_at = models.DateTimeField(_('Restaurant updated at'),  null=True)
+    
     class Meta:
         verbose_name = _("Restaurant")            
         verbose_name_plural = _("Restaurants")
@@ -69,7 +107,9 @@ class Restaurant(models.Model):
             ''' On save, update timestamps '''
             if not self.id:
                 self.created = timezone.now()
+                self.slug= slugify("{} {}".format(self.name,self.id))
             self.modified = timezone.now()
+            
             return super(Restaurant, self).save(*args, **kwargs)
 
 class RestaurantPromotion(models.Model):
