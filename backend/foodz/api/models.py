@@ -20,6 +20,8 @@ class Locations(models.Model):
     class Meta:
         verbose_name = _("Lcation")            
         verbose_name_plural = _("Locations")
+    def __str__(self):
+        return self.city
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
         
