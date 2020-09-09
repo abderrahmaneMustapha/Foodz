@@ -16,7 +16,7 @@ import fetchFoodsAction from "../../api/foodsApi/index"
 
 
 // redux
-import {getRestaurants, getRestaurantsPending, getRestaurantsError} from "../../reducer/Restaurants/restaurantsReducer"
+import {getRestaurants, getRestaurantsPending, getRestaurantsError, getCity, getQuery} from "../../reducer/Restaurants/restaurantsReducer"
 import {getFoods, getFoodsPending, getFoodsError} from "../../reducer/Foods/foodsReducer"
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -26,7 +26,7 @@ class Search extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            city : 'Tiaret',
+            query : this.props.query,
             
         }
     }
@@ -34,8 +34,10 @@ class Search extends React.Component {
     componentDidMount(){
         // fetch data from api    
         const {fetchRestaurant, fetchFood} = this.props
+        fetchRestaurantsAction(this.state.query)
         fetchFood()
         fetchRestaurant()
+        
     }
 
     shouldComponentRender() {
@@ -46,13 +48,13 @@ class Search extends React.Component {
 
 
     render(){
+        console.log(this.props.location)
         const {foods, restaurants, foods_error} = this.props
-        
         if(this.shouldComponentRender()) return <div>aaaa</div>
         return (
             <>
             <header>
-                <WNavBar city={this.state.city} />
+                <WNavBar  city="city" query={this.state.query} />
             </header>
             <main className="container-fluid">
                 <div className="row">
@@ -69,6 +71,7 @@ class Search extends React.Component {
 }
 
 const mapStateToProps = state =>({
+    city : getQuery(state.restaurant),
     error_restaurant : getRestaurantsError(state.restaurant),
     restaurants : getRestaurants(state.restaurant),
     pending_restaurant : getRestaurantsPending(state.restaurant),

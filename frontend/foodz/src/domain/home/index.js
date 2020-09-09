@@ -42,7 +42,7 @@ class Home extends React.Component {
 
                     
                   </div>
-                  <SearchBar />
+                  <SearchBar query="Tiaret" />
                     
                   
                 </header>

@@ -1,17 +1,17 @@
 import {fetchRestaurantsError, fetchRestaurantsPending, fetchRestaurantsSuccess} from "../../reducer/Restaurants/restaurantsActions"
 
 
-let fetchRestaurant  = ()=>{
-    
+let fetchRestaurant  = (query)=>{
     return (dispatch)=>{
+      
         dispatch(fetchRestaurantsPending()); 
-        fetch('http://localhost:8000/api/restaurant/')
+        fetch(`http://localhost:8000/api/restaurant?search=${query}`)
         .then(res => res.json())
         .then(res => {      
             if (res.error){
                 throw(res.error)
             }    
-            dispatch(fetchRestaurantsSuccess(res.results))
+            dispatch(fetchRestaurantsSuccess(res.results,query))
             return res.results
         })
         .catch(error=>{

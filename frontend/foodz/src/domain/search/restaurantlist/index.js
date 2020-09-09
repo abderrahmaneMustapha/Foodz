@@ -52,8 +52,7 @@ class RestaurantList extends React.Component{
                         
                         
                         <Link  class="link-tr" to={`/restaurants/${element.slug}?page=Menu`}>
-                        
-                            <td ><img className="search-restaurant-img" src={element.photo}></img></td>
+                            <td ><img className="search-restaurant-img" src={element.photo} alt={element.name+" restaurant in search page of CoolFoodz"} /></td>
                             <td className="font-weight-bold">{element.name}<br></br>
                             <p className="text-muted d-sm-none ">
                             img elements must have an alt prop, either with meaningful text, or an empty string for decorative images 

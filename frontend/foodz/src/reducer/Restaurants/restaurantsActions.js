@@ -8,10 +8,11 @@ function  fetchRestaurantsPending (){
     }
 }
 
-function  fetchRestaurantsSuccess (restaurants){
+function  fetchRestaurantsSuccess (restaurants, query){
     return{
         type : FETCH_RESTAURANTS_SUCCESS,
-        restaurants : restaurants
+        restaurants : restaurants,
+        query : query
     }
 }
 

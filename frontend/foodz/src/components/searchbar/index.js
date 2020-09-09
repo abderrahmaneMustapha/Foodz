@@ -16,7 +16,7 @@ class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            city : "Tiaret",
+            query : this.props.query,
             search_redirect : false
         }
     
@@ -38,10 +38,10 @@ class SearchBar extends React.Component {
     handleSearch = (e)=>{
         // please page dont refresh 
         e.preventDefault()
-        let search = document.getElementById('search').value || this.state.city
+        let search = document.getElementById('search').value || this.state.query
         // allow redirect to search page
         if (search){
-            this.setState({ search_redirect : true, city : search})
+            this.setState({ search_redirect : true, query : search})
         }
         
         
@@ -49,7 +49,7 @@ class SearchBar extends React.Component {
 
     render(){
         if (this.state.search_redirect){
-            return <RedirectToResearch query = {this.state.city}></RedirectToResearch>
+            return <RedirectToResearch query = {this.state.query}></RedirectToResearch>
         }
         return (
             <>
@@ -65,7 +65,7 @@ class SearchBar extends React.Component {
                         name="search"
                         id="search"
                         className="form-control"
-                        placeholder={this.state.city}
+                        placeholder={this.state.query}
                         aria-label="Search..." 
                         aria-describedby="basic-addon2" 
                         required={false}

@@ -3,6 +3,7 @@ import {FETCH_RESTAURANTS_PENDING, FETCH_RESTAURANTS_SUCCESS, FETCH_RESTAURANTS_
 const initialState = {
     pending : false,
     restaurants : [],
+    city : '',
     error : null
 }
 
@@ -17,7 +18,9 @@ export  function restaurantsReducer (state = initialState, action){
             return{
                 ...state,
                 pending:false,
-                restaurants : action.restaurants
+                restaurants : action.restaurants,
+                query : action.query
+    
             }
         case FETCH_RESTAURANTS_ERROR:
             return{
@@ -30,6 +33,8 @@ export  function restaurantsReducer (state = initialState, action){
     }
 }
 
+
+export const getQuery = state => state.query
 export const getRestaurants  = state => state.restaurants
 export const getRestaurantsPending  = state => state.pending
 export const getRestaurantsError  = state => state.error
