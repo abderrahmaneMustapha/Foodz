@@ -59,7 +59,8 @@ class Food(models.Model):
     class Meta:
         verbose_name = _("Food")            
         verbose_name_plural = _("Foods")
-
+    def __str__(self):
+        return self.name
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
         return super(Food, self).save(*args, **kwargs)

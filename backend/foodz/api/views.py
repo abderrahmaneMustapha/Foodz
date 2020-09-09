@@ -1,13 +1,13 @@
 from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model 
 
-from rest_framework import viewsets, generics
+from rest_framework import viewsets, generics, filters as rest_filters
 from rest_framework import permissions
 
 from .serializers import *
 from .models import (Locations, Restaurant,Reviews, RestaurantCalendar, RestaurantPromotion,
                     Food)
-
+from .filters import RestaurantFilters
 from django_filters import rest_framework as filters
 
 
@@ -42,8 +42,10 @@ class RestaurantViewSet(viewsets.ModelViewSet):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [permissions.AllowAny]
-    filter_backends = (filters.DjangoFilterBackend,)
-    filterset_fields = ('name' ,)
+    filter_backends = [rest_filters.SearchFilter,filters.DjangoFilterBackend]
+    search_fields = ['^name', 'location__city',  '^foods__name']
+    filter_class = RestaurantFilters
+    
     
 class RestaurantPromotionViewSet(viewsets.ModelViewSet):
     queryset = RestaurantPromotion.objects.all()
