@@ -28,15 +28,11 @@ ReactDOM.render(
     <Router history={history}>
 
       <Switch>
-      <Route path="/restaurants/:name" >
-        <Restaurant/>
-      </Route>
-      <Route path='/search'>
-        <Search />
-      </Route>
-      <Route path='/'>
-        <Home />
-      </Route>
+
+        <Route path="/restaurants/:name" component={Restaurant} />
+        <Route path='/search' component={Search} />      
+        <Route path='/' component={Home} />
+
       </Switch>
     
     </Router>

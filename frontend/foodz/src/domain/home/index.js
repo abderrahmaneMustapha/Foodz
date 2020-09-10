@@ -26,6 +26,7 @@ class Home extends React.Component {
         
     }
   render(){
+    
     return (
       <>
       <header className="bg-c-white site-header">

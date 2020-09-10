@@ -17,9 +17,8 @@ class WNavBar extends React.Component {
                             {this.props.city}
                 </div>  
                 <div className="collapse navbar-collapse " id="navbarTogglerWhiteSearch">
-
                       
-                        <WNavSearch query={this.props.query} ></WNavSearch> 
+                    <WNavSearch handleSearch={this.props.handleSearch} query={this.props.query} /> 
                 
                 </div>
 

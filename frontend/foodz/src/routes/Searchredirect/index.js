@@ -6,9 +6,8 @@ class RedirectToResearch extends React.Component {
  
     render(){
 
-        return <Redirect to={{ pathname : '/search', search: "?query="+this.props.query }} />
-
-                  
+        return <Redirect  to={{ pathname : '/search', search: `?query=${this.props.query}` }} />
+         
     }
     
 
