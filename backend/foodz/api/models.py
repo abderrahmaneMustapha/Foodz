@@ -109,8 +109,8 @@ class Restaurant(models.Model):
     restaurant_open = models.BooleanField('Restaurant is open now', default=False)
     total_review = models.IntegerField('Total restaurant reviews', default=0)
     photos = models.ManyToManyField(Photos, verbose_name="Restaurant photos",blank=True)
-    created_at = models.DateTimeField(_("Restaurant created at"), auto_now_add=True,null=True)
-    updated_at = models.DateTimeField(_('Restaurant updated at'), auto_now=True, null=True)
+    created_at = models.DateTimeField(_("Restaurant created at"), auto_now_add=True,null=True,blank=False)
+    updated_at = models.DateTimeField(_('Restaurant updated at'), auto_now=True, null=True, blank=False)
     
     class Meta:
         verbose_name = _("Restaurant")            

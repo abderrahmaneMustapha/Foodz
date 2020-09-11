@@ -42,8 +42,9 @@ class RestaurantViewSet(viewsets.ModelViewSet):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [permissions.AllowAny]
-    filter_backends = [rest_filters.SearchFilter,filters.DjangoFilterBackend]
-    search_fields = ['^name', 'location__city',  '^foods__name']
+    filter_backends = [rest_filters.SearchFilter,filters.DjangoFilterBackend,rest_filters.OrderingFilter]
+    search_fields = ['^name', '^location__city',  '^foods__name']
+    ordering_fields = ['created_at', 'total_review']
     filter_class = RestaurantFilters
     
     
