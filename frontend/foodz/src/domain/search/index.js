@@ -26,15 +26,20 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 
+// helpers 
+import {addFiltersToUrl} from "../../utilities/filterAndOrder/index"
 class Search extends React.Component {
     constructor(props){
         super(props)
         
         this.state = {
             query : "",
+            ordering : "",
+            filters : []
             
         }
         this.handleSearch = this.handleSearch.bind()
+        this.handleFilters = this.handleFilters.bind()
         
     }
 
@@ -44,9 +49,9 @@ class Search extends React.Component {
 
         // get current query from url
         let params = queryString.parse(this.props.location.search)
-        
         this.setState({
             query:params.query
+    
         })
 
         this.props.fetchRestaurant(params.query)
@@ -64,7 +69,15 @@ class Search extends React.Component {
             const stringified = queryString.stringify(parsed);
             this.props.location.search = stringified;
             this.props.history.push(this.props.location)
+            this.setState({
+                query:parsed.query
+            })
+            this.props.fetchRestaurant(parsed.query)
         }        
+    }
+
+    handleFilters = (event )=>{  
+        addFiltersToUrl(this.props, event)
     }
 
     shouldComponentRender() {
@@ -80,7 +93,7 @@ class Search extends React.Component {
         
         // get fooods & restaurants list from redux store
         const {foods, restaurants} = this.props
-        console.log(restaurants)
+
         if(this.shouldComponentRender()) return <div>aaaa</div>
         return (
             <>
@@ -91,8 +104,8 @@ class Search extends React.Component {
                 <div className="row">
                     <FilterSideBar />
                     <section id="main-search-result" className="col-md-9 col-sm-12"> 
-                        <FoodsList foods={foods} />                                             
-                        <RestaurantList restaurants={restaurants} />                  
+                        <FoodsList handle_filters={this.handleFilters}  foods={foods} />                                             
+                        <RestaurantList  handle_filters={this.handleFilters} restaurants={restaurants} />                  
                     </section>
                 </div>
             </main>        

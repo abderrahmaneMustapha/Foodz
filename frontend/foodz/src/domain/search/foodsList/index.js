@@ -42,9 +42,9 @@ class FoodList extends React.Component{
                
                     {this.props.foods.map(
                         (element)=>(
-                            <SwiperSlide>
+                            <SwiperSlide  name="food" onClick={this.props.handle_filters}>
                             <FoodCircle photo={element.photo}  />
-                                <div className="text-muted my-2">{element.title}</div>
+                                <div className="text-muted my-2 food-name">{element.name}</div>
                             </SwiperSlide>
                             )
                         )

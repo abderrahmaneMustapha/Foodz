@@ -32,11 +32,16 @@ class RestaurantList extends React.Component{
                         <div  className="d-flex flex-row justify-content-between  align-items-center">
                             <div   id="filter-options-select"   className="my-2 ">
                                 <label for="filters-select"></label>
-                                <select className="custom-select" id="filters-select">
-                                <option value="volvo">New</option>
-                                <option value="saab">Old</option>
-                                <option value="opel">Best</option>
-                                <option value="audi">Worste</option>
+                                <select 
+                                    name="sort" 
+                                    onClick={this.props.handle_filters} 
+                                    className="custom-select" 
+                                    id="filters-select"
+                                >
+                                        <option value="-created_at">New</option>
+                                        <option value="created_at">Old</option>
+                                        <option value="-total_review">Best</option>
+                                        <option value="total_review">Worste</option>
                                 </select>                                  
                             </div>  
                             <div  id="filter-show" onClick={this.handleFiltersShow}  className="ml-5 hide-lg" span="3">
