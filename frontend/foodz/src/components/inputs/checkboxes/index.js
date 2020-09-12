@@ -10,6 +10,7 @@ class Checkbox extends React.Component{
             className="form-check-input" 
             type="checkbox" 
             id={"filter-check" + this.props.text } 
+            onClick={this.props.handle_filters}
             />
             <label  className="form-check-label" for={"filter-check" + this.props.text }>
                 {this.props.text}

@@ -11,7 +11,10 @@ class ButtonRadio extends React.Component{
                 name={this.props.name} 
                 id={"id-"+this.props.id}
                 autoComplete={false} 
+                className={this.props.classname}
+                data={this.props.data}
                 checked={this.props.checked}
+                onClick={this.props.handle_filters}
             />
             {this.props.text}
             </label>

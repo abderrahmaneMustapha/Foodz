@@ -88,9 +88,7 @@ class Search extends React.Component {
 
 
     render(){
-        
-       
-        
+              
         // get fooods & restaurants list from redux store
         const {foods, restaurants} = this.props
 
@@ -98,11 +96,11 @@ class Search extends React.Component {
         return (
             <>
             <header>
-                <WNavBar  handleSearch={this.handleSearch} city="Tiaret" query={this.state.query} />
+                <WNavBar  handle_search={this.handleSearch} city="Tiaret" query={this.state.query} />
             </header>
             <main className="container-fluid">
                 <div className="row">
-                    <FilterSideBar />
+                    <FilterSideBar handle_filters={this.handleFilters} />
                     <section id="main-search-result" className="col-md-9 col-sm-12"> 
                         <FoodsList handle_filters={this.handleFilters}  foods={foods} />                                             
                         <RestaurantList  handle_filters={this.handleFilters} restaurants={restaurants} />                  

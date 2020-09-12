@@ -26,10 +26,11 @@ class FilterSideBar extends React.Component{
         
         // add check boxes 
         let add_checkboxes = ()=>{
-            let checboxes_names =  ['Open Now', 'Free Delivery', 'Most Visited']
+            let checboxes_names =  [{name: "open-now" , text:'Open Now'}, {name:'free-delivery', text:'Free Delivery'}]
             let items = []
             checboxes_names.forEach(element=>{
-                items.push(<CheckBoxes  name="sidebar-checkboxes" text={element} />)
+                items.push(<CheckBoxes  handle_filters={this.props.handle_filters}
+                name={element.name} text={element.text} />)
             })
 
             return items
@@ -37,11 +38,23 @@ class FilterSideBar extends React.Component{
 
         // add radio buttons 
         let add_radio = ()=>{
-            let radio_names = ['Delivery', 'Pickup', 'Reserve']
+
+            let radio_names = [
+                {name: 'delivery' ,text:'Delivery'}, 
+                {name:'pickup', text:'Pickup'},
+                {name:'reserve', text:'Reserve'}
+            ]
+
             let items = []
             radio_names.forEach(element=>{
-                items.push(<ButtonRadio   checked={false} name="sidebar-options"  text={element} id={element} />)
-            })
+                items.push(<ButtonRadio 
+                classname= "radio-button-filter"  
+                handle_filters={this.props.handle_filters} 
+                checked={false}
+                  name={element.name}  
+                 text={element.text} 
+                 id={element.name} />)
+            }) 
             return items
         }
 
@@ -54,8 +67,11 @@ class FilterSideBar extends React.Component{
                 items.push(
                     <ButtonRadio   
                         checked={false} 
-                        name="sidebar-stars"  
+                        name="sidebar-stars"
+                        classname= "radio-button-rating"  
+                        handle_filters={this.props.handle_filters} 
                         text={star} 
+                        data = {i+1}
                         id={"stars"+i}
                         style="px-3"
                     />

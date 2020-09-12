@@ -9,7 +9,7 @@ class WNavSearch extends React.Component{
   
     render(){
         return (
-            <form onKeyDown={this.props.handleSearch} id="w-seach-form" >
+            <form onKeyDown={this.props.handle_search} id="w-seach-form" >
             <div className="input-group mx-1">
                 <div className="input-group-prepend ">
                     <span className="input-group-text" id="basic-addon2">
