@@ -30,7 +30,6 @@ export function addFiltersToUrl(props,event){
                         filters.push({name : "rate", query : query } )
                     }
                     else{
-                        alert(event.target.checked)
                         filters.push({name : event.target.name, query : event.target.checked })
                     }
                 }
@@ -47,9 +46,43 @@ export function addFiltersToUrl(props,event){
     const stringified = queryString.stringify(parsed);
     props.location.search = stringified;
     props.history.push(props.location)
-}
 
-export function getFiltersFromUrl(){
-    const parsed = queryString.parse(this.props.location.search);
     return parsed
 }
+
+export function getFiltersFromUrl(parsed){
+    let parsed_result = {}
+    console.log(parsed)
+    Object.entries(parsed).forEach(([k,v]) => {
+        switch(k){
+            case "query":{
+                parsed_result['search'] = parsed['query']
+            }
+            case "sort":{
+                parsed_result['ordering']= parsed['sort']
+            }
+            case "food" : {
+                parsed_result['foods__name']= parsed.food
+            }
+            case 'open-now':{
+                parsed_result['restaurant_open'] = parsed['open-now']
+            }
+            case  'filter':{
+                parsed_result['services__choice'] = parsed['filter']
+            }
+            case 'free-delivery':{
+                parsed_result['services__choice'] = 'free-delivery'
+            }
+            case 'rate':{
+                parsed_result['total_review'] = parsed['rate']
+            }
+        }
+    })
+    
+    return queryString.stringify(parsed_result)
+}
+
+export function resetFilters(props){
+    props.location.search = {};
+    props.history.push(props.location.search)
+}   

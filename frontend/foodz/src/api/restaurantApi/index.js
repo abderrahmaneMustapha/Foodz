@@ -2,11 +2,11 @@ import {fetchRestaurantsError, fetchRestaurantsPending, fetchRestaurantsSuccess}
 
 
 let fetchRestaurant  = (query)=>{
-    console.log('search query', query)
+
     return (dispatch)=>{
         
         dispatch(fetchRestaurantsPending()); 
-        fetch(`http://localhost:8000/api/restaurant?search=${query}`)
+        fetch(`http://localhost:8000/api/restaurant/?${query}`)
         .then(res => res.json())
         .then(res => {      
             if (res.error){

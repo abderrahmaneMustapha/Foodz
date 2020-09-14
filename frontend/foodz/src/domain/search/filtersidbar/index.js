@@ -60,7 +60,6 @@ class FilterSideBar extends React.Component{
 
          // add radio buttons 
         let add_stars = ()=>{
-            let radio_names = ['Delivery', 'Pickup', 'Reserve']
             let items = []
             let star = <OneStart />
             for(let i =0; i < 5; i++){
@@ -88,8 +87,12 @@ class FilterSideBar extends React.Component{
                             <div onClick={this.handleFiltersClose} className="col-12 close mt-2 ">
                                 <i className="fas fa-times float-right"></i>
                             </div>
-                            <header  id="fitlers-header" className="mb-5 mt-4"> 
-                             <h3 className="h3">Filters</h3>
+                            <header  id="fitlers-header" className="mb-5 mt-4 "> 
+                                <h3 className="h3">Filters</h3>
+                                <button 
+                                    onClick={this.props.handle_reset_filters} 
+                                    className="btn btn-primary">Reset
+                                </button>
                             </header>
                             <div id="deliver-pick-reserve" className="my-5">
                                 <div className="btn-group btn-group-toggle" data-toggle="buttons">

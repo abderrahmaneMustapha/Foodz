@@ -27,7 +27,7 @@ import { bindActionCreators } from 'redux';
 
 
 // helpers 
-import {addFiltersToUrl} from "../../utilities/filterAndOrder/index"
+import {addFiltersToUrl,getFiltersFromUrl,resetFilters} from "../../utilities/filterAndOrder/index"
 class Search extends React.Component {
     constructor(props){
         super(props)
@@ -49,12 +49,15 @@ class Search extends React.Component {
 
         // get current query from url
         let params = queryString.parse(this.props.location.search)
+        // full query from url
+        let search = getFiltersFromUrl(params)
+        this.props.fetchRestaurant(search)
+
         this.setState({
             query:params.query
     
         })
-
-        this.props.fetchRestaurant(params.query)
+        
         fetchFood()
         fetchRestaurant()    
         
@@ -69,17 +72,27 @@ class Search extends React.Component {
             const stringified = queryString.stringify(parsed);
             this.props.location.search = stringified;
             this.props.history.push(this.props.location)
+
+             // full query from url
+            let search = getFiltersFromUrl(parsed)
+            this.props.fetchRestaurant(search)
             this.setState({
-                query:parsed.query
+                query:search
             })
-            this.props.fetchRestaurant(parsed.query)
+           
         }        
     }
 
     handleFilters = (event )=>{  
-        addFiltersToUrl(this.props, event)
+        let parsed  = addFiltersToUrl(this.props, event)
+        let search = getFiltersFromUrl(parsed)
+        this.props.fetchRestaurant(search)
     }
 
+    handleResetFilters = ()=>{
+        resetFilters(this.props)
+        this.props.fetchRestaurant('')
+    }
     shouldComponentRender() {
         const {pending_food, pending_restaurant} = this.props;
       
@@ -100,7 +113,10 @@ class Search extends React.Component {
             </header>
             <main className="container-fluid">
                 <div className="row">
-                    <FilterSideBar handle_filters={this.handleFilters} />
+                    <FilterSideBar 
+                        handle_reset_filters={this.handleResetFilters} 
+                        handle_filters={this.handleFilters}                             
+                    />
                     <section id="main-search-result" className="col-md-9 col-sm-12"> 
                         <FoodsList handle_filters={this.handleFilters}  foods={foods} />                                             
                         <RestaurantList  handle_filters={this.handleFilters} restaurants={restaurants} />                  
