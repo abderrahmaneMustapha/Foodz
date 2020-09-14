@@ -4,4 +4,4 @@ class RestaurantFilters(filters.FilterSet):
       class Meta:
         model = Restaurant
         fields = ['foods__name','restaurant_type__choice', "restaurant_open",
-                'total_review', 'services__choice']
+                'total_review', 'services__choice', 'services__choice']

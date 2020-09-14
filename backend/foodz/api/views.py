@@ -6,7 +6,7 @@ from rest_framework import permissions
 
 from .serializers import *
 from .models import (Locations, Restaurant,Reviews, RestaurantCalendar, RestaurantPromotion,
-                    Food)
+                    Food, RestaurantService,RestaurantType )
 from .filters import RestaurantFilters
 from django_filters import rest_framework as filters
 
@@ -36,6 +36,16 @@ class LocationViewSet(viewsets.ModelViewSet):
     """
     queryset = Locations.objects.all()
     serializer_class = LocationSerializer
+    permission_classes = [permissions.AllowAny]
+
+class RestaurantServiceViewSet(viewsets.ModelViewSet):
+    queryset = RestaurantService.objects.all()
+    serializer_class = RestaurantServiceSerializer
+    permission_classes = [permissions.AllowAny]
+
+class RestaurantTypeViewSet(viewsets.ModelViewSet):
+    queryset = RestaurantType.objects.all()
+    serializer_class = RestaurantTypeSerializer
     permission_classes = [permissions.AllowAny]
 
 class RestaurantViewSet(viewsets.ModelViewSet):

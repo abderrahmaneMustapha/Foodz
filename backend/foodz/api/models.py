@@ -68,32 +68,35 @@ class Food(models.Model):
 
 
 class RestaurantService(models.Model):
-    choice = models.CharField(max_length=50, unique=True, primary_key=True)
+    choice = models.CharField(_("Restaurant service name"), max_length=50,  primary_key=True)
+    slug = models.SlugField("Restaurant Service slug", max_length=500, null=True)
     created_at = models.DateTimeField(_("Restaurant service created at"),auto_now_add=True, null=True)
     updated_at = models.DateTimeField(_('Restaurant service updated at'), auto_now=True, null=True)
     class Meta:
         verbose_name = _("Restaurant service")            
         verbose_name_plural = _("Restaurants services")
     def __str__(self):
-        return self.choice
-        
+        return str(self.choice)
     def save(self, *args, **kwargs):
-        ''' On save, update timestamps '''
-        return super(Restaurant, self).save(*args, **kwargs)
+        ''' On save, update timestamps '''                
+        super( RestaurantService, self).save(*args, **kwargs)
+        self.slug= slugify("{}".format(self.choice))
+        
 
 class RestaurantType(models.Model):
-    choice = models.CharField(max_length=125, unique=True, primary_key=True)
+    choice = models.CharField(_("Restaurant type name"), max_length=125,  primary_key=True)
+    slug = models.SlugField("Restaurant Type slug", max_length=500, null=True)
     created_at = models.DateTimeField(_("Restaurant type created at"),auto_now_add=True, null=True)
     updated_at = models.DateTimeField(_('Restaurant type updated at'),auto_now=True,  null=True)
     class Meta:
         verbose_name = _("Restaurant type")            
         verbose_name_plural = _("Restaurants types")
     def __str__(self):
-        return self.choice
-        
+        return str(self.choice)
     def save(self, *args, **kwargs):
-        ''' On save, update timestamps '''
-        return super(Restaurant, self).save(*args, **kwargs)
+        ''' On save, update timestamps '''                
+        super( RestaurantType, self).save(*args, **kwargs)
+        self.slug= slugify("{}".format(self.choice))
 
 class Restaurant(models.Model):
     name = models.CharField("Restaurant name",max_length=200,null=True)
