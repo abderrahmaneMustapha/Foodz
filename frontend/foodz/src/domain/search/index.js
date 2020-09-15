@@ -69,6 +69,7 @@ class Search extends React.Component {
             event.preventDefault()
             const parsed = queryString.parse(this.props.location.search);
             parsed.query = document.getElementById("input-search-white-nav").value;
+
             const stringified = queryString.stringify(parsed);
             this.props.location.search = stringified;
             this.props.history.push(this.props.location)
@@ -77,7 +78,7 @@ class Search extends React.Component {
             let search = getFiltersFromUrl(parsed)
             this.props.fetchRestaurant(search)
             this.setState({
-                query:search
+                query:search.query
             })
            
         }        
