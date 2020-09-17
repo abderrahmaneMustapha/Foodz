@@ -56,7 +56,14 @@ class RestaurantList extends React.Component{
                         {this.props.restaurants.map(element=>(                        
                         
                         
-                        <Link  class="link-tr" to={`/restaurants/${element.slug}?page=Menu`}>
+                        <Link  class="link-tr" 
+                            to={{
+                                pathname:`/restaurants/${element.slug}/`,
+                                search : "?page=Menu",
+                                state : {
+                                    restaurant : element
+                                }
+                             }}>
                             <td ><img className="search-restaurant-img" src={element.photo} alt={element.name+" restaurant in search page of CoolFoodz"} /></td>
                             <td className="font-weight-bold">{element.name}<br></br>
                             <p className="text-muted d-sm-none ">
@@ -75,9 +82,6 @@ class RestaurantList extends React.Component{
                              <span className="text-muted ">20 ratings</span>
                             </td>
                         </Link>
-                    
-                        
-                        
                         ))}
                         
                     </tbody>

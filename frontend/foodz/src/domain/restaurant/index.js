@@ -16,10 +16,21 @@ import { Route} from "react-router-dom";
 let cover_src= 'https://drivendata-prod-public.s3.amazonaws.com/images/project-conservation.png'
 let photos_list = [{id:"222"},{id:"292"}, {id:"242"}, {id:"422"}, {id:"202"}]
 class Restaurant extends  React.Component{
+    constructor(props){
+        super(props)        
+        this.state = {
+            restaurant : this.props.location.state.restaurant,           
+        }
+    }
+    
+    componentDidMount(){
+        this.setState ({
+            restaurant : this.props.location.state.restaurant,           
+        })
+    }
 
 
     render(){
-
         return(
             <>
             <header>
@@ -45,31 +56,42 @@ class Restaurant extends  React.Component{
                         </div>                        
                     </div>
 
-                    <img id="conver-image" src={cover_src} alt=""></img>
+                    <img id="conver-image" src={this.state.restaurant.photo} alt=""></img>
                     
-                    <ProfileHeaderInfo/>
+                    <ProfileHeaderInfo 
+                    profile_pic={this.state.restaurant.photo} 
+                    rating={this.state.restaurant.total_review}
+                    website = {this.state.restaurant.url}
+                    phone = {this.state.restaurant.phone_number}
+                    />
                     <HeaderNav />
                 </section>
 
             </header>
             <main>
+            
             <Route strict  path="/restaurants/:name" render = {({match})=>{
-                if (window.location.href.includes("?page=Menu")) return <Menu />
+                if (window.location.href.includes("?page=Menu")) {
+                    return <Menu foods={this.state.restaurant.foods}/>
+                }
                 else return null 
-            }} >
-                
+            }} >                
             </Route>
+
             <Route strict path="/restaurants/:name" render = {({match})=>{
-                if (window.location.href.includes("?page=Reviews")) return <Reviews />
+                if (window.location.href.includes("?page=Reviews")) {
+                    return <Reviews />
+                }
                 else return null 
-            }}>
-                
+            }}>                
             </Route>
+
             <Route strict path="/restaurants/:name"  render = {({match})=>{
-                if (window.location.href.includes("?page=Photos")) return <Photos photos_list={photos_list} />
+                if (window.location.href.includes("?page=Photos")){
+                    return <Photos photos_list={this.state.restaurant.photos} />
+                }
                 else return null 
-            }}  >
-                
+            }}  >                
             </Route>
         
             

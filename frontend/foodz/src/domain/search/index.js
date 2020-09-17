@@ -13,7 +13,7 @@ import RestaurantList from './restaurantlist/index'
 
 /// api fetchs
 import  fetchRestaurantsAction  from "../../api/restaurantApi/index"
-import fetchFoodsAction from "../../api/foodsApi/index"
+import {fetchFood as fetchFoodsAction} from "../../api/foodsApi/index"
 
 
 // a package to get params from a url

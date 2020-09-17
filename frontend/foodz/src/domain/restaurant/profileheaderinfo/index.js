@@ -10,7 +10,7 @@ class ProfileHeaderInfo extends React.Component{
     render(){
         return(
             <div id="profile-header-info" >                
-                        <img className="rounded-circle" id="profile-image" src={profile_src}></img>
+                        <img className="rounded-circle" id="profile-image" src={this.props.profile_pic}></img>
                         <div className="mx-md-2">
                             <div className="d-flex flex-row align-items-center">
                                 <h4> Restaurant 1</h4> 
@@ -22,7 +22,7 @@ class ProfileHeaderInfo extends React.Component{
                             <div className=" d-flex flex-wrap justify-content-between align-items-center">
                                 <div className="d-flex align-items-center" >
                                     <StarRatings 
-                                        rating={parseFloat(4)}
+                                        rating={parseFloat(this.props.rating)}
                                         starRatedColor="#FFBF00"
                                         numberOfStars={5}
                                         name='rating'
@@ -33,15 +33,22 @@ class ProfileHeaderInfo extends React.Component{
                                 </div>
 
                                 <div className="">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle-fill" fill="#01F802" xmlns="http://www.w3.org/2000/svg">
+                                    {this.props.open_now ?
+                                    (<><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle-fill" fill="#01F802" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="8" cy="8" r="8"/>
                                     </svg>
-                                    <span className="font-weight-bold ml-md-2 ml-sm-0" >open now</span>
+                                    <span className="font-weight-bold ml-md-2 ml-sm-0" >open now</span></>):
+                                    (<>
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="8" cy="8" r="8"/>
+                                    </svg>
+                                    <span className="font-weight-bold ml-md-2 ml-sm-0" >closed</span></>)
+                                    }
                                 </div>
                                
                                 <div id="profile-contact" className="d-flex flex-wrap ">
-                                    <span className="font-weight-bold" >website  : </span> <a href="http://abderrahmane-mustapha.codes/" target="_blank">abderrahmane-mustapha.codes</a>
-                                    <span className="ml-md-5  font-weight-bold">phone number : </span> <a href="#">+213988999889</a>
+                                    <span className="font-weight-bold" >website  : </span> <a href={this.props.website} target="_blank">{this.props.website}</a>
+                                    <span className="ml-md-5  font-weight-bold">phone number : </span> <a href="#">{this.props.phone}</a>
                                 </div>                                
 
                             </div>

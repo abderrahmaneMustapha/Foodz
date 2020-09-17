@@ -7,7 +7,7 @@ import {
     return (
     <>
            
-    <NavLink className="nav-link"  activeClassName="active" to={to} {...rest} />
+    <NavLink className="nav-link"  activeClassName="active" to={to} {...rest}  replace />
     
     </>
     );
