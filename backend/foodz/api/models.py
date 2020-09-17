@@ -118,6 +118,8 @@ class Restaurant(models.Model):
     class Meta:
         verbose_name = _("Restaurant")            
         verbose_name_plural = _("Restaurants")
+    def __str__(self):
+        return str(self.name)
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''                
         super(Restaurant, self).save(*args, **kwargs)

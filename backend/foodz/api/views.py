@@ -82,3 +82,8 @@ class FoodViewsSet(viewsets.ModelViewSet):
         queryset = Food.objects.all()
         serializer_class = FoodSerializer
         permission_classes = [permissions.AllowAny]
+
+class PhotosViewSet(viewsets.ModelViewSet):
+        queryset = Photos.objects.all()
+        serializer_class = PhotosSerializer
+        permission_classes = [permissions.AllowAny]

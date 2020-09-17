@@ -1,6 +1,6 @@
 from django.contrib.auth.models import  Group
 from .models import (AbstractUser as User,Locations,Restaurant,RestaurantPromotion, RestraurantComments, 
-                Reviews, RestaurantCalendar, Food, FoodReview, RestaurantType, RestraurantReview,RestaurantService)
+                Reviews, RestaurantCalendar, Photos, Food, FoodReview, RestaurantType, RestraurantReview,RestaurantService)
 from rest_framework import serializers
 
 
@@ -63,6 +63,10 @@ class RestaurantCalendarSerializer(serializers.HyperlinkedModelSerializer):
         model = RestaurantCalendar
         fields = ['url', 'restaurant_name', 'day', 'open_time', 'close_time', 'created_at']
 
+class PhotosSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Photos
+        fields = ['url', 'ImageField']
 class FoodSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Food
