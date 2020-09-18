@@ -103,7 +103,7 @@ class Restaurant(models.Model):
     name = models.CharField("Restaurant name",max_length=200,null=True)
     photo = models.ImageField('Restaurant image ',upload_to="resturant/photos/main", null=True, blank=False)
     slug = models.SlugField("Restaurant slug", max_length=500, null=True)
-    website = models.URLField(max_length=300, null=True)
+    website = models.URLField(max_length=300, null=True, blank=True)
     phone_number = PhoneNumberField(null=True)
     location = models.ForeignKey(Locations, verbose_name="Restaurant location", on_delete=models.CASCADE, null=True)
     verified = models.BooleanField('Verified restaurant', default=False)
