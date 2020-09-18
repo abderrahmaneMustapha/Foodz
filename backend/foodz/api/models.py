@@ -53,6 +53,7 @@ class CustomUser(AbstractUser):
 class Food(models.Model):
     name = models.CharField(_("Food name"), max_length=250,  null=True)
     photo = models.ImageField('Food image ',upload_to="food/photos/main/".format(name), null=True, blank=False)
+    description = models.TextField(_('Food description'), null=True)
     created_at = models.DateTimeField(_("Calendar created at"),auto_now_add=True, null=True)
     updated_at = models.DateTimeField(_('Clendar updated at'),auto_now=True, null=True)
         
@@ -102,7 +103,7 @@ class Restaurant(models.Model):
     name = models.CharField("Restaurant name",max_length=200,null=True)
     photo = models.ImageField('Restaurant image ',upload_to="resturant/photos/main", null=True, blank=False)
     slug = models.SlugField("Restaurant slug", max_length=500, null=True)
-    website = models.URLField(max_length=300)
+    website = models.URLField(max_length=300, null=True)
     phone_number = PhoneNumberField(null=True)
     location = models.ForeignKey(Locations, verbose_name="Restaurant location", on_delete=models.CASCADE, null=True)
     verified = models.BooleanField('Verified restaurant', default=False)
