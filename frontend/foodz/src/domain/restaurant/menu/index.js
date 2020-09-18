@@ -48,14 +48,14 @@ class Menu extends React.Component{
                             <FoodCard
                             foodimage={element.photo}  
                             foodname={element.name} 
-                            foodtext={"some text about the burger"}
-                            foodprice={"200$"}
+                            foodtext={element.description}
+                            foodprice={element.price}
                             /> 
                         ))
                     }                    
                     </div>
 
-                    :<div>loading...</div>
+                    :<>{this.state.foods.length < 1 ? <div>There is no foods here</div>: <div>Loading ...</div>}</>
                 }
 
 

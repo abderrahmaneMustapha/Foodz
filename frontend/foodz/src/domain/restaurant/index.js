@@ -59,10 +59,12 @@ class Restaurant extends  React.Component{
                     <img id="conver-image" src={this.state.restaurant.photo} alt=""></img>
                     
                     <ProfileHeaderInfo 
-                    profile_pic={this.state.restaurant.photo} 
-                    rating={this.state.restaurant.total_review}
-                    website = {this.state.restaurant.url}
-                    phone = {this.state.restaurant.phone_number}
+                        profile_pic={this.state.restaurant.photo} 
+                        rating={this.state.restaurant.total_review}
+                        website = {this.state.restaurant.website}
+                        phone = {this.state.restaurant.phone_number}
+                        restaurant_name = {this.state.restaurant.name}
+                        is_verified = {this.state.restaurant.verified}
                     />
                     <HeaderNav />
                 </section>

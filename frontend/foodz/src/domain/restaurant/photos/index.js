@@ -49,7 +49,7 @@ class Photos extends React.Component{
                         ))}
                     </div> 
 
-                    :<div>loading ... </div>
+                    :<>{this.state.photos_list.length < 1 ? <div>There is no photos here here</div>: <div>Loading ...</div>}</>
 
                 }               
             </div>
