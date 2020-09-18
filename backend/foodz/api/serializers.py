@@ -70,4 +70,4 @@ class PhotosSerializer(serializers.HyperlinkedModelSerializer):
 class FoodSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Food
-        fields = ['url','name','photo','created_at']
+        fields = ['url','name', 'description', 'photo','created_at']

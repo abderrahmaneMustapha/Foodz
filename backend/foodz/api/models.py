@@ -54,6 +54,7 @@ class Food(models.Model):
     name = models.CharField(_("Food name"), max_length=250,  null=True)
     photo = models.ImageField('Food image ',upload_to="food/photos/main/".format(name), null=True, blank=False)
     description = models.TextField(_('Food description'), null=True)
+    price = models.FloatField(_('Food price'), null=True)
     created_at = models.DateTimeField(_("Calendar created at"),auto_now_add=True, null=True)
     updated_at = models.DateTimeField(_('Clendar updated at'),auto_now=True, null=True)
         
