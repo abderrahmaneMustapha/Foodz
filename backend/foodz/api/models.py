@@ -181,7 +181,7 @@ class RestraurantReview(models.Model):
     def __str__(self):
         return str(self.restaurant.name)
 
-class RestraurantComments(models.Model):
+class RestaurantComments(models.Model):
     restaurant  = models.ForeignKey(Restaurant, verbose_name=_("Comment about this restaurant"), on_delete=models.CASCADE, null=True)
     comment = models.ForeignKey(Comment, verbose_name=_("Comment text"), on_delete=models.CASCADE, null=True)
     review = models.ForeignKey(RestraurantReview, verbose_name=_("resturant review"), on_delete=models.CASCADE, null=True)
@@ -192,7 +192,7 @@ class RestraurantComments(models.Model):
         verbose_name_plural = _("Comments")
     def save(self, *args, **kwargs):
             ''' On save, update timestamps '''
-            return super(RestraurantComments, self).save(*args, **kwargs)
+            return super(RestaurantComments, self).save(*args, **kwargs)
 
 class RestaurantCalendar(models.Model):
         class SevenDaysOfWeek(models.TextChoices):

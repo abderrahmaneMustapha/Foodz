@@ -1,5 +1,5 @@
 from django.contrib.auth.models import  Group
-from .models import (AbstractUser as User,Locations,Restaurant,RestaurantPromotion, RestraurantComments, 
+from .models import (AbstractUser as User,Locations,Restaurant,RestaurantPromotion, RestaurantComments, 
                 Reviews, RestaurantCalendar, Photos, Food, FoodReview, RestaurantType, RestraurantReview,RestaurantService)
 from rest_framework import serializers
 
@@ -43,9 +43,9 @@ class RestaurantPromotionSerializer(serializers.HyperlinkedModelSerializer):
         model = RestaurantPromotion
         fields = ['url', 'restaurant', 'title', 'text', 'created_at']
 
-class RestaurantCommentsPromotionSerializer(serializers.HyperlinkedModelSerializer):
+class RestaurantCommentsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = RestraurantComments
+        model = RestaurantComments
         fields = ['url', 'restaurant', 'comment', 'created_at']
 
 class FoodReviewSerializer(serializers.HyperlinkedModelSerializer):
