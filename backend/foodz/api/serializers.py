@@ -1,5 +1,5 @@
 from django.contrib.auth.models import  Group
-from .models import (AbstractUser as User,Locations,Restaurant,RestaurantPromotion, RestaurantComments, 
+from .models import (CustomUser as User,Locations,Restaurant,RestaurantPromotion, RestaurantComments, 
                 Reviews, RestaurantCalendar, Photos, Food, FoodReview, RestaurantType, Comment, 
                 RestraurantReview,RestaurantService)
 from rest_framework import serializers
@@ -8,7 +8,7 @@ from rest_framework import serializers
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'first_name', 'last_name', 'email','date_birth', 'adress', 'wilayas', 'current_location', 'last_location', 'groups', ]
+        fields = ['url', 'id','first_name', 'last_name', 'email','date_birth', 'adress', 'wilayas', 'current_location', 'last_location', 'groups', ]
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -34,7 +34,7 @@ class RestaurantTypeSerializer(serializers.HyperlinkedModelSerializer):
 class RestaurantSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Restaurant
-        fields = ['url', 'name','photo', 'slug', 'website','verified', 'services', 'foods', 'rank', 'restaurant_type',
+        fields = ['url','id', 'name','photo', 'slug', 'website','verified', 'services', 'foods', 'rank', 'restaurant_type',
                   'restaurant_open', 'phone_number', 'location', 'photos', 'created_at', 'total_review']
 
 
@@ -47,12 +47,12 @@ class RestaurantPromotionSerializer(serializers.HyperlinkedModelSerializer):
 class CommentsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Comment
-        fields = ['url', 'restaurant', 'comment', 'created_at']
+        fields = ['url', 'id', 'user', 'text', 'replys', 'created_at', 'updated_at']
         
 class RestaurantCommentsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = RestaurantComments
-        fields = ['url', 'restaurant', 'comment', 'created_at']
+        fields = ['url', 'id', 'restaurant', 'comment', 'created_at']
 
 class FoodReviewSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

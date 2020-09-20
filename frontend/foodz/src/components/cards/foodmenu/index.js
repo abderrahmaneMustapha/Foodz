@@ -10,7 +10,7 @@ import "./foodmenu.css"
             <div className="card-body">            
                 <h5 className="card-title">{this.props.foodname}</h5>
                 <p className="card-text">{this.props.foodtext}</p>
-                <span className="text-muted">{this.props.foodprice+" $"} </span>
+                <span className="text-muted">{`${this.props.foodprice} $`} </span>
             </div>
             </div>
         )

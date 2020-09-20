@@ -40,20 +40,55 @@ class CommentList extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            commentList : this.props.commentList
+            commentList : this.props.commentList,
         }
         this.handleAddReply = this.handleAddReply.bind()
         this.handleAddComment = this.handleAddComment.bind(this)
     }
 
+    PostComment = (text) =>{
+        let form = new FormData()
+        form.append("text", text)
+        form.append("user", `http://localhost:8000/api/users/${1}/`)
+        let id =  undefined
+        fetch("http://localhost:8000/api/comments/", {
+            method: 'POST',
+            body : form
+        })
+        .then(response => response.json())
+        .then(data=>{        
+            this.PostRestaurantComment(data.id, 1)
+        })
+
+    
+    }
+
+    PostRestaurantComment = (comment_id, restaurant_id)=>{
+        let form = new FormData()
+        form.append("comment", `http://localhost:8000/api/comments/${comment_id}/`)
+        form.append("restaurant", `http://localhost:8000/api/restaurant/${restaurant_id}/`)
+        console.log("comment id ", comment_id)
+
+        fetch("http://localhost:8000/api/restaurant-comment/", {
+            method: 'POST',
+            body : form
+        })
+        .then(response => response.json())
+        .then(data=>{
+            console.log(data)
+        })
+    }
+
+    
     handleAddComment = (event)=>{
         event.preventDefault()
+        
         // this is the hole comment list container
         let ul = document.getElementById('comment-list')
+
         // get the new comment from the text area comment
         let textarea = document.getElementById('new-comment-textarea').value
-        
-        // 
+        this.PostComment(textarea)
         // get  current review
         // by getting the title of the star-ratings container 
         // this title will alawys contain the number of stars in the first case

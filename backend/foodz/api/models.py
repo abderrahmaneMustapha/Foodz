@@ -182,9 +182,9 @@ class RestraurantReview(models.Model):
         return str(self.restaurant.name)
 
 class RestaurantComments(models.Model):
-    restaurant  = models.ForeignKey(Restaurant, verbose_name=_("Comment about this restaurant"), on_delete=models.CASCADE, null=True)
-    comment = models.ForeignKey(Comment, verbose_name=_("Comment text"), on_delete=models.CASCADE, null=True)
-    review = models.ForeignKey(RestraurantReview, verbose_name=_("resturant review"), on_delete=models.CASCADE, null=True)
+    restaurant  = models.ForeignKey(Restaurant, verbose_name=_("Comment about this restaurant"), on_delete=models.CASCADE,blank=False, null=True)
+    comment = models.ForeignKey(Comment, verbose_name=_("Comment text"), on_delete=models.CASCADE,blank=False, null=True)
+    review = models.ForeignKey(RestraurantReview, verbose_name=_("resturant review"), on_delete=models.CASCADE, blank=False, null=True)
     created_at = models.DateTimeField(_("Comment created at"),auto_now_add=True, null=True)
     updated_at = models.DateTimeField(_('Comment updated at'), auto_now=True, null=True)
     class Meta:
