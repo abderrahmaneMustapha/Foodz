@@ -7,7 +7,7 @@ from rest_framework import permissions
 from .serializers import *
 from .models import (Locations, Restaurant,Reviews, RestaurantCalendar, RestaurantPromotion,
                     Food, RestaurantService,RestaurantType, RestaurantComments, Comment )
-from .filters import RestaurantFilters
+from .filters import RestaurantFilters, RestaurantCommentsFilters
 from django_filters import rest_framework as filters
 
 
@@ -56,6 +56,7 @@ class RestaurantViewSet(viewsets.ModelViewSet):
     search_fields = ['^name', '^location__city',  '^foods__name']
     ordering_fields = ['created_at', 'total_review']
     filter_class = RestaurantFilters
+
     
     
 class RestaurantPromotionViewSet(viewsets.ModelViewSet):
@@ -82,9 +83,13 @@ class CommentsViewsSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentsSerializer
     permission_classes = [permissions.AllowAny]
+
 class RestaurantCommentsViewsSet(viewsets.ModelViewSet):
     queryset = RestaurantComments.objects.all()
     serializer_class = RestaurantCommentsSerializer
+    filter_backends = [filters.DjangoFilterBackend, rest_filters.OrderingFilter]
+    ordering_fields = ['created_at', 'total_review']
+    filter_class = RestaurantCommentsFilters
     permission_classes = [permissions.AllowAny]
 
 class FoodViewsSet(viewsets.ModelViewSet):

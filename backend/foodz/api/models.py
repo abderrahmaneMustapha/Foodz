@@ -140,6 +140,7 @@ class RestaurantPromotion(models.Model):
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
         return super(RestaurantPromotion, self).save(*args, **kwargs)
+
 class Comment(models.Model):
     user = models.ForeignKey(CustomUser, verbose_name=_('User who comment'), on_delete=models.CASCADE,  null=True)
     text = models.TextField("Comment text", null=True)
@@ -184,7 +185,7 @@ class RestraurantReview(models.Model):
 class RestaurantComments(models.Model):
     restaurant  = models.ForeignKey(Restaurant, verbose_name=_("Comment about this restaurant"), on_delete=models.CASCADE,blank=False, null=True)
     comment = models.ForeignKey(Comment, verbose_name=_("Comment text"), on_delete=models.CASCADE,blank=False, null=True)
-    review = models.ForeignKey(RestraurantReview, verbose_name=_("resturant review"), on_delete=models.CASCADE, blank=False, null=True)
+    review = models.FloatField( verbose_name=_("resturant review"),blank=False, null=True )
     created_at = models.DateTimeField(_("Comment created at"),auto_now_add=True, null=True)
     updated_at = models.DateTimeField(_('Comment updated at'), auto_now=True, null=True)
     class Meta:
