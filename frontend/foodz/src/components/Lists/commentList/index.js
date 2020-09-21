@@ -41,15 +41,35 @@ class CommentList extends React.Component{
         super(props)
         this.state = {
             commentList : this.props.commentList,
+            restaurant : this.props.restaurant
         }
         this.handleAddReply = this.handleAddReply.bind()
         this.handleAddComment = this.handleAddComment.bind(this)
     }
 
+   
+
+    componentDidMount(){
+        this.GetComments()
+    }
+
+    // get comments for a specific restaurant
+    GetComments = ()=>{
+        fetch(`http://localhost:8000/api/restaurant-comment/?restaurant__id=${this.state.restaurant.id}`)
+        .then(response => response.json())
+        .then(
+            data=>{
+                console.log("get comments for ",data)
+            }
+        )
+    }
+    
+
+    // this fucntion will create a comment  but we need to add this comment to a specific restaurant
     PostComment = (text) =>{
         let form = new FormData()
         form.append("text", text)
-        form.append("user", `http://localhost:8000/api/users/${1}/`)
+        //form.append("user", `http://localhost:8000/api/users/${1}/`)
         let id =  undefined
         fetch("http://localhost:8000/api/comments/", {
             method: 'POST',
@@ -57,17 +77,18 @@ class CommentList extends React.Component{
         })
         .then(response => response.json())
         .then(data=>{        
-            this.PostRestaurantComment(data.id, 1)
+            this.PostRestaurantComment(data.id, this.state.restaurant.id)
         })
 
     
     }
 
+
+    // here wehre we can add the comment and the restaurant to a one single model (RestaurantComment)
     PostRestaurantComment = (comment_id, restaurant_id)=>{
         let form = new FormData()
         form.append("comment", `http://localhost:8000/api/comments/${comment_id}/`)
         form.append("restaurant", `http://localhost:8000/api/restaurant/${restaurant_id}/`)
-        console.log("comment id ", comment_id)
 
         fetch("http://localhost:8000/api/restaurant-comment/", {
             method: 'POST',
@@ -78,6 +99,7 @@ class CommentList extends React.Component{
             console.log(data)
         })
     }
+
 
     
     handleAddComment = (event)=>{
@@ -93,7 +115,7 @@ class CommentList extends React.Component{
         // by getting the title of the star-ratings container 
         // this title will alawys contain the number of stars in the first case
         let current_review  = document.getElementById('new-comment-container').getElementsByClassName('star-ratings')[0].title[0]
-        console.log(current_review)
+    
         let tempCommentList = this.state.commentList 
         tempCommentList.unshift({
             text: textarea, username : current_username, photo : current_userimage, review : current_review, replys :[]

@@ -82,7 +82,7 @@ class Restaurant extends  React.Component{
 
             <Route strict path="/restaurants/:name" render = {({match})=>{
                 if (window.location.href.includes("?page=Reviews")) {
-                    return <Reviews />
+                    return <Reviews  restaurant ={this.state.restaurant} />
                 }
                 else return null 
             }}>                

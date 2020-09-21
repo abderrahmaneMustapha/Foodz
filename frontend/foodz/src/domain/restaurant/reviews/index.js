@@ -8,11 +8,19 @@ replys : [{text: "text text text text", username : "Abderrahmane", photo : "http
 {id: "25",text: "text text text text", username : "Abderrahmane", photo : "https://avatars3.githubusercontent.com/u/34008130?s=460&u=5183a8fc438d75db4c5c8f081d0ef3ffc91f97a4&v=4", review : 2.4,
 replys : [{text: "text text text text", username : "Abderrahmane", photo : "https://avatars3.githubusercontent.com/u/34008130?s=460&u=5183a8fc438d75db4c5c8f081d0ef3ffc91f97a4&v=4"}]}]
 class Reviews extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            restaurant :  this.props.restaurant
+        }
+    }
+
 
     render(){
+        
         return(
             <div className=" container mt-7 p-md-5 p-sm-0 bg-white">
-                  <CommentList  commentList={comments}/>
+                  <CommentList restaurant={this.props.restaurant}  commentList={comments}/>
             </div>
           
         )
