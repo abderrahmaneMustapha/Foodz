@@ -18,7 +18,7 @@ class ReplyList extends React.Component{
         return(
             <ul  className="list-group comment-list-reply">
                                 
-            { this.state.replysList.map((subelement, index)=>(
+            {this.state.replysList ? this.state.replysList.map((subelement, index)=>(
                 <li key={"AZER"+index}  className="list-group-item">
                 <ExistingComment
                     
@@ -29,7 +29,7 @@ class ReplyList extends React.Component{
                 />
                 </li> 
             )                             
-            )}
+            ) : undefined}
         
              </ul>
         )
@@ -40,7 +40,7 @@ class CommentList extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            commentList : this.props.commentList,
+            commentList : [],
             restaurant : this.props.restaurant,
             new_comment_stars : 0
         }
@@ -50,24 +50,51 @@ class CommentList extends React.Component{
     }
    
     componentDidMount(){
-        this.GetComments()
+        this.GetRestaurantComments()
     }
 
     handleStarsInNewComment = (rating)=>{
-        console.log("a rating ", rating)
+
         this.setState({
             new_comment_stars : rating
         })
     }
     // get comments for a specific restaurant
-    GetComments = ()=>{
+    GetRestaurantComments = ()=>{
+        let result = []
         fetch(`http://localhost:8000/api/restaurant-comment/?restaurant__id=${this.state.restaurant.id}`)
         .then(response => response.json())
         .then(
             data=>{
-                console.log("get comments for ",data)
+                data.results.forEach(async element=>{
+                    let comment = {}
+                    comment.review = element.review
+                    await this.getComment(element.comment, comment)
+                    
+                    // add the comment to the results
+                    result.push(comment)
+
+                    // update the state 
+                    this.setState({
+                        commentList :  result
+                    })
+                
+                })
+                
             }
         )
+    }
+    /// get comment
+    getComment = (data, comment)=>{
+    
+        fetch(data)
+        .then(response => response.json())
+        .then(data=>{
+            comment.id = data.id
+            comment.text = data.text            
+        })
+
+    
     }
 
     // this fucntion will create a comment  but we need to add this comment to a specific restaurant
@@ -215,7 +242,7 @@ class CommentList extends React.Component{
                     this.state.commentList.map( 
                     (element)=>(
                     <li  key = {element.id} className="list-group-item">
-                    
+                        <>{console.log(" element ", element)}</>
                         <ExistingComment
                            data_key = {element.id}
                            handleAddReply={this.handleAddReply}
