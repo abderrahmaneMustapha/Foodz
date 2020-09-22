@@ -11,7 +11,7 @@ class NewComment extends React.Component{
         super(props)
         
         this.state = {
-            rating : 3
+            rating : 0
         }
 
         
@@ -23,6 +23,7 @@ class NewComment extends React.Component{
         this.setState({
             rating: newRating
         });
+        this.props.handleRatingChange(newRating)
     }
 
 

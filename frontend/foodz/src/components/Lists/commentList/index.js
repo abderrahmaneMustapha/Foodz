@@ -41,18 +41,24 @@ class CommentList extends React.Component{
         super(props)
         this.state = {
             commentList : this.props.commentList,
-            restaurant : this.props.restaurant
+            restaurant : this.props.restaurant,
+            new_comment_stars : 0
         }
         this.handleAddReply = this.handleAddReply.bind()
         this.handleAddComment = this.handleAddComment.bind(this)
+        this.handleStarsInNewComment = this.handleStarsInNewComment.bind(this)
     }
-
    
-
     componentDidMount(){
         this.GetComments()
     }
 
+    handleStarsInNewComment = (rating)=>{
+        console.log("a rating ", rating)
+        this.setState({
+            new_comment_stars : rating
+        })
+    }
     // get comments for a specific restaurant
     GetComments = ()=>{
         fetch(`http://localhost:8000/api/restaurant-comment/?restaurant__id=${this.state.restaurant.id}`)
@@ -63,12 +69,12 @@ class CommentList extends React.Component{
             }
         )
     }
-    
 
     // this fucntion will create a comment  but we need to add this comment to a specific restaurant
     PostComment = (text) =>{
         let form = new FormData()
         form.append("text", text)
+        
         //form.append("user", `http://localhost:8000/api/users/${1}/`)
         let id =  undefined
         fetch("http://localhost:8000/api/comments/", {
@@ -78,18 +84,15 @@ class CommentList extends React.Component{
         .then(response => response.json())
         .then(data=>{        
             this.PostRestaurantComment(data.id, this.state.restaurant.id)
-        })
-
-    
+        })    
     }
-
 
     // here wehre we can add the comment and the restaurant to a one single model (RestaurantComment)
     PostRestaurantComment = (comment_id, restaurant_id)=>{
         let form = new FormData()
         form.append("comment", `http://localhost:8000/api/comments/${comment_id}/`)
         form.append("restaurant", `http://localhost:8000/api/restaurant/${restaurant_id}/`)
-
+        form.append('review', this.state.new_comment_stars)
         fetch("http://localhost:8000/api/restaurant-comment/", {
             method: 'POST',
             body : form
@@ -100,8 +103,6 @@ class CommentList extends React.Component{
         })
     }
 
-
-    
     handleAddComment = (event)=>{
         event.preventDefault()
         
@@ -206,7 +207,9 @@ class CommentList extends React.Component{
     render(){
         return(
             <ul  id="comment-list" className="list-group">
-                <NewComment myOnClick={this.handleAddComment}></NewComment>
+                <NewComment 
+                handleRatingChange={this.handleStarsInNewComment} 
+                myOnClick={this.handleAddComment}></NewComment>
                 
                 {
                     this.state.commentList.map( 
