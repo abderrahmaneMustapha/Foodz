@@ -189,6 +189,7 @@ class RestaurantComments(models.Model):
     created_at = models.DateTimeField(_("Comment created at"),auto_now_add=True, null=True)
     updated_at = models.DateTimeField(_('Comment updated at'), auto_now=True, null=True)
     class Meta:
+        ordering = ["-created_at"]
         verbose_name = _("Comment")            
         verbose_name_plural = _("Comments")
     def save(self, *args, **kwargs):
