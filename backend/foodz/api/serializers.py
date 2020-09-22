@@ -52,7 +52,7 @@ class CommentsSerializer(serializers.HyperlinkedModelSerializer):
 class RestaurantCommentsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = RestaurantComments
-        fields = ['url', 'id', 'restaurant', 'comment', 'created_at']
+        fields = ['url', 'id', 'restaurant', 'comment', 'review', 'created_at']
 
 class FoodReviewSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
