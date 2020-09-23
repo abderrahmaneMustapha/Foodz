@@ -3,7 +3,7 @@ from .models import Restaurant, RestaurantComments
 class RestaurantFilters(filters.FilterSet):
       class Meta:
         model = Restaurant
-        fields = ['foods__name','restaurant_type__choice', "restaurant_open",
+        fields = ['slug', 'foods__name','restaurant_type__choice', "restaurant_open",
                 'total_review', 'services__slug']
 
 class RestaurantCommentsFilters(filters.FilterSet):
