@@ -69,6 +69,7 @@ class CommentList extends React.Component{
                 data.results.forEach(async element=>{
                     let comment = {}
                     comment.review = element.review
+                    
                     await this.getComment(element.comment, comment)
                     
                     // add the comment to the results

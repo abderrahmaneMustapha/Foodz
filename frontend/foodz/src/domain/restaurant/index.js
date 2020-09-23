@@ -16,21 +16,46 @@ import { Route} from "react-router-dom";
 let cover_src= 'https://drivendata-prod-public.s3.amazonaws.com/images/project-conservation.png'
 let photos_list = [{id:"222"},{id:"292"}, {id:"242"}, {id:"422"}, {id:"202"}]
 class Restaurant extends  React.Component{
+    
     constructor(props){
         super(props)        
         this.state = {
-            restaurant : this.props.location.state.restaurant,           
+            restaurant :undefined,    
+            loading : true     
         }
+        this.getCurrentRestaurant =  this.getCurrentRestaurant.bind(this)
     }
     
+    
     componentDidMount(){
-        this.setState ({
-            restaurant : this.props.location.state.restaurant,           
+        this.getCurrentRestaurant()
+    
+    }
+
+    getCurrentRestaurant = async ()=>{
+
+        // waite for the fetch till the end
+        await fetch("http://localhost:8000/api/restaurant/?slug="+this.props.match.params.name)
+        .then(response=> response.json())
+        .then( data=>{
+            console.log(data)
+             this.setState ({
+                restaurant : data.results[0],           
+            })         
+        })
+
+        // when the fetch end tell react that the loading phase is done
+        this.setState({
+            loading: false
         })
     }
 
 
     render(){
+        if (this.state.loading===true){
+            return <div>Loading</div>
+        }
+        else
         return(
             <>
             <header>
