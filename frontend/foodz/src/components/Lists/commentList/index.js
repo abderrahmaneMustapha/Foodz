@@ -85,9 +85,9 @@ class CommentList extends React.Component{
         )
     }
     /// get comment
-    getComment = (data, comment)=>{
+    getComment =    async (data, comment)=>{
     
-        fetch(data)
+        await fetch(data)
         .then(response => response.json())
         .then(data=>{
             comment.id = data.id
