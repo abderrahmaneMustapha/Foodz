@@ -56,67 +56,6 @@ class NewComment extends React.Component{
 
 
 class ExistingComment extends  React.Component {
-    constructor(props){
-        super(props)
-    }
-
-    
-        handleReply = (event)=>{
-            
-            let main_comment_li  = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
-            let main_comment_replys = main_comment_li.getElementsByClassName('comment-list-reply')[0]
-            let can_reply = (main_comment_replys)=>{
-                if(main_comment_replys.firstChild){
-                    if (!main_comment_replys.firstChild.className.includes("comment-temp-add")) return true
-                    else return false
-                }
-                else{
-                    return true
-                }
-            }
-            if(can_reply){
-                
-                // create new element in the list 
-                // by cloning the first child (li) of the replys list
-                let list_element =  main_comment_replys.firstChild.cloneNode(true)
-                // edit the comment text
-                list_element.classList.add('comment-temp-add')
-                let comment_text_area = list_element.getElementsByClassName('comment-text')[0]
-                comment_text_area.innerText = "Comment here"
-                // make the div editable
-                comment_text_area.contentEditable = true
-                // set the image to the current user image 
-                list_element.getElementsByTagName('img')[0].src = current_userimage
-                // set the user name to the current user username
-                list_element.getElementsByTagName('h5')[0].innerText = current_username
-                // get the comment utils   
-                let comment_utils = list_element.getElementsByClassName('comment-utils')[0]
-                comment_utils.remove()
-
-                // create a share button
-                let share_button = document.createElement("button")
-                share_button.className = "d-block btn btn-link text-black"
-                share_button.innerText = "share"
-                // add classs and style
-                share_button.addEventListener("click", event=>{
-                    share_button.replaceWith(comment_utils)
-                    comment_text_area.contentEditable = false
-                    list_element.classList.remove('comment-temp-add')
-                })
-                list_element.getElementsByClassName('col-md-11')[0].appendChild(share_button)
-
-                // remove the comment utils  
-                if (main_comment_replys.firstChild) {
-                    main_comment_replys.insertBefore(list_element, main_comment_replys.firstChild);
-                }  
-                else{
-                    main_comment_replys.appendChild(list_element) 
-                } 
-                    
-                
-            }
-           
-        }
 
         render(){
             return(

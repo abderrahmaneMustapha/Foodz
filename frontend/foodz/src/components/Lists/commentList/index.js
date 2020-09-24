@@ -9,12 +9,37 @@ class ReplyList extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            replysList : this.props.replysList
-        }       
+            replysList : [],
+            loading : true
+        }      
         
     }
+    componentDidMount(){
+        
+        this.getReplys()
+    }
+
+    getReplys = async ()=>{
+        let replys = []
+        console.log( "a rely list", this.props.replysList)
+        await this.props.replysList.forEach(element=>{
+            fetch(element)
+            .then(response => response.json())
+            .then(data=>{
+                
+              replys.push({username : data.user, text: data.text, photo: ""})
+              console.log(replys)
+            })
+        })
+        await this.setState({
+            replysList : replys,
+            loading : false
+        })
+    }
+    
 
     render(){
+        if (this.state.loading) return <div>loading</div>
         return(
             <ul  className="list-group comment-list-reply">
                                 
@@ -67,9 +92,10 @@ class CommentList extends React.Component{
         .then(
             data=>{
                 data.results.forEach(async element=>{
+                
                     let comment = {}
-                    comment.review = element.review
-                    
+                    comment.review = element.review ? element.review :0.01 
+                                      
                     await this.getComment(element.comment, comment)
                     
                     // add the comment to the results
@@ -92,14 +118,15 @@ class CommentList extends React.Component{
         .then(response => response.json())
         .then(data=>{
             comment.id = data.id
-            comment.text = data.text            
+            comment.text = data.text  
+            comment.replys = data.replys ? data.replys : []           
         })
 
     
     }
 
     // this fucntion will create a comment  but we need to add this comment to a specific restaurant
-    PostComment = (text) =>{
+    PostComment = (text, type="new", comment_id=undefined) =>{
         let form = new FormData()
         form.append("text", text)
         
@@ -110,8 +137,9 @@ class CommentList extends React.Component{
             body : form
         })
         .then(response => response.json())
-        .then(data=>{        
-            this.PostRestaurantComment(data.id, this.state.restaurant.id)
+        .then(async data=>{                    
+            if(type === "new") await this.PostRestaurantComment(data.id, this.state.restaurant.id)
+            if (type === "reply") await this.PostReply(comment_id, data.id)
         })    
     }
 
@@ -149,19 +177,51 @@ class CommentList extends React.Component{
         tempCommentList.unshift({
             text: textarea, username : current_username, photo : current_userimage, review : current_review, replys :[]
         })
-        console.log(tempCommentList)
+
         
         this.setState({
-            commentList : [...tempCommentList]
+            commentList : tempCommentList
         })
 
     }
 
+    PostReply = (comment_id, new_comment_id)=>{
+        fetch("http://localhost:8000/api/comments/"+comment_id+"/")
+        .then( response => response.json())
+        .then(async  data=>{
+            let replys  = data.replys
+            console.log("list of replys ", replys)
+
+            if(replys){
+                replys.unshift("http://localhost:8000/api/comments/"+new_comment_id+"/")
+            }
+            else{
+                replys =  ["http://localhost:8000/api/comments/"+new_comment_id+"/"]
+            }
+          
+            console.log("new list of replys ", replys)
+            let form = new FormData()            
+            form.append("replys", replys)
+              
+            
+            await fetch("http://localhost:8000/api/comments/"+comment_id+"/", {
+                method: 'PUT',
+                body : form
+            })
+            .then( response => response.json())
+            .then(async  data=>{
+                console.log('the ne commne id ', new_comment_id)
+                console.log(data)
+            })
+
+        }) 
+    }
     handleAddReply  = (event)=>{
         let element = event.target
 
         // get the ul that contains the list of the replys of current comment
         let main_comment_li  = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+
         let main_comment_replys = main_comment_li.getElementsByClassName('comment-list-reply')[0]
 
         let li_comment_container  = document.createElement('li')
@@ -200,7 +260,7 @@ class CommentList extends React.Component{
         if (!data_key) {
              data_key = element.parentElement.getAttribute('data-key')
         }
-
+        
         
         // get the current comment list from the state
         let commentList  =  this.state.commentList
@@ -208,6 +268,7 @@ class CommentList extends React.Component{
        
         // a fucntion which  is going to find the comment by his id
         // then we update the replys of this comment
+       
         let updateReplys = (id, comment, username, photo)=>{
             commentList.map(element=>{
                 if(element.id==id){
@@ -220,6 +281,7 @@ class CommentList extends React.Component{
             // get the comment text
             let comment_text  = li_comment_container.getElementsByClassName('comment-text')[0].innerText
             // call the fucntion to update replys by id
+            this.PostComment(comment_text, "reply", data_key)
             updateReplys(data_key,comment_text,current_username, current_userimage)  
             /// update the state 
             this.setState({
@@ -242,12 +304,11 @@ class CommentList extends React.Component{
                 {
                     this.state.commentList.map( 
                     (element)=>(
-                    <li  key = {element.id} className="list-group-item">
-                        <>{console.log(" element ", element)}</>
+                    <li  data-key={element.id} key = {element.id} className="list-group-item">
                         <ExistingComment
-                           data_key = {element.id}
-                           handleAddReply={this.handleAddReply}
-                           classPlus = "main-exisiting-comment-container"
+                            data_key = {element.id}
+                            handleAddReply={this.handleAddReply}
+                            classPlus = "main-exisiting-comment-container"
                             text={element.text} 
                             username={element.username} 
                             photo={element.photo}

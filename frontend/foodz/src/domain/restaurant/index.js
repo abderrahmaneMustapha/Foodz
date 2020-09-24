@@ -28,8 +28,7 @@ class Restaurant extends  React.Component{
     
     
     componentDidMount(){
-        this.getCurrentRestaurant()
-    
+        this.getCurrentRestaurant()    
     }
 
     getCurrentRestaurant = async ()=>{
