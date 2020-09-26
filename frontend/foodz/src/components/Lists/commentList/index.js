@@ -28,13 +28,15 @@ class ReplyList extends React.Component{
             .then(data=>{
                 
               replys.push({username : data.user, text: data.text, photo: ""})
-              console.log(replys)
+              this.setState({
+                replysList : replys,
+                })
             })
         })
-        await this.setState({
-            replysList : replys,
+        this.setState({
             loading : false
         })
+       
     }
     
 
@@ -198,11 +200,12 @@ class CommentList extends React.Component{
             else{
                 replys =  ["http://localhost:8000/api/comments/"+new_comment_id+"/"]
             }
-          
-            console.log("new list of replys ", replys)
-            let form = new FormData()            
-            form.append("replys", replys)
-              
+
+            let form = new FormData() 
+            replys.forEach(element=>{
+                          
+                form.append("replys", element)
+            })
             
             await fetch("http://localhost:8000/api/comments/"+comment_id+"/", {
                 method: 'PUT',
@@ -210,7 +213,6 @@ class CommentList extends React.Component{
             })
             .then( response => response.json())
             .then(async  data=>{
-                console.log('the ne commne id ', new_comment_id)
                 console.log(data)
             })
 
@@ -282,7 +284,8 @@ class CommentList extends React.Component{
             let comment_text  = li_comment_container.getElementsByClassName('comment-text')[0].innerText
             // call the fucntion to update replys by id
             this.PostComment(comment_text, "reply", data_key)
-            updateReplys(data_key,comment_text,current_username, current_userimage)  
+            updateReplys(data_key, comment_text, current_username, current_userimage)  
+            
             /// update the state 
             this.setState({
                 commentList : commentList 
