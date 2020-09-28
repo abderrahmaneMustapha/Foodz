@@ -11,24 +11,38 @@ class ReplyList extends React.Component{
         this.state = {
             replysList : [],
             loading : true
+           
         }      
         
     }
     componentDidMount(){
-        
-        this.getReplys()
+        console.log('im mounting ')
+        this.getReplys(this.props.replysList)
     }
 
-    getReplys = async ()=>{
+    componentDidUpdate(prevProps){
+        console.log(`im updating  hey new props ${this.props.replysList.length} the old one ${prevProps.replysList.length} `)
+        if(this.props.replysList.length >  prevProps.replysList.length){
+           
+            console.log('loading state ', this.state.loading)
+            this.setState({
+                loading : true
+            })
+           
+            this.getReplys(this.props.replysList)
+        }
+        
+    }
+
+    getReplys = async (replysList)=>{
         let replys = []
-        console.log( "a rely list", this.props.replysList)
-        await this.props.replysList.forEach(element=>{
-            fetch(element)
+        await replysList.forEach(element=>{
+                fetch(element)
             .then(response => response.json())
-            .then(data=>{
+            .then( async data=>{
                 
-              replys.push({username : data.user, text: data.text, photo: ""})
-              this.setState({
+               await replys.push({id: data.id ,username : data.user, text: data.text, photo: ""})
+               await this.setState({
                 replysList : replys,
                 })
             })
@@ -41,14 +55,13 @@ class ReplyList extends React.Component{
     
 
     render(){
-        if (this.state.loading) return <div>loading</div>
+        if (this.state.loading===true) return <div>loading</div>
         return(
             <ul  className="list-group comment-list-reply">
                                 
             {this.state.replysList ? this.state.replysList.map((subelement, index)=>(
-                <li key={"AZER"+index}  className="list-group-item">
-                <ExistingComment
-                    
+                <li key={`${subelement.id}-${this.props.data_key}`}  className="list-group-item">
+                <ExistingComment                    
                     classPlus = "reply-exisiting-comment-container"
                     text={subelement.text} 
                     username={subelement.username} 
@@ -140,7 +153,9 @@ class CommentList extends React.Component{
         })
         .then(response => response.json())
         .then(async data=>{                    
-            if(type === "new") await this.PostRestaurantComment(data.id, this.state.restaurant.id)
+            if(type === "new") {
+                await this.PostRestaurantComment(data.id, this.state.restaurant.id)
+            }
             if (type === "reply") await this.PostReply(comment_id, data.id)
         })    
     }
@@ -157,7 +172,7 @@ class CommentList extends React.Component{
         })
         .then(response => response.json())
         .then(data=>{
-            console.log(data)
+            console.log("")
         })
     }
 
@@ -177,7 +192,7 @@ class CommentList extends React.Component{
     
         let tempCommentList = this.state.commentList 
         tempCommentList.unshift({
-            text: textarea, username : current_username, photo : current_userimage, review : current_review, replys :[]
+         text: textarea, username : current_username, photo : current_userimage, review : current_review, replys :[]
         })
 
         
@@ -192,18 +207,18 @@ class CommentList extends React.Component{
         .then( response => response.json())
         .then(async  data=>{
             let replys  = data.replys
-            console.log("list of replys ", replys)
 
             if(replys){
                 replys.unshift("http://localhost:8000/api/comments/"+new_comment_id+"/")
             }
             else{
                 replys =  ["http://localhost:8000/api/comments/"+new_comment_id+"/"]
-            }
+            } 
+
+            this.updateReplys(comment_id, replys)
 
             let form = new FormData() 
-            replys.forEach(element=>{
-                          
+            await replys.forEach(element=>{                          
                 form.append("replys", element)
             })
             
@@ -213,11 +228,28 @@ class CommentList extends React.Component{
             })
             .then( response => response.json())
             .then(async  data=>{
-                console.log(data)
+                console.log("")
             })
 
         }) 
     }
+
+    updateReplys = (comment_id,replys)=>{
+        
+        let commmentList__ = this.state.commentList
+
+        commmentList__.map(element=>{
+            if(element.id==comment_id){
+                element.replys = replys
+            }
+        })
+
+
+        this.setState({
+            commentList : commmentList__
+        })
+    }
+
     handleAddReply  = (event)=>{
         let element = event.target
 
@@ -271,25 +303,14 @@ class CommentList extends React.Component{
         // a fucntion which  is going to find the comment by his id
         // then we update the replys of this comment
        
-        let updateReplys = (id, comment, username, photo)=>{
-            commentList.map(element=>{
-                if(element.id==id){
-                     element.replys.unshift({text:comment, username : username, photo : photo})
-                }
-            })
-        }
+        
         let share_button = main_comment_replys.getElementsByClassName('reply-btn')[0]
         share_button.addEventListener("click", event=>{
             // get the comment text
             let comment_text  = li_comment_container.getElementsByClassName('comment-text')[0].innerText
             // call the fucntion to update replys by id
-            this.PostComment(comment_text, "reply", data_key)
-            updateReplys(data_key, comment_text, current_username, current_userimage)  
-            
-            /// update the state 
-            this.setState({
-                commentList : commentList 
-            })  
+            console.log("comment data key is ", data_key)
+            this.PostComment(comment_text, "reply", data_key)            
             li_comment_container.parentElement.removeChild(li_comment_container)     
         })        
         
@@ -308,6 +329,7 @@ class CommentList extends React.Component{
                     this.state.commentList.map( 
                     (element)=>(
                     <li  data-key={element.id} key = {element.id} className="list-group-item">
+                   
                         <ExistingComment
                             data_key = {element.id}
                             handleAddReply={this.handleAddReply}
@@ -317,7 +339,7 @@ class CommentList extends React.Component{
                             photo={element.photo}
                             review={element.review}
                         />                       
-                        <ReplyList  replysList={element.replys} />
+                        <ReplyList  data_key = {element.id} replysList={element.replys} />
                     </li>
                     )                  
                     )
