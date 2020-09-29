@@ -16,15 +16,13 @@ class ReplyList extends React.Component{
         
     }
     componentDidMount(){
-        console.log('im mounting ')
         this.getReplys(this.props.replysList)
     }
 
     componentDidUpdate(prevProps){
-        console.log(`im updating  hey new props ${this.props.replysList.length} the old one ${prevProps.replysList.length} `)
+    
         if(this.props.replysList.length >  prevProps.replysList.length){
            
-            console.log('loading state ', this.state.loading)
             this.setState({
                 loading : true
             })
@@ -57,7 +55,7 @@ class ReplyList extends React.Component{
     render(){
         if (this.state.loading===true) return <div>loading</div>
         return(
-            <ul  className="list-group comment-list-reply">
+            <ul id={"replys-list-"+this.props.data_key} className="list-group comment-list-reply">
                                 
             {this.state.replysList ? this.state.replysList.map((subelement, index)=>(
                 <li key={`${subelement.id}-${this.props.data_key}`}  className="list-group-item">
@@ -82,7 +80,9 @@ class CommentList extends React.Component{
         this.state = {
             commentList : [],
             restaurant : this.props.restaurant,
-            new_comment_stars : 0
+            new_comment_stars : 0,
+            new_comment_id : null,
+            new_comment_add_loading : true
         }
         this.handleAddReply = this.handleAddReply.bind()
         this.handleAddComment = this.handleAddComment.bind(this)
@@ -154,7 +154,21 @@ class CommentList extends React.Component{
         .then(response => response.json())
         .then(async data=>{                    
             if(type === "new") {
+                console.log(data)
+                 // get  current review
+                // by getting the title of the star-ratings container 
+                // this title will alawys contain the number of stars in the first case
+                let current_review  = document.getElementById('new-comment-container').getElementsByClassName('star-ratings')[0].title[0]
+                let tempCommentList = this.state.commentList 
+                tempCommentList.unshift({
+                id: data.id ,text: data.text, username : current_username, photo : current_userimage, review : current_review, replys :data.replys
+                })
+                
+                this.setState({
+                    commentList : tempCommentList
+                })
                 await this.PostRestaurantComment(data.id, this.state.restaurant.id)
+                
             }
             if (type === "reply") await this.PostReply(comment_id, data.id)
         })    
@@ -172,11 +186,12 @@ class CommentList extends React.Component{
         })
         .then(response => response.json())
         .then(data=>{
-            console.log("")
+                   
+
         })
     }
 
-    handleAddComment = (event)=>{
+    handleAddComment = async ( event)=>{
         event.preventDefault()
         
         // this is the hole comment list container
@@ -184,21 +199,8 @@ class CommentList extends React.Component{
 
         // get the new comment from the text area comment
         let textarea = document.getElementById('new-comment-textarea').value
-        this.PostComment(textarea)
-        // get  current review
-        // by getting the title of the star-ratings container 
-        // this title will alawys contain the number of stars in the first case
-        let current_review  = document.getElementById('new-comment-container').getElementsByClassName('star-ratings')[0].title[0]
-    
-        let tempCommentList = this.state.commentList 
-        tempCommentList.unshift({
-         text: textarea, username : current_username, photo : current_userimage, review : current_review, replys :[]
-        })
-
-        
-        this.setState({
-            commentList : tempCommentList
-        })
+        await this.PostComment(textarea)
+      
 
     }
 
@@ -227,8 +229,8 @@ class CommentList extends React.Component{
                 body : form
             })
             .then( response => response.json())
-            .then(async  data=>{
-                console.log("")
+            .then( data=>{
+                console.log("my reply return data", data)
             })
 
         }) 
@@ -294,23 +296,15 @@ class CommentList extends React.Component{
         if (!data_key) {
              data_key = element.parentElement.getAttribute('data-key')
         }
-        
-        
-        // get the current comment list from the state
-        let commentList  =  this.state.commentList
-
-       
-        // a fucntion which  is going to find the comment by his id
-        // then we update the replys of this comment
-       
+               
         
         let share_button = main_comment_replys.getElementsByClassName('reply-btn')[0]
-        share_button.addEventListener("click", event=>{
+        share_button.addEventListener("click",async event=>{
             // get the comment text
             let comment_text  = li_comment_container.getElementsByClassName('comment-text')[0].innerText
             // call the fucntion to update replys by id
             console.log("comment data key is ", data_key)
-            this.PostComment(comment_text, "reply", data_key)            
+            await this.PostComment(comment_text, "reply", data_key)            
             li_comment_container.parentElement.removeChild(li_comment_container)     
         })        
         
@@ -325,8 +319,7 @@ class CommentList extends React.Component{
                 handleRatingChange={this.handleStarsInNewComment} 
                 myOnClick={this.handleAddComment}></NewComment>
                 
-                {
-                    this.state.commentList.map( 
+                    {this.state.commentList.map( 
                     (element)=>(
                     <li  data-key={element.id} key = {element.id} className="list-group-item">
                    
@@ -342,9 +335,7 @@ class CommentList extends React.Component{
                         <ReplyList  data_key = {element.id} replysList={element.replys} />
                     </li>
                     )                  
-                    )
-                }
-                
+                    ) }               
             </ul>
         )
     }

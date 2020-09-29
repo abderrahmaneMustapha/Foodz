@@ -100,7 +100,9 @@ class ExistingComment extends  React.Component {
                             </div>:
                             <></>
                             }
-                            <span className="ml-auto"> see all </span>
+                            <a  data-toggle="collapse" href={"#replys-list-"+this.props.data_key}
+                            role="button" aria-expanded="false" aria-controls="Comment Replys list" 
+                            className="ml-auto text-dark"> see all </a>
                         </div>                        
                     </div>
                 </div>                   
