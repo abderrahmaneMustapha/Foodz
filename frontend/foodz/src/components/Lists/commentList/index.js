@@ -79,6 +79,7 @@ class CommentList extends React.Component{
         super(props)
         this.state = {
             commentList : [],
+            loading_comments : true,
             restaurant : this.props.restaurant,
             new_comment_stars : 0,
             new_comment_id : null,
@@ -109,8 +110,8 @@ class CommentList extends React.Component{
                 data.results.forEach(async element=>{
                 
                     let comment = {}
-                    comment.review = element.review ? element.review :0.01 
-                                      
+                    comment.review = element.review ? element.review :0.0
+                    comment.restaurant_id = element.id             
                     await this.getComment(element.comment, comment)
                     
                     // add the comment to the results
@@ -118,7 +119,8 @@ class CommentList extends React.Component{
 
                     // update the state 
                     this.setState({
-                        commentList :  result
+                        commentList :  result,
+                        loading_comments: false
                     })
                 
                 })
@@ -132,6 +134,7 @@ class CommentList extends React.Component{
         await fetch(data)
         .then(response => response.json())
         .then(data=>{
+            
             comment.id = data.id
             comment.text = data.text  
             comment.replys = data.replys ? data.replys : []           
@@ -313,7 +316,10 @@ class CommentList extends React.Component{
     }   
 
     render(){
+        let loading  = this.state.loading_comments
         return(
+            <>
+            {loading === false ? 
             <ul  id="comment-list" className="list-group">
                 <NewComment 
                 handleRatingChange={this.handleStarsInNewComment} 
@@ -325,6 +331,7 @@ class CommentList extends React.Component{
                    
                         <ExistingComment
                             data_key = {element.id}
+                            restaurant_comment_key  = {element.restaurant_id}
                             handleAddReply={this.handleAddReply}
                             classPlus = "main-exisiting-comment-container"
                             text={element.text} 
@@ -337,6 +344,8 @@ class CommentList extends React.Component{
                     )                  
                     ) }               
             </ul>
+           : <div>Loading</div> }
+           </>
         )
     }
 }

@@ -56,10 +56,38 @@ class NewComment extends React.Component{
 
 
 class ExistingComment extends  React.Component {
+        constructor(props){
+            super(props)
+            this.handleUpCommentVote = this.handleUpCommentVote.bind()
+            this.handleDownCommentVote = this.handleDownCommentVote.bind()
+        }
+        postComment = (params)=>{
+            const restaurant_comment_id = this.props.restaurant_comment_key
+    
+            let form = new FormData()
+            form.append('user', `http://127.0.0.1:8000/api/users/${1}/`)
+            form.append('restaurant_comments', `http://127.0.0.1:8000/api/restaurant-comment/${restaurant_comment_id}/`)
+           
+            fetch(`http://127.0.0.1:8000/api/${params}/`, {
+                method: 'POST',
+                body : form
+            })
+            .then(response => response.json())
+            .then(data=>{
+                console.log(data)
+            })
+        }
+        handleUpCommentVote = (event)=>{
+            this.postComment("restaurant-comment-vote-up")
 
+        }
+
+        handleDownCommentVote = (event)=>{
+            this.postComment("restaurant-comment-vote-down")
+        }
         render(){
             return(
-                <div   key={this.props.key} className={"bg-white container comment "+this.props.classPlus}>
+                <div   key={this.props.data_key} className={"bg-white container comment "+this.props.classPlus}>
                 <div className="row">
                     <div className="col-md-1 col-sm-4">
                         <img className="rounded-circle" src={this.props.photo}></img>
@@ -80,30 +108,37 @@ class ExistingComment extends  React.Component {
                         }
                         </header>
                         <div  className="font-weight-light m-2 comment-text">{this.props.text}</div>
+
+                        { this.props.review ?
                         <div      className="comment-utils d-flex flex-row align-items-center mt-3">
-                            <div  title="up vote">
+                            <div onClick={this.handleUpCommentVote} title="up vote">
                                 <i  className="fas fa-chevron-up"></i>
                                 <span  className="text-muted">33 </span>
                             </div> 
                             . 
-                            <div title="down vote">
+                            <div  onClick={this.handleDownCommentVote} title="down vote">
                                 <i  className="fas fa-chevron-down"></i>
                                 <span className="text-muted">33 </span>
                             </div>
-                            { this.props.review ?
-                            <div 
-                                key={this.props.data_key}
-                                data-key={this.props.data_key}
-                                onClick={this.props.handleAddReply} 
-                                title="reply">
-                                <i  className="fas fa-reply"></i>
-                            </div>:
-                            <></>
-                            }
-                            <a  data-toggle="collapse" href={"#replys-list-"+this.props.data_key}
-                            role="button" aria-expanded="false" aria-controls="Comment Replys list" 
-                            className="ml-auto text-dark"> see all </a>
-                        </div>                        
+                           
+                              
+
+                                    <div 
+                                        key={this.props.data_key}
+                                        data-key={this.props.data_key}
+                                        onClick={this.props.handleAddReply} 
+                                        title="reply">
+                                        <i  className="fas fa-reply"></i>
+                                    </div>
+
+                                    <a  data-toggle="collapse" href={"#replys-list-"+this.props.data_key}
+                                    role="button" aria-expanded="false" aria-controls="Comment Replys list" 
+                                    className="ml-auto text-dark"> see all </a>
+                               
+                           
+                        </div>   :
+                                <></>     
+                            }                 
                     </div>
                 </div>                   
                     
