@@ -149,6 +149,7 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(_('Comment updated at'), auto_now=True, null=True)
   
     class Meta:
+        ordering = ["-created_at"]
         verbose_name = _("Comment")            
         verbose_name_plural = _("Comments")
     def save(self, *args, **kwargs):
@@ -195,6 +196,32 @@ class RestaurantComments(models.Model):
     def save(self, *args, **kwargs):
             ''' On save, update timestamps '''
             return super(RestaurantComments, self).save(*args, **kwargs)
+
+class ReastaurantCommentsUp(models.Model):
+    restaurant_comments = models.ForeignKey(RestaurantComments, verbose_name=_("restaurant comment"), on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, verbose_name=_('user who cote up on comment'), on_delete=models.CASCADE)
+    created_at = models.DateTimeField(_("Comment created at"),auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(_('Comment updated at'), auto_now=True, null=True)
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = _("Restaurant comment up")            
+        verbose_name_plural = _("Restaurants comments up")
+    def save(self, *args, **kwargs):
+            ''' On save, update timestamps '''
+            return super(ReastaurantCommentsUp, self).save(*args, **kwargs)
+
+class ReastaurantCommentsDown(models.Model):
+    restaurant_comments = models.ForeignKey(RestaurantComments, verbose_name=_("Restaurant comment"), on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, verbose_name=_('User who cote up on comment'), on_delete=models.CASCADE)
+    created_at = models.DateTimeField(_("Comment created at"),auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(_('Comment updated at'), auto_now=True, null=True)
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = _("Restaurant comment down")            
+        verbose_name_plural = _("Restaurants comments down")
+    def save(self, *args, **kwargs):
+            ''' On save, update timestamps '''
+            return super(ReastaurantCommentsDown, self).save(*args, **kwargs)
 
 class RestaurantCalendar(models.Model):
         class SevenDaysOfWeek(models.TextChoices):
