@@ -157,7 +157,6 @@ class CommentList extends React.Component{
         .then(response => response.json())
         .then(async data=>{                    
             if(type === "new") {
-                console.log(data)
                  // get  current review
                 // by getting the title of the star-ratings container 
                 // this title will alawys contain the number of stars in the first case

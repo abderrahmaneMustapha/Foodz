@@ -11,7 +11,7 @@ class NewComment extends React.Component{
         super(props)
         
         this.state = {
-            rating : 0
+            rating : 1
         }
 
         
@@ -61,6 +61,14 @@ class ExistingComment extends  React.Component {
             this.handleUpCommentVote = this.handleUpCommentVote.bind()
             this.handleDownCommentVote = this.handleDownCommentVote.bind()
         }
+        getComment = (params)=>{
+            const restaurant_comment_id = this.props.restaurant_comment_key
+            fetch(`http://localhost:8000/api/${params}/?restaurant_comments__id=${restaurant_comment_id}`)
+            .then(response => response.json())
+            .then(data=>{
+                console.log(data)
+            })
+        }
         postComment = (params)=>{
             const restaurant_comment_id = this.props.restaurant_comment_key
     
@@ -77,14 +85,18 @@ class ExistingComment extends  React.Component {
                 console.log(data)
             })
         }
+
         handleUpCommentVote = (event)=>{
             this.postComment("restaurant-comment-vote-up")
+            this.getComment("restaurant-comment-vote-up")
 
         }
 
         handleDownCommentVote = (event)=>{
             this.postComment("restaurant-comment-vote-down")
+            this.postComment("restaurant-comment-vote-down")
         }
+        
         render(){
             return(
                 <div   key={this.props.data_key} className={"bg-white container comment "+this.props.classPlus}>

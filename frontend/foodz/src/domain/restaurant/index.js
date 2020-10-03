@@ -32,7 +32,7 @@ class Restaurant extends  React.Component{
     }
 
     getCurrentRestaurant = async ()=>{
-
+        console.log("restaurant name ",this.props.match.params.name)
         // waite for the fetch till the end
         await fetch("http://localhost:8000/api/restaurant/?slug="+this.props.match.params.name)
         .then(response=> response.json())
