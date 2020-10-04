@@ -58,17 +58,15 @@ class NewComment extends React.Component{
 class ExistingComment extends  React.Component {
         constructor(props){
             super(props)
+            this.state = {
+                ups : this.props.ups,
+                downs: this.props.downs
+            }
             this.handleUpCommentVote = this.handleUpCommentVote.bind()
             this.handleDownCommentVote = this.handleDownCommentVote.bind()
         }
-        getComment = (params)=>{
-            const restaurant_comment_id = this.props.restaurant_comment_key
-            fetch(`http://localhost:8000/api/${params}/?restaurant_comments__id=${restaurant_comment_id}`)
-            .then(response => response.json())
-            .then(data=>{
-                console.log(data)
-            })
-        }
+      
+
         postComment = (params)=>{
             const restaurant_comment_id = this.props.restaurant_comment_key
     
@@ -80,20 +78,42 @@ class ExistingComment extends  React.Component {
                 method: 'POST',
                 body : form
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log(response)
+                if( response.status===500){
+                    console.log(" you can not comment ")
+                }
+                if(response.ok){
+                    return response.json()
+                }
+                
+            })
             .then(data=>{
-                console.log(data)
+                console.log( data)
+                if(data){
+                    if (params==="restaurant-comment-vote-up"){
+                        let new_ups = this.state.ups + 1
+                        this.setState({
+                            ups : new_ups
+                        })
+                    }
+
+                    if (params==="restaurant-comment-vote-down"){
+                        let new_downs = this.state.downs + 1
+                        this.setState({
+                            downs : new_downs
+                        })
+                    }
+                  
+                }
             })
         }
 
         handleUpCommentVote = (event)=>{
             this.postComment("restaurant-comment-vote-up")
-            this.getComment("restaurant-comment-vote-up")
-
         }
 
         handleDownCommentVote = (event)=>{
-            this.postComment("restaurant-comment-vote-down")
             this.postComment("restaurant-comment-vote-down")
         }
         
@@ -125,12 +145,12 @@ class ExistingComment extends  React.Component {
                         <div      className="comment-utils d-flex flex-row align-items-center mt-3">
                             <div onClick={this.handleUpCommentVote} title="up vote">
                                 <i  className="fas fa-chevron-up"></i>
-                                <span  className="text-muted">33 </span>
+                                <span   className="text-muted">{this.state.ups}</span>
                             </div> 
                             . 
                             <div  onClick={this.handleDownCommentVote} title="down vote">
                                 <i  className="fas fa-chevron-down"></i>
-                                <span className="text-muted">33 </span>
+                                <span className="text-muted">{this.state.downs}</span>
                             </div>
                            
                               
