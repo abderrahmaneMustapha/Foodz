@@ -187,8 +187,8 @@ class RestaurantComments(models.Model):
     restaurant  = models.ForeignKey(Restaurant, verbose_name=_("Comment about this restaurant"), on_delete=models.CASCADE,blank=False, null=True)
     comment = models.ForeignKey(Comment, verbose_name=_("Comment text"), on_delete=models.CASCADE,blank=False, null=True)
     review = models.FloatField( verbose_name=_("resturant review"),blank=False, null=True )
-    ups = models.IntegerField(_("number of ups in comment"), blank=True, null=True)
-    downs = models.IntegerField(_("number of downs in comment"), blank=True, null=True)
+    ups = models.IntegerField(_("number of ups in comment"), blank=True, default=0)
+    downs = models.IntegerField(_("number of downs in comment"), blank=True, default=0)
     created_at = models.DateTimeField(_("Comment created at"),auto_now_add=True, null=True)
     updated_at = models.DateTimeField(_('Comment updated at'), auto_now=True, null=True)
     class Meta:
@@ -212,8 +212,12 @@ class ReastaurantCommentsUp(models.Model):
             models.UniqueConstraint(fields=['restaurant_comments', 'user'], name='unique_up_comment_voting')
         ]
     def save(self, *args, **kwargs):
-            self.restaurant_comments.ups +=1
-            self.restaurant_comments.save()  
+            exist  = ReastaurantCommentsUp.objects.filter(restaurant_comments=self.restaurant_comments, user=self.user).exists()
+            if not exist:
+                votes   =  self.restaurant_comments.ups if self.restaurant_comments.ups else 0
+                votes +=1
+                self.restaurant_comments.ups = votes
+                self.restaurant_comments.save()  
             return super(ReastaurantCommentsUp, self).save(*args, **kwargs)
 
 class ReastaurantCommentsDown(models.Model):
@@ -229,8 +233,12 @@ class ReastaurantCommentsDown(models.Model):
             models.UniqueConstraint(fields=['restaurant_comments', 'user'], name='unique_dow_comment_voting')
         ]
     def save(self, *args, **kwargs):
-            self.restaurant_comments.downs +=1
-            self.restaurant_comments.save() 
+            exist  = ReastaurantCommentsDown.objects.filter(restaurant_comments=self.restaurant_comments, user=self.user).exists()
+            if not exist:
+                votes   =  self.restaurant_comments.downs if self.restaurant_comments.downs else 0
+                votes +=1
+                self.restaurant_comments.downs = votes
+                self.restaurant_comments.save() 
             return super(ReastaurantCommentsDown, self).save(*args, **kwargs)
 
 class RestaurantCalendar(models.Model):
