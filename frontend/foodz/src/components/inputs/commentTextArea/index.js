@@ -127,7 +127,7 @@ class ExistingComment extends  React.Component {
                     <div className=" col-md-11 col-sm-8">
                         <header  className="d-md-flex">
                         <h5 className="font-weight-bold mr-4">{this.props.username}</h5>
-                        { this.props.review ?
+                        { this.props.type=="comment" ?
                         <StarRatings 
                                         rating={parseFloat(this.props.review)}
                                         starRatedColor="#FFBF00"
@@ -141,7 +141,7 @@ class ExistingComment extends  React.Component {
                         </header>
                         <div  className="font-weight-light m-2 comment-text">{this.props.text}</div>
 
-                        { this.props.review ?
+                        { this.props.type=="comment" ?
                         <div      className="comment-utils d-flex flex-row align-items-center mt-3">
                             <div onClick={this.handleUpCommentVote} title="up vote">
                                 <i  className="fas fa-chevron-up"></i>

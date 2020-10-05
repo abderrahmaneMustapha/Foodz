@@ -11,6 +11,7 @@ let current_userimage =
 
 class ReplyList extends React.Component {
   constructor(props) {
+    this.abort  = new AbortController()
     super(props);
     this.state = {
       replysList: [],
@@ -48,10 +49,11 @@ class ReplyList extends React.Component {
           });
         });
     });
-    this.setState({
+    await this.setState({
       loading: false,
     });
   };
+ 
 
   render() {
     if (this.state.loading === true) return <div>loading</div>;
@@ -60,7 +62,7 @@ class ReplyList extends React.Component {
         id={"replys-list-" + this.props.data_key}
         className="list-group comment-list-reply"
       >
-        {this.state.replysList
+        {this.state.replysList &&  !this.state.loading
           ? this.state.replysList.map((subelement, index) => (
               <li
                 key={`${subelement.id}-${this.props.data_key}`}
@@ -81,22 +83,27 @@ class ReplyList extends React.Component {
 }
 class CommentList extends React.Component {
   constructor(props) {
+    let _isMounted = false;
     super(props);
     this.state = {
       commentList: [],
+      next_commentList : "",
+      previous_commentList : "",
       loading_comments: true,
       restaurant: this.props.restaurant,
       new_comment_stars: 0,
       new_comment_id: null,
       new_comment_add_loading: true,
     };
+    
     this.handleAddReply = this.handleAddReply.bind();
     this.handleAddComment = this.handleAddComment.bind(this);
     this.handleStarsInNewComment = this.handleStarsInNewComment.bind(this);
   }
 
   componentDidMount() {
-    this.GetRestaurantComments();
+    this._isMounted = true;
+    if(this._isMounted===true) this.GetRestaurantComments();
   }
 
   handleStarsInNewComment = (rating) => {
@@ -105,14 +112,23 @@ class CommentList extends React.Component {
     });
   };
   // get comments for a specific restaurant
-  GetRestaurantComments = () => {
+  GetRestaurantComments = (event) => {
     let result = [];
+    let url = `http://localhost:8000/api/restaurant-comment/?restaurant__id=${this.state.restaurant.id}`
     fetch(
-      `http://localhost:8000/api/restaurant-comment/?restaurant__id=${this.state.restaurant.id}`
+     url
     )
       .then((response) => response.json())
       .then((data) => {
-        data.results.forEach(async (element) => {
+        if (this._isMounted) {
+          this.setState({
+            next_commentList : data.next,
+            previous_commentList : data.previous
+          })     
+        }
+
+  
+         data.results.forEach(async (element) => {
           let comment = {};
           comment.review = element.review ? element.review : 0.0;
           comment.restaurant_id = element.id;
@@ -124,7 +140,7 @@ class CommentList extends React.Component {
           result.push(comment);
 
           // update the state
-          this.setState({
+          await this.setState({
             commentList: result,
             loading_comments: false,
           });
@@ -172,11 +188,12 @@ class CommentList extends React.Component {
             replys: data.replys,
 
           });
-
-          this.setState({
-            commentList: tempCommentList,
-            loading_comments : false,
-          });
+          if (this._isMounted) {
+            this.setState({
+              commentList: tempCommentList,
+              loading_comments : false,
+            });
+          }
           await this.PostRestaurantComment(data.id, this.state.restaurant.id);
         }
         if (type === "reply") await this.PostReply(comment_id, data.id);
@@ -253,10 +270,11 @@ class CommentList extends React.Component {
         element.replys = replys;
       }
     });
-
-    this.setState({
-      commentList: commmentList__,
-    });
+    if (this._isMounted) {
+      this.setState({
+        commentList: commmentList__,
+      });
+    }
   };
 
   handleAddReply = (event) => {
@@ -326,18 +344,24 @@ class CommentList extends React.Component {
     }
   };
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+ 
   render() {
     let loading = this.state.loading_comments;
     return (
       <>
+      <button onClick={this.GetRestaurantComments()}>Next</button>
         <ul id="comment-list" className="list-group">
           <NewComment
             handleRatingChange={this.handleStarsInNewComment}
             myOnClick={this.handleAddComment}
           ></NewComment>
-          {loading === false ? (
+          {loading === false  && this._isMounted ? (
             <>
               {this.state.commentList.map((element) => (
+
                 <li
                   data-key={element.id}
                   key={element.id}
@@ -354,11 +378,14 @@ class CommentList extends React.Component {
                     review={element.review}
                     ups={element.ups}
                     downs={element.downs}
+                    type="comment"
                   />
+                  
                   <ReplyList
                     data_key={element.id}
                     replysList={element.replys}
-                  />
+                    type="reply"
+                  /> 
                 </li>
               ))}{" "}
             </>
@@ -366,6 +393,7 @@ class CommentList extends React.Component {
             <div>Loading</div>
           )}
         </ul>
+        
       </>
     );
   }
