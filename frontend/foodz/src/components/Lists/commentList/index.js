@@ -82,11 +82,13 @@ class ReplyList extends React.Component {
 class CommentList extends React.Component {
   constructor(props) {
     super(props);
-  
+
     this.state = {
       commentList: [],
       next_commentList: "",
       previous_commentList: "",
+      page: 1,
+      total_pages: 0,
       loading_comments: true,
       restaurant: this.props.restaurant,
       new_comment_stars: 0,
@@ -100,29 +102,56 @@ class CommentList extends React.Component {
     this.getComment = this.getComment.bind(this);
     this.PostComment = this.PostComment.bind(this);
     this.PostReply = this.PostReply.bind(this);
+    this.handleNextCommentsPage = this.handleNextCommentsPage.bind(this);
+    this.handlePreviousCommentsPage = this.handlePreviousCommentsPage.bind(
+      this
+    );
   }
 
   async componentDidMount() {
-
     await this.GetRestaurantComments();
-   
   }
 
+  handleNextCommentsPage = (event) => {
+    event.preventDefault()
+    if(this.state.next_commentList){
+      let page = this.state.page;
+      page += 1;
+      this.setState({
+        page: page,
+      });
+      this.GetRestaurantComments();
+    }
+  };
+
+  handlePreviousCommentsPage = (event) => {
+    event.preventDefault()
+    if(this.state.previous_commentList){
+      let page = this.state.page;
+      page -= 1;
+      this.setState({
+        page: page,
+      });
+      this.GetRestaurantComments();
+    }
+  
+  };
   handleStarsInNewComment = (rating) => {
     this.setState({
       new_comment_stars: rating,
     });
   };
   // get comments for a specific restaurant
-  GetRestaurantComments =async (event) => {
+  GetRestaurantComments = async (event) => {
     let result = [];
-    let url = `http://localhost:8000/api/restaurant-comment/?restaurant__id=${this.state.restaurant.id}&page=1`;
+    let url = `http://localhost:8000/api/restaurant-comment/?restaurant__id=${this.state.restaurant.id}&page=${this.state.page}`;
     await fetch(url)
       .then((response) => response.json())
       .then(async (data) => {
-       await this.setState({
+        await this.setState({
           next_commentList: data.next,
           previous_commentList: data.previous,
+          total_pages: data.total_pages,
         });
 
         await data.results.forEach(async (element) => {
@@ -135,21 +164,13 @@ class CommentList extends React.Component {
 
           // add the comment to the results
           await result.push(comment);
-              // update the state
+          // update the state
           this.setState({
             commentList: result,
             loading_comments: false,
           });
-         
         });
-      
-      
-        
       });
-
-    
-      
-    
   };
   /// get comment
   getComment = async (data, comment) => {
@@ -346,57 +367,91 @@ class CommentList extends React.Component {
     }
   };
 
-  
-
   render() {
-    if( this.state.loading_comments==true) return <div>Loading ...</div>
-    else
-    return (
+   
+    if (this.state.loading_comments == true) return <div>Loading ...</div>;
+    else {
+    console.log("total pages ", this.state.total_pages)
+    let pages = Array.from({length:this.state.total_pages}, Number.call, i => i + 1)
+    console.log(pages)
+      return (
+        <>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+            {this.state.previous_commentList ? (
+              <li   id="go-previous" class="page-item disabled"  onClick={this.handlePreviousCommentsPage}>
+                <a class="page-link" href="" tabindex="-1">
+                  Previous
+                </a>
+              </li>
+          ) : undefined}
+              { pages.map(element=>(
+                <li class={`page-item ${
+                  this.state.page ===element ? "active" : ""
+                }`}>
+                <a class="page-link" href="">
+                  {element}
+                </a>
+              </li>
+              ))}
+              
+             
+              {this.state.next_commentList ? (
+                <li id="go-next" class="page-item" onClick={this.handleNextCommentsPage}>
+                <a class="page-link" href="">
+                  Next
+                </a>
+              </li>
+          ) : undefined}
+             
+            </ul>
+          </nav>
+          
+         
 
-      <>
-        <button onClick={this.GetRestaurantComments}>Next</button>
-        <ul id="comment-list" className="list-group">
-          <NewComment
-            handleRatingChange={this.handleStarsInNewComment}
-            myOnClick={this.handleAddComment}
-          ></NewComment>
-          {this.state.loading_comments === false ? (
-            <>
-              {this.state.commentList.map((element) => (
-                <li
-                  data-key={element.id}
-                  key={element.id}
-                  className="list-group-item"
-                >
-                  <ExistingComment
-                    data_key={element.id}
-                    restaurant_comment_key={element.restaurant_id}
-                    handleAddReply={this.handleAddReply}
-                    classPlus="main-exisiting-comment-container"
-                    text={element.text}
-                    username={element.username}
-                    photo={element.photo}
-                    review={element.review}
-                    ups={element.ups}
-                    downs={element.downs}
-                    type="comment"
-                  />
+          <ul id="comment-list" className="list-group">
+            <NewComment
+              handleRatingChange={this.handleStarsInNewComment}
+              myOnClick={this.handleAddComment}
+            ></NewComment>
+            {this.state.loading_comments === false ? (
+              <>
+                {this.state.commentList.map((element) => (
+                  <li
+                    data-key={element.id}
+                    key={element.id}
+                    className="list-group-item"
+                  >
+                    <ExistingComment
+                      data_key={element.id}
+                      restaurant_comment_key={element.restaurant_id}
+                      handleAddReply={this.handleAddReply}
+                      classPlus="main-exisiting-comment-container"
+                      text={element.text}
+                      username={element.username}
+                      photo={element.photo}
+                      review={element.review}
+                      ups={element.ups}
+                      downs={element.downs}
+                      type="comment"
+                    />
 
-                  <ReplyList
-                    data_key={element.id}
-                    replysList={element.replys}
-                    type="reply"
-                  />
-                </li>
-              ))}{" "}
-            </>
-          ) : (
-            <div>Loading</div>
-          )}
-        </ul>
-      </>
-    );
+                    <ReplyList
+                      data_key={element.id}
+                      replysList={element.replys}
+                      type="reply"
+                    />
+                  </li>
+                ))}{" "}
+              </>
+            ) : (
+              <div>Loading</div>
+            )}
+          </ul>
+        </>
+      );
   }
+}
 }
 
 export { CommentList, ReplyList };
