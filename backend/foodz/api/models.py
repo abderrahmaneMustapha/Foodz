@@ -196,7 +196,14 @@ class RestaurantComments(models.Model):
         verbose_name = _("Comment")            
         verbose_name_plural = _("Comments")
     def save(self, *args, **kwargs):
-            ''' On save, update timestamps '''
+            total_review = self.restaurant.total_review if self.restaurant.total_review else 0
+            review = self.review if self.review else 0
+            rest_review_number = RestaurantComments.objects.filter(restaurant=self.restaurant).count() 
+            review = review / int(rest_review_number if rest_review_number else 1)
+            total_review += int(review)
+            self.restaurant.total_review = total_review
+            self.restaurant.save()
+            print("total review " ,self.restaurant.total_review)
             return super(RestaurantComments, self).save(*args, **kwargs)
 
 class ReastaurantCommentsUp(models.Model):
