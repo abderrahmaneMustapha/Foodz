@@ -79,7 +79,7 @@ class RestaurantList extends React.Component{
                                 starSpacing="1px"
                             ></StarRatings>
                             <br></br> 
-                             <span className="text-muted ">20 ratings</span>
+                             <span className="text-muted ">{`${element.number_of_reviews || 0 } ratings`}</span>
                             </td>
                         </Link>
                         ))}

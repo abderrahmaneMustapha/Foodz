@@ -369,8 +369,7 @@ class CommentList extends React.Component {
 
   render() {
    
-    if (this.state.loading_comments == true) return <div>Loading ...</div>;
-    else {
+ 
     console.log("total pages ", this.state.total_pages)
     let pages = Array.from({length:this.state.total_pages}, Number.call, i => i + 1)
     console.log(pages)
@@ -452,6 +451,6 @@ class CommentList extends React.Component {
       );
   }
 }
-}
+
 
 export { CommentList, ReplyList };
