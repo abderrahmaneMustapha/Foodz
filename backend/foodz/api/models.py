@@ -61,10 +61,10 @@ class Food(models.Model):
     class Meta:
         verbose_name = _("Food")            
         verbose_name_plural = _("Foods")
+        ordering = ['-created_at']
     def __str__(self):
         return self.name
     def save(self, *args, **kwargs):
-        ''' On save, update timestamps '''
         return super(Food, self).save(*args, **kwargs)
 
 
@@ -113,7 +113,8 @@ class Restaurant(models.Model):
     foods = models.ManyToManyField(Food,verbose_name="Restraurant foods",blank=True)
     rank = models.IntegerField("Restaurant rank", default=-1)
     restaurant_open = models.BooleanField('Restaurant is open now', default=False)
-    total_review = models.IntegerField('Total restaurant reviews', default=0)
+    total_review = models.FloatField('Total restaurant reviews', default=0)
+    number_of_reviews = models.IntegerField("Number of reviews", default=0)
     photos = models.ManyToManyField(Photos, verbose_name="Restaurant photos",blank=True)
     created_at = models.DateTimeField(_("Restaurant created at"), auto_now_add=True,null=True,blank=False)
     updated_at = models.DateTimeField(_('Restaurant updated at'), auto_now=True, null=True, blank=False)
@@ -121,6 +122,7 @@ class Restaurant(models.Model):
     class Meta:
         verbose_name = _("Restaurant")            
         verbose_name_plural = _("Restaurants")
+        ordering = ["-number_of_reviews", '-total_review']
     def __str__(self):
         return str(self.name)
     def save(self, *args, **kwargs):
@@ -193,15 +195,18 @@ class RestaurantComments(models.Model):
     updated_at = models.DateTimeField(_('Comment updated at'), auto_now=True, null=True)
     class Meta:
         ordering = ["-created_at"]
-        verbose_name = _("Comment")            
-        verbose_name_plural = _("Comments")
+        verbose_name = _("Restaurant Comment")            
+        verbose_name_plural = _("Reataurats Comments")
     def save(self, *args, **kwargs):
             total_review = self.restaurant.total_review if self.restaurant.total_review else 0
             review = self.review if self.review else 0
             rest_review_number = RestaurantComments.objects.filter(restaurant=self.restaurant).count() 
             review = review / int(rest_review_number if rest_review_number else 1)
-            total_review += int(review)
+            total_review += review
             self.restaurant.total_review = total_review
+            number_of_reviews__  = self.restaurant.number_of_reviews 
+            number_of_reviews__ +=1
+            self.restaurant.number_of_reviews  = number_of_reviews__
             self.restaurant.save()
             print("total review " ,self.restaurant.total_review)
             return super(RestaurantComments, self).save(*args, **kwargs)
