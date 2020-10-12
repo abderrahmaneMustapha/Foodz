@@ -57,9 +57,7 @@ class Search extends React.Component {
             query:params.query
         })
         
-        fetchFood()
-  
-        
+        fetchFood()        
     }
 
     handleSearch = (event)=>{

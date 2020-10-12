@@ -5,10 +5,14 @@ from .models import (CustomUser as User,Locations,Restaurant,RestaurantPromotion
 from rest_framework import serializers
 
 
+class UserCreationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", 'email', ]
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'id','first_name', 'last_name', 'email','date_birth', 'adress', 'wilayas', 'current_location', 'last_location', 'groups', ]
+        fields = ['url', 'id','key','first_name', 'last_name', 'email','date_birth', 'adress', 'wilayas', 'current_location', 'last_location', 'groups', ]
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):

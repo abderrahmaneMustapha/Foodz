@@ -5,7 +5,7 @@ from django.utils import timezone
 from datetime import datetime
 from django.utils.text import slugify
 from .managers import CustomUserManager
-
+import uuid
 from phonenumber_field.modelfields import PhoneNumberField
 
 class Photos(models.Model):
@@ -30,6 +30,7 @@ class Locations(models.Model):
 ## user models
 class CustomUser(AbstractUser):
     username = None
+    key  = models.UUIDField(_("user key"),unique=True, default=uuid.uuid4, editable=False)
     first_name = models.CharField(_("first name"), max_length=150)
     last_name = models.CharField(_("last name"), max_length=150)
     date_birth = models.DateField(_("date of birth"), auto_now=False, auto_now_add=False, null=True, blank=True)
