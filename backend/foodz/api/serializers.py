@@ -6,13 +6,19 @@ from rest_framework import serializers
 
 
 class UserCreationSerializer(serializers.ModelSerializer):
+    def create(self, validate_data):
+        user =  User.objects.create_user(first_name=validate_data['first_name'], last_name=validate_data['last_name'],
+            email=validate_data['email'], password=validate_data['password'], date_birth=validate_data['date_birth'],
+            adress=validate_data['adress'], wilayas=validate_data['wilayas'])
+
     class Meta:
         model = User
-        fields = ["first_name", "last_name", 'email', ]
+        fields = ["first_name", "last_name", 'email','password', 'date_birth', 'adress', 'wilayas']
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'id','key','first_name', 'last_name', 'email','date_birth', 'adress', 'wilayas', 'current_location', 'last_location', 'groups', ]
+        fields = ['url', 'id', 'key','first_name', 'last_name', 'email', 'date_birth', 'adress', 'wilayas', 'current_location', 'last_location', 'groups', ]
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):

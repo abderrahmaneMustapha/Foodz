@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import viewsets, generics, filters as rest_filters
 from rest_framework import permissions
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from .serializers import *
 from .models import (Locations, Restaurant,Reviews, RestaurantCalendar, RestaurantPromotion,
@@ -12,6 +14,13 @@ from .filters import RestaurantFilters, RestaurantCommentsFilters,RestaurantComm
 from django_filters import rest_framework as filters
 
 
+class UserCreateViewSet(APIView):
+    """ 
+    Creates the user. 
+    """
+
+    def post(self, request, format='json'):
+        return Response('hello')
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
