@@ -46,20 +46,19 @@ class Search extends React.Component {
     componentDidMount(){
         // fetch data from api    
         const {fetchRestaurant, fetchFood} = this.props
-
+        console.log("a search query ", this.props.location.search)
         // get current query from url
         let params = queryString.parse(this.props.location.search)
         // full query from url
         let search = getFiltersFromUrl(params)
-        this.props.fetchRestaurant(search)
+        fetchRestaurant(search)
 
         this.setState({
             query:params.query
-    
         })
         
         fetchFood()
-        fetchRestaurant()    
+  
         
     }
 

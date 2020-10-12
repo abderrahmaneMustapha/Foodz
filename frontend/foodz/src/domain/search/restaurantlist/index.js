@@ -6,10 +6,7 @@ import { Link } from 'react-router-dom';
 
 import "./restaurant.css"
 class RestaurantList extends React.Component{
-    constructor(props){
-        super(props)
-       
-    }
+   
  
     // show filter sidebar
     handleFiltersShow = (e)=>{

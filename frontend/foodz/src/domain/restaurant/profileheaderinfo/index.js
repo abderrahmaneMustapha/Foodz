@@ -38,14 +38,17 @@ class ProfileHeaderInfo extends React.Component {
           <div className=" d-flex flex-wrap justify-content-between align-items-center">
             <div className="d-flex align-items-center">
               <StarRatings
-                rating={parseFloat(this.props.rating ? this.props.rating :0 )}
+                rating={parseFloat(this.props.rating ? this.props.rating : 0)}
                 starRatedColor="#FFBF00"
                 numberOfStars={5}
                 name="rating"
                 starDimension="1.3em"
                 starSpacing="1px"
               ></StarRatings>
-              <span className="text-muted pt-1 ml-1"> {`${this.props.number_of_reviews } ratings`}</span>
+              <span className="text-muted pt-1 ml-1">
+                {" "}
+                {`${this.props.number_of_reviews} ratings`}
+              </span>
             </div>
 
             <div className="">
