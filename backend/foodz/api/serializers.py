@@ -3,14 +3,24 @@ from .models import (CustomUser as User,Locations,Restaurant,RestaurantPromotion
                 Reviews, RestaurantCalendar, Photos, Food, FoodReview, RestaurantType, Comment, 
                 RestraurantReview,RestaurantService, ReastaurantCommentsDown, ReastaurantCommentsUp)
 from rest_framework import serializers
-
+from rest_framework.validators import UniqueValidator
 
 class UserCreationSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+            required=True,
+            validators=[UniqueValidator(queryset=User.objects.all())]
+            )
+    first_name =  serializers.CharField(max_length=200)
+    last_name =  serializers.CharField(max_length=200)
+    date_birth = serializers.DateField()
+    adress=  serializers.CharField(max_length=200)
+    wilayas =  serializers.CharField(max_length=100)
+    password = serializers.CharField(min_length=8, write_only=True)
     def create(self, validate_data):
         user =  User.objects.create_user(first_name=validate_data['first_name'], last_name=validate_data['last_name'],
             email=validate_data['email'], password=validate_data['password'], date_birth=validate_data['date_birth'],
             adress=validate_data['adress'], wilayas=validate_data['wilayas'])
-
+        return user
     class Meta:
         model = User
         fields = ["first_name", "last_name", 'email','password', 'date_birth', 'adress', 'wilayas']

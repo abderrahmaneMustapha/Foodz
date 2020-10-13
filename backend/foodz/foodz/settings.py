@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',    
     'api',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_filters',
     'corsheaders',
 ]
@@ -77,12 +78,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 25,
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        
-        'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-        'rest_framework.authentication.SessionAuthentication',
-        
+    
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
     ]
 }
 

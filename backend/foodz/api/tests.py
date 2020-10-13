@@ -3,8 +3,8 @@ from rest_framework.test import APITestCase
 from django.test import Client
 from .models import CustomUser as User
 from rest_framework import status
-
-
+from datetime import date
+from rest_framework.authtoken.models import Token
 class USerCreationTest(APITestCase):
    
     def setUp(self):
@@ -20,13 +20,21 @@ class USerCreationTest(APITestCase):
         data = {
             'first_name': 'test', 
             'last_name': 'user', 
-            'email': 'testuser@test.com', 
+            'email': 'testusbselor@test.com', 
             'password' : 'passworD1234',
-            'date_birth': '12-5-2019', 
+            'date_birth': date.fromisoformat('2019-05-12'), 
             'adress' : "mohamed djanhlen tiaret",
-            'wilaya': 'tiaret'
+            'wilayas': 'tiaret'
         }
         c = Client()
         response = c.post(self.create_user_url, data, format="json")
-
-        self.assertEqual(User.objects.count(), 2)
+        #self.assertEqual(User.objects.count(), 2)
+        #self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        #self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        user = User.objects.latest('id')
+        
+        token = Token.objects.get(user=user)
+        self.assertEqual(response.data['token'], token.key)
+            
+        self.assertFalse('password' in response.data)
+      

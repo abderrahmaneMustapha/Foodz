@@ -5,8 +5,9 @@ from rest_framework import viewsets, generics, filters as rest_filters
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
+from rest_framework import status
 from .serializers import *
+from rest_framework.authtoken.models import Token
 from .models import (Locations, Restaurant,Reviews, RestaurantCalendar, RestaurantPromotion,
                     Food, RestaurantService,RestaurantType, RestaurantComments, Comment,ReastaurantCommentsDown,
                     ReastaurantCommentsUp )
@@ -18,9 +19,18 @@ class UserCreateViewSet(APIView):
     """ 
     Creates the user. 
     """
-
     def post(self, request, format='json'):
-        return Response('hello')
+        serializer = UserCreationSerializer(data=request.data)
+        print("helllooo")
+        if serializer.is_valid():
+            user = serializer.save()
+            if user:
+                token = Token.objects.create(user=user)
+                json = serializer.data
+                json['token'] = token.key
+                return Response(json, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
