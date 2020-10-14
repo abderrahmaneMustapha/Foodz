@@ -18,8 +18,8 @@ class TNavBar extends React.Component{
           <a className="navbar-brand ml-md-auto " href="#">Logo</a>    
 
           <ul className="navbar-nav d-flex flex-row ml-md-auto  w-20 ">
-            <li className="nav-item mx-3"><a className="nav-link black-link  p-0 " href="#">Login</a></li>
-            <li className="nav-item mx-3"><a className="nav-link black-link p-0" href="#">Signup</a></li>
+            <li className="nav-item mx-3"><a className="nav-link black-link  p-0 " href="/login">Login</a></li>
+            <li className="nav-item mx-3"><a className="nav-link black-link p-0" href="/signup">Signup</a></li>
           </ul>
         </nav>
         <div className="collapse w-100" id="navbarToggleExternalContent">

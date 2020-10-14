@@ -4,7 +4,7 @@ import ReactDOMServer from "react-dom/server";
 import {
   ExistingComment,
   NewComment,
-} from "../../inputs/commentTextArea/index";
+} from "../../inputs/text/index";
 let current_username = "Mustapha";
 let current_userimage =
   "https://scontent-mrs2-1.xx.fbcdn.net/v/t1.0-1/p240x240/91818612_100248741644513_2244727394118139904_n.jpg?_nc_cat=109&_nc_sid=dbb9e7&_nc_ohc=Jh8mckF5fyYAX889OWa&_nc_ht=scontent-mrs2-1.xx&tp=6&oh=3809d73d2fd0904a2ae191f08e2ead08&oe=5F6DEDF1";

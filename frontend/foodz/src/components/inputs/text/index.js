@@ -181,8 +181,16 @@ class ExistingComment extends  React.Component {
 
 }
 
+class TextInput extends React.Component{
+
+    render(){
+        return(
+            <input type={this.props.text} className="form-control" placeholder={this.props.placeholder} />
+        )
+    }
+}
 
 
 
-export {ExistingComment, NewComment }
+export {ExistingComment, NewComment, TextInput }
 

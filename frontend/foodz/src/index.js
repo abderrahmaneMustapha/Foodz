@@ -18,6 +18,7 @@ import Restaurant from './domain/restaurant/index'
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
+import { SigninPage, SignupPage } from "./domain/registration/index"
 const history = createBrowserHistory();
 console.log(store.getState())
 
@@ -31,7 +32,9 @@ ReactDOM.render(
 
         <Route path="/restaurants/:name" component={Restaurant} />
         <Route path='/search' component={Search} />      
-        <Route path='/' component={Home} />
+        <Route  exact path='/' component={Home} />
+        <Route  exact path='/signup' component={SignupPage}  />
+        <Route exact  path='/login' component={SigninPage}  />
 
       </Switch>
     
