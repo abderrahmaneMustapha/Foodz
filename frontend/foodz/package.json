@@ -7,6 +7,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.5.2",
+    "formik": "^2.2.0",
     "jquery": "^3.5.1",
     "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",
@@ -20,7 +21,8 @@
     "react-star-ratings": "^2.3.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "swiper": "^6.1.2"
+    "swiper": "^6.1.2",
+    "yup": "^0.29.3"
   },
   "scripts": {
     "start": "react-scripts start",
