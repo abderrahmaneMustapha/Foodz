@@ -12,7 +12,7 @@ class UserCreationSerializer(serializers.ModelSerializer):
             )
     first_name =  serializers.CharField(max_length=200)
     last_name =  serializers.CharField(max_length=200)
-    date_birth = serializers.DateField()
+    date_birth = serializers.DateField(required=False)
     adress=  serializers.CharField(max_length=200)
     wilayas =  serializers.CharField(max_length=100)
     password = serializers.CharField(min_length=8, write_only=True)

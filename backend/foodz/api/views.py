@@ -21,7 +21,6 @@ class UserCreateViewSet(APIView):
     """
     def post(self, request, format='json'):
         serializer = UserCreationSerializer(data=request.data)
-        print("helllooo")
         if serializer.is_valid():
             user = serializer.save()
             if user:
@@ -31,6 +30,7 @@ class UserCreateViewSet(APIView):
                 return Response(json, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
