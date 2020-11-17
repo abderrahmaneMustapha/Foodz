@@ -1,9 +1,21 @@
 import React from "react";
-import { TextInput } from "../inputs/text/index";
-import { Button } from "../inputs/buttons/index";
+
 import { Link } from "react-router-dom";
 import { Formik } from "formik";
+
 import { SingupValidationSchema } from "./schemas/index";
+
+/* me */
+import { TextInput } from "../inputs/text/index";
+import { Button } from "../inputs/buttons/index";
+
+ /* actions */
+import {fetchSignupUSer as  fetchSignupUSerAction} from "../../api/authApi/index"
+
+/* redux */
+import {getQuery, getUserSignup, getUserSignupError, getUserSignupPending} from "../../reducer/Auth/registrationReducer"
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 export class SignupForm extends React.Component {
     render() {
         return (
@@ -160,3 +172,10 @@ export class SignupForm extends React.Component {
         );
     }
 }
+
+const mapStateToProps =  state=>({
+    query :  getQuery(state.signup),
+    errors :  getUserSignupError(state.signup),
+    user :  getUserSignup(state.signup),
+    pending : getUserSignupPending(state.signup),
+})

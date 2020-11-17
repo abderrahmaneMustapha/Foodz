@@ -3,7 +3,7 @@ import {
     fetchSignupUserError,
     fetchSignupUserSuccess,
     fetchSignupUserPending,
-} from "../../reducer/Registration/registationActions";
+} from "../../reducer/Auth/registationActions";
 export let fetchSignupUSer = (values) => {
     return (dispatch) => {
         dispatch(fetchSignupUserPending);
