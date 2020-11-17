@@ -23,5 +23,5 @@ router.register(r'food', views.FoodViewsSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('create-account', views.UserCreateViewSet.as_view(), name="create-account" )
+    path('create-account/', views.UserCreateViewSet.as_view(), name="create-account" )
 ]
