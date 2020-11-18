@@ -10,9 +10,10 @@ function fetchSignupUserPending(){
     }
 }
 
-function fetchSignupUserSuccess(){
+function fetchSignupUserSuccess(user){
     return {
-        type : FETCH_SUIGNUP_USER_SUCCESS 
+        type : FETCH_SUIGNUP_USER_SUCCESS,
+        user : user
     }
 }
 

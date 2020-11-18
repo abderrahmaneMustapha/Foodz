@@ -4,8 +4,11 @@ import {
     fetchSignupUserSuccess,
     fetchSignupUserPending,
 } from "../../reducer/Auth/registationActions";
-export let fetchSignupUSer = (values) => {
+
+export const fetchSignupUSer = (values) => {
+
     return (dispatch) => {
+        console.log("dispatch " , dispatch)
         dispatch(fetchSignupUserPending);
         let form_data = new FormData();
         form_data.append("first_name", values.first_name);
