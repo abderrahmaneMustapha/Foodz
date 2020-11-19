@@ -7,6 +7,7 @@ const initialState = {
 }
 
 export function signupReducer( state=initialState, action){
+    console.log("action : " , action)
     switch(action.type){
         case FETCH_SIGNUP_USER_PENDING:
             return {
@@ -23,7 +24,7 @@ export function signupReducer( state=initialState, action){
             return{
                 ...state,
                 user_pending  : false,
-                user_errors: action.user_errors
+                user_errors:action.user_errors
             }
         default : 
             return state
@@ -33,4 +34,4 @@ export function signupReducer( state=initialState, action){
 
 export const getUserSignup = state => state.user
 export const getUserSignupPending  = state => state.user_pending  
-export const getUserSignupError = state => state. user_errors
+export const getUserSignupError = state => state.user_errors

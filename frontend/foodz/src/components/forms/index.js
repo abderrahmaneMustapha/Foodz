@@ -9,19 +9,10 @@ import { SingupValidationSchema } from "./schemas/index";
 import { TextInput } from "../inputs/text/index";
 import { Button } from "../inputs/buttons/index";
 
-/* actions */
-import { fetchSignupUSer } from "../../api/authApi/index";
 
-/* redux */
-import {
-    getUserSignup,
-    getUserSignupError,
-    getUserSignupPending,
-} from "../../reducer/Auth/registrationReducer";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 export class SignupForm extends React.Component {
+    
     render() {
         return (
             <Formik
@@ -36,7 +27,7 @@ export class SignupForm extends React.Component {
                 }}
                 validationSchema={SingupValidationSchema}
                 onSubmit={(values) => {
-                    console.log(this.props);
+                    this.props.submit(values)
                 }}
             >
                 {({
@@ -178,19 +169,3 @@ export class SignupForm extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    user_errors: getUserSignupError(state.signup),
-    user: getUserSignup(state.signup),
-    user_pending: getUserSignupPending(state.signup),
-});
-
-const mapDispatchToProps = (dispatch) =>
-
-    bindActionCreators(
-        {
-            fetchSignupUSer,
-        },
-        dispatch
-    );
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);

@@ -6,10 +6,10 @@ import {
 } from "../../reducer/Auth/registationActions";
 
 export const fetchSignupUSer = (values) => {
-
+    console.log(values)
     return (dispatch) => {
         console.log("dispatch " , dispatch)
-        dispatch(fetchSignupUserPending);
+        dispatch(fetchSignupUserPending());
         let form_data = new FormData();
         form_data.append("first_name", values.first_name);
         form_data.append("last_name", values.last_name);

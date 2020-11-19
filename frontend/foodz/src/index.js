@@ -18,9 +18,9 @@ import Restaurant from './domain/restaurant/index'
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
-import { SigninPage, SignupPage } from "./domain/registration/index"
+import SignupPage , { SigninPage } from "./domain/registration/index"
 const history = createBrowserHistory();
-console.log(store.getState())
+
 
 
 ReactDOM.render(

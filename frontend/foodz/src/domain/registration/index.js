@@ -1,19 +1,36 @@
 import React from "react";
 import { SignupForm } from "../../components/forms/index";
-export class SignupPage extends React.Component {
+
+/* actions */
+import { fetchSignupUSer as  fetchSignupUserAction } from "../../api/authApi/index";
+
+/* redux */
+import {
+    getUserSignup,
+    getUserSignupError,
+    getUserSignupPending,
+} from "../../reducer/Auth/registrationReducer";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+ class SignupPage extends React.Component {
+   componentDidMount(){
+     console.log(this.props)
+   }
   render() {
+     
     return (
       <div>
         <h3 className="h3">Signup</h3>
         <div className="w-75 mx-auto">
-          <SignupForm />
+          <SignupForm  submit={this.props.fetchSignupUSer} />
         </div>
       </div>
     );
   }
 }
 
-export class SigninPage extends React.Component {
+ export class SigninPage extends React.Component {
   render() {
     return (
       <div>
@@ -22,3 +39,24 @@ export class SigninPage extends React.Component {
     );
   }
 }
+
+
+const mapStateToProps = (state) => ({
+  user_errors: getUserSignupError(state.signup),
+  user: getUserSignup(state.signup),
+  user_pending: getUserSignupPending(state.signup),
+});
+
+
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+      {
+          fetchSignupUSer : fetchSignupUserAction,
+      },
+      dispatch
+  );
+
+
+
+export  default connect(mapStateToProps, mapDispatchToProps)( SignupPage);
