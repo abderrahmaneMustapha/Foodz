@@ -11,9 +11,11 @@ function fetchSignupUserPending(){
 }
 
 function fetchSignupUserSuccess(user){
+       
     return {
         type : FETCH_SUIGNUP_USER_SUCCESS,
-        user : user
+        user : user,
+        auth : true
     }
 }
 

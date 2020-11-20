@@ -6,9 +6,9 @@ import {
 } from "../../reducer/Auth/registationActions";
 
 export const fetchSignupUSer = (values) => {
-    console.log(values)
+    console.log(values);
     return (dispatch) => {
-        console.log("dispatch " , dispatch)
+        console.log("dispatch ", dispatch);
         dispatch(fetchSignupUserPending());
         let form_data = new FormData();
         form_data.append("first_name", values.first_name);
@@ -25,19 +25,19 @@ export const fetchSignupUSer = (values) => {
         })
             .then((res) => res.json())
             .then((data) => {
-                if (data.error){
-                    throw(data.error)
+                
+                if (!data.token) {
+                    dispatch(fetchSignupUserError(data));
+                    return data;
                 }
-                dispatch(fetchSignupUserSuccess(data))
-                try {
-                    localStorage.setItem("token", data.token);
-                } catch (e) {
-                    document.cookie = `token=${data.token}`;
-                }
-                return data
+
+                dispatch(fetchSignupUserSuccess(data));
+                localStorage.setItem("user", JSON.stringify(data));
+                return data;
+                
             })
             .catch((error) => {
-                dispatch(fetchSignupUserError(error))
+                dispatch(fetchSignupUserError(error));
             });
     };
 };

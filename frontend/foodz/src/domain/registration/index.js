@@ -9,6 +9,7 @@ import {
     getUserSignup,
     getUserSignupError,
     getUserSignupPending,
+    getUserSignupAuth
 } from "../../reducer/Auth/registrationReducer";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -45,6 +46,7 @@ const mapStateToProps = (state) => ({
   user_errors: getUserSignupError(state.signup),
   user: getUserSignup(state.signup),
   user_pending: getUserSignupPending(state.signup),
+  auth :  getUserSignupAuth(state.signup)
 });
 
 

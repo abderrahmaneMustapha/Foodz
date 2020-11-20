@@ -3,11 +3,12 @@ import {FETCH_SIGNUP_USER_PENDING, FETCH_SUIGNUP_USER_SUCCESS, FETCH_SUIGNUP_USE
 const initialState = {
     user_pending  : true,
     user  : '',
-    user_errors : null
+    user_errors : null,
+    auth : false
 }
 
 export function signupReducer( state=initialState, action){
-    console.log("action : " , action)
+   
     switch(action.type){
         case FETCH_SIGNUP_USER_PENDING:
             return {
@@ -19,12 +20,14 @@ export function signupReducer( state=initialState, action){
                 ...state,
                 user_pending  :  false,
                 user : action.user,
+                auth : true,
             }
         case FETCH_SUIGNUP_USER_ERROR:
             return{
                 ...state,
                 user_pending  : false,
-                user_errors:action.user_errors
+                user_errors:action.user_errors,
+                auth :  false,
             }
         default : 
             return state
@@ -35,3 +38,4 @@ export function signupReducer( state=initialState, action){
 export const getUserSignup = state => state.user
 export const getUserSignupPending  = state => state.user_pending  
 export const getUserSignupError = state => state.user_errors
+export const getUserSignupAuth  = state => state.auth
