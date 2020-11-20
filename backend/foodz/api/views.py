@@ -36,6 +36,24 @@ class UserCreateViewSet(APIView):
         #bad request 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class LoginViewSet(APIView):
+    def post(self, request, format="json"):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.validate()
+            if user : 
+                
+                token = Token.objects.get(user=user)
+                json = serializer.data
+
+                #generate token
+                json['token'] = token.key
+
+                #success
+                return Response(json, status=status.HTTP_201_CREATED)
+        
+        #bad request 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.

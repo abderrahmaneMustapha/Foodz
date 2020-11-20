@@ -37,4 +37,7 @@ class USerCreationTest(APITestCase):
         self.assertEqual(response.data['token'], token.key)
             
         self.assertFalse('password' in response.data)
-      
+
+
+class UserSigninTest(APITestCase):
+    pass

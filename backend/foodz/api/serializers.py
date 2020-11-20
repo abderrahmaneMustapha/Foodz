@@ -1,9 +1,16 @@
 from django.contrib.auth.models import  Group
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import update_last_login
+
+from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
+from rest_framework.authtoken.models import Token
+
 from .models import (CustomUser as User,Locations,Restaurant,RestaurantPromotion, RestaurantComments, 
                 Reviews, RestaurantCalendar, Photos, Food, FoodReview, RestaurantType, Comment, 
                 RestraurantReview,RestaurantService, ReastaurantCommentsDown, ReastaurantCommentsUp)
-from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
+
+
 
 class UserCreationSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
@@ -24,6 +31,30 @@ class UserCreationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["first_name", "last_name", 'email','password', 'date_birth', 'adress', 'wilayas']
+
+class LoginSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        required=True,
+        )
+    password = serializers.CharField(min_length=8, required=True )
+    
+    def validate(self, data):
+        email = data.get("email", None)
+        password = data.get("password", None)
+     
+        user = authenticate(email=email, password=password)
+
+        if user is None:
+            raise serializers.ValidationError(
+                'A user with this email and password is not found.'
+            )
+       
+        return user
+    
+    class Meta :
+        model = User
+        fields = ['email','password']
+
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
