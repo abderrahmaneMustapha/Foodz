@@ -32,7 +32,6 @@ class USerCreationTest(APITestCase):
         #self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         #self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         user = User.objects.latest('id')
-        
         token = Token.objects.get(user=user)
         self.assertEqual(response.data['token'], token.key)
             
@@ -40,4 +39,16 @@ class USerCreationTest(APITestCase):
 
 
 class UserSigninTest(APITestCase):
-    pass
+    def setUp(self):
+        self.login_user_url = reverse('create-account')
+    def test_signin_user(self):
+        data ={
+            "email" : "abdmusttoumi@gmail.com",
+            "password": "JfT7mD@8wZQgv8R"
+        }
+
+        c =  Client()
+
+        response =  c.post(self.login_user_url, data, format="json")
+        print(response)
+        self.assertEqual(response.data, status.HTTP_400_BAD_REQUEST)

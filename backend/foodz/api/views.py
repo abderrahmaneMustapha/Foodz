@@ -36,7 +36,7 @@ class UserCreateViewSet(APIView):
         #bad request 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class LoginViewSet(APIView):
+class UserLoginViewSet(APIView):
     def post(self, request, format="json"):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():

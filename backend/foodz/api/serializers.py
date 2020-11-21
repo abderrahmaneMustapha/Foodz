@@ -32,7 +32,7 @@ class UserCreationSerializer(serializers.ModelSerializer):
         model = User
         fields = ["first_name", "last_name", 'email','password', 'date_birth', 'adress', 'wilayas']
 
-class LoginSerializer(serializers.ModelSerializer):
+class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField(
         required=True,
         )
@@ -51,9 +51,6 @@ class LoginSerializer(serializers.ModelSerializer):
        
         return user
     
-    class Meta :
-        model = User
-        fields = ['email','password']
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
