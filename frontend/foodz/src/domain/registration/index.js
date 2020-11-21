@@ -41,7 +41,7 @@ class SignupPage extends React.Component {
     }
 }
 
-export class SigninPage extends React.Component {
+class SigninPage extends React.Component {
     render() {
         return (
             <div>
@@ -75,4 +75,5 @@ const mapDispatchToProps = (dispatch) =>
         dispatch
     );
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);
+export const SignupPageConnect =  connect(mapStateToProps, mapDispatchToProps)(SignupPage);
+export const SigninPageConnect = connect(mapStateToProps, mapDispatchToProps)(SigninPage);

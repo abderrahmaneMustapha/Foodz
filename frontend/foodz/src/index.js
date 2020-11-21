@@ -18,7 +18,7 @@ import Restaurant from './domain/restaurant/index'
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
-import SignupPage , { SigninPage } from "./domain/registration/index"
+import {SignupPageConnect , SigninPageConnect}  from "./domain/registration/index"
 const history = createBrowserHistory();
 
 
@@ -33,8 +33,8 @@ ReactDOM.render(
         <Route path="/restaurants/:name" component={Restaurant} />
         <Route path='/search' component={Search} />      
         <Route  exact path='/' component={Home} />
-        <Route  exact path='/signup' component={SignupPage}  />
-        <Route exact  path='/login' component={SigninPage}  />
+        <Route  exact path='/signup' component={SignupPageConnect}  />
+        <Route exact  path='/login' component={SigninPageConnect}  />
 
       </Switch>
     
