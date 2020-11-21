@@ -14,8 +14,8 @@ function fetchSignupUserSuccess(user){
        
     return {
         type : FETCH_SUIGNUP_USER_SUCCESS,
-        user : user,
-        auth : true
+        user_signup : user,
+        auth_signup : true
     }
 }
 

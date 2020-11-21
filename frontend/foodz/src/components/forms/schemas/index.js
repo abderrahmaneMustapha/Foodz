@@ -15,3 +15,10 @@ export const SingupValidationSchema =Yup.object({
     adress: Yup.string().min(5, "adress too short").required("Required"),
     date_birth: Yup.date(),
 });
+
+export const SinginValidationSchema =Yup.object({
+    email: Yup.string().email("Invalid email address").required("Required"),
+    password: Yup.string()
+        .min(8, "password must be at least 8 charcters long")
+        .required("Required"),
+});

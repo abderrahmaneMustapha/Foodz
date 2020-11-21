@@ -1,64 +1,78 @@
 import React from "react";
-import { SignupForm } from "../../components/forms/index";
+import { SignupForm, SigninForm } from "../../components/forms/index";
 
 /* actions */
-import { fetchSignupUSer as  fetchSignupUserAction } from "../../api/authApi/index";
+import {
+    fetchSignupUSer as fetchSignupUserAction,
+    fetchSigninUSer as fetchSigninUserAction,
+} from "../../api/authApi/index";
 
 /* redux */
 import {
     getUserSignup,
     getUserSignupError,
     getUserSignupPending,
-    getUserSignupAuth
+    getUserSignupAuth,
 } from "../../reducer/Auth/registrationReducer";
+
+import {
+    getUserSignin,
+    getUserSigninAuth,
+    getUserSigninError,
+    getUserSigninPending,
+} from "../../reducer/Auth/loginReducer";
+
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
- class SignupPage extends React.Component {
-   componentDidMount(){
-     console.log(this.props)
-   }
-  render() {
-     
-    return (
-      <div>
-        <h3 className="h3">Signup</h3>
-        <div className="w-75 mx-auto">
-          <SignupForm  submit={this.props.fetchSignupUSer} />
-        </div>
-      </div>
-    );
-  }
+class SignupPage extends React.Component {
+    componentDidMount() {
+        console.log(this.props);
+    }
+    render() {
+        return (
+            <div>
+                <h3 className="h3">Signup</h3>
+                <div className="w-75 mx-auto">
+                    <SignupForm submit={this.props.fetchSignupUSer} />
+                </div>
+            </div>
+        );
+    }
 }
 
- export class SigninPage extends React.Component {
-  render() {
-    return (
-      <div>
-        <h3 className="Signin"></h3>
-      </div>
-    );
-  }
+export class SigninPage extends React.Component {
+    render() {
+        return (
+            <div>
+                <h3 className="Signin"></h3>
+                <div className="w-75 mx-auto">
+                    <SigninForm submit={this.props.fetchSigninUSer} />
+                </div>
+            </div>
+        );
+    }
 }
-
 
 const mapStateToProps = (state) => ({
-  user_errors: getUserSignupError(state.signup),
-  user: getUserSignup(state.signup),
-  user_pending: getUserSignupPending(state.signup),
-  auth :  getUserSignupAuth(state.signup)
+    user_errors_signup: getUserSignupError(state.signup),
+    user_signup: getUserSignup(state.signup),
+    user_pending_signup: getUserSignupPending(state.signup),
+    auth_signup: getUserSignupAuth(state.signup),
+
+    user_errors_signin: getUserSigninError(state.signin),
+    user_signin: getUserSignin(state.signin),
+    user_pending_signin: getUserSigninPending(state.signin),
+    auth_signin: getUserSigninAuth(state.signin),
 });
 
-
-
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-      {
-          fetchSignupUSer : fetchSignupUserAction,
-      },
-      dispatch
-  );
+    bindActionCreators(
+        {
+            fetchSignupUSer: fetchSignupUserAction,
+            fetchSigninUSer: fetchSigninUserAction,
+        },
+        dispatch
+    );
 
-
-
-export  default connect(mapStateToProps, mapDispatchToProps)( SignupPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);

@@ -3,12 +3,79 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Formik } from "formik";
 
-import { SingupValidationSchema } from "./schemas/index";
+import { SinginValidationSchema, SingupValidationSchema } from "./schemas/index";
 
 /* me */
 import { TextInput } from "../inputs/text/index";
 import { Button } from "../inputs/buttons/index";
 
+
+
+export class SigninForm extends React.Component {
+    
+    render() {
+        return (
+            <Formik
+                initialValues={{                  
+                    email: "",
+                    password: "",
+                }}
+                validationSchema={SinginValidationSchema}
+                onSubmit={(values) => {                
+                    this.props.submit(values)
+                }}
+            >
+                {({
+                    errors,
+                    touched,
+                    handleBlur,
+                    handleSubmit,
+                    setFieldValue,
+                }) => (
+                    <form onSubmit={handleSubmit}>
+                        
+                        <div className="form-group mb-2">
+                            <TextInput
+                                type="email"
+                                name="email"
+                                placeholder="Email"
+                                onChange={(event) => {
+                                    setFieldValue("email", event.target.value);
+                                }}
+                                onBlure={handleBlur}
+                            />
+                            {touched.email && errors.email ? (
+                                <div>{errors.email}</div>
+                            ) : null}
+                        </div>
+
+                        <div className="form-group mb-2">
+                            <TextInput
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                onChange={(event) => {
+                                    setFieldValue(
+                                        "password",
+                                        event.target.value
+                                    );
+                                }}
+                                onBlur={handleBlur}
+                            />
+                            {touched.password && errors.password ? (
+                                <div>{errors.password}</div>
+                            ) : null}
+                        </div>
+
+                        <Button type="submit" color="blue" />
+                        <br></br>
+                        <Link to="/signup">Create new account</Link>
+                    </form>
+                )}
+            </Formik>
+        );
+    }
+}
 
 
 export class SignupForm extends React.Component {
