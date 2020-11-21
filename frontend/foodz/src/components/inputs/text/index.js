@@ -1,10 +1,7 @@
 import React from "react";
 import "./comment.css";
 import StarRatings from "react-star-ratings";
-
-let current_username = "Mustapha";
-let current_userimage =
-    "https://scontent-mrs2-1.xx.fbcdn.net/v/t1.0-1/p240x240/91818612_100248741644513_2244727394118139904_n.jpg?_nc_cat=109&_nc_sid=dbb9e7&_nc_ohc=Jh8mckF5fyYAX889OWa&_nc_ht=scontent-mrs2-1.xx&tp=6&oh=3809d73d2fd0904a2ae191f08e2ead08&oe=5F6DEDF1";
+import {getFirstLastName} from "../../../utilities/userInfo/index"
 
 class NewComment extends React.Component {
     constructor(props) {
@@ -30,6 +27,9 @@ class NewComment extends React.Component {
             <form id="new-comment-container" className="w-100">
                 <header>
                     <h5>Add new comment : </h5>
+                    <h5 className="font-weight-bold mr-4">
+                        {getFirstLastName()}
+                    </h5>
                     <StarRatings
                         starHoverColor="#FFBF00"
                         starRatedColor="#FFBF00"
@@ -139,7 +139,7 @@ class ExistingComment extends React.Component {
                     <div className=" col-md-11 col-sm-8">
                         <header className="d-md-flex">
                             <h5 className="font-weight-bold mr-4">
-                                {this.props.username}
+                                {this.props.first_name} {this.props.last_name}
                             </h5>
                             {this.props.type == "comment" ? (
                                 <StarRatings
