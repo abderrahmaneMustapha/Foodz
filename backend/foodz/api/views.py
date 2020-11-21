@@ -40,7 +40,8 @@ class UserLoginViewSet(APIView):
     def post(self, request, format="json"):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.validate()
+            user = serializer.validate(request.data)
+            print("user :  " , user)
             if user : 
                 
                 token = Token.objects.get(user=user)
@@ -50,7 +51,7 @@ class UserLoginViewSet(APIView):
                 json['token'] = token.key
 
                 #success
-                return Response(json, status=status.HTTP_201_CREATED)
+                return Response(json, status=status.HTTP_202_ACCEPTED)
         
         #bad request 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -55,6 +55,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+    
 ROOT_URLCONF = 'foodz.urls'
 
 TEMPLATES = [
@@ -73,6 +75,14 @@ TEMPLATES = [
     },
 ]
 
+#Authentication backends
+AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
+    )
+
+# custome user  settings 
+AUTH_USER_MODEL = 'api.CustomUser'
+
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'api.utils.YourPagination',
     'PAGE_SIZE': 25,
@@ -81,7 +91,9 @@ REST_FRAMEWORK = {
     
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
+
         'rest_framework.authentication.TokenAuthentication',
+        
     ]
 }
 
@@ -125,9 +137,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# custome user  settings 
-AUTH_USER_MODEL = 'api.CustomUser'
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
