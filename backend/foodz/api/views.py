@@ -26,6 +26,9 @@ class UserCreateViewSet(APIView):
             if user:
                 token = Token.objects.create(user=user)
                 json = serializer.data
+                json["id"] = user.id
+                json["first_name"] = user.first_name
+                json["last_name"] = user.last_name
                 del json['password']
                 #generate token
                 json['token'] = token.key
@@ -41,11 +44,12 @@ class UserLoginViewSet(APIView):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validate(request.data)
-            print("user :  " , user)
-            if user : 
-                
+            if user :               
                 token = Token.objects.get(user=user)
                 json = serializer.data
+                json["id"] = user.id
+                json["first_name"] = user.first_name
+                json["last_name"] = user.last_name
                 del json['password']
                 #generate token
                 json['token'] = token.key
