@@ -29,7 +29,7 @@ class UserCreateViewSet(APIView):
                 json["id"] = user.id
                 json["first_name"] = user.first_name
                 json["last_name"] = user.last_name
-                json['profile_pic'] = user.profile_pic
+                json['profile_pic'] = user.profile_pic.url
                 del json['password']
                 #generate token
                 json['token'] = token.key
@@ -51,7 +51,7 @@ class UserLoginViewSet(APIView):
                 json["id"] = user.id
                 json["first_name"] = user.first_name
                 json["last_name"] = user.last_name
-                json['profile_pic'] = user.profile_pic
+                json['profile_pic'] = user.profile_pic.url
                 del json['password']
                 #generate token
                 json['token'] = token.key
