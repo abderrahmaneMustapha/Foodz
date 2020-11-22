@@ -7,3 +7,12 @@ export function getFirstLastName(){
     console.log( last_name)
     return `${last_name} ${first_name}`
 }
+
+export function checkUserExist(){
+    return localStorage.getItem('user')
+}
+
+export function getUserInfo(key){
+
+    return JSON.parse(localStorage.getItem('user'))[key]
+}

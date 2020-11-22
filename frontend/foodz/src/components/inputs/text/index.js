@@ -1,7 +1,7 @@
 import React from "react";
 import "./comment.css";
 import StarRatings from "react-star-ratings";
-import {getFirstLastName} from "../../../utilities/userInfo/index"
+import {getFirstLastName, checkUserExist} from "../../../utilities/userInfo/index"
 
 class NewComment extends React.Component {
     constructor(props) {
@@ -23,6 +23,7 @@ class NewComment extends React.Component {
     };
 
     render() {
+       if ( ! checkUserExist ()) return <>{undefined}</>
         return (
             <form id="new-comment-container" className="w-100">
                 <header>

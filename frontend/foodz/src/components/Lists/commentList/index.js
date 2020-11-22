@@ -1,13 +1,11 @@
 import React from "react";
 import "./comment.css";
-import ReactDOMServer from "react-dom/server";
+import {getUserInfo, getFirstLastName} from "../../../utilities/userInfo/index"
+import { SERVER_URL } from "../../../utilities/consts/index"
 import {
   ExistingComment,
   NewComment,
 } from "../../inputs/text/index";
-let current_username = "Mustapha";
-let current_userimage =
-  "https://scontent-mrs2-1.xx.fbcdn.net/v/t1.0-1/p240x240/91818612_100248741644513_2244727394118139904_n.jpg?_nc_cat=109&_nc_sid=dbb9e7&_nc_ohc=Jh8mckF5fyYAX889OWa&_nc_ht=scontent-mrs2-1.xx&tp=6&oh=3809d73d2fd0904a2ae191f08e2ead08&oe=5F6DEDF1";
 
 class ReplyList extends React.Component {
   constructor(props) {
@@ -41,7 +39,7 @@ class ReplyList extends React.Component {
             id: data.id,
             username: data.user,
             text: data.text,
-            photo: "",
+            photo: data.profile_pic,
           });
           await this.setState({
             replysList: replys,
@@ -82,7 +80,7 @@ class ReplyList extends React.Component {
 class CommentList extends React.Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       commentList: [],
       next_commentList: "",
@@ -160,6 +158,7 @@ class CommentList extends React.Component {
           comment.restaurant_id = element.id;
           comment.ups = element.ups;
           comment.downs = element.downs;
+        
           await this.getComment(element.comment, comment);
 
           // add the comment to the results
@@ -176,19 +175,30 @@ class CommentList extends React.Component {
   getComment = async (data, comment) => {
     await fetch(data)
       .then((response) => response.json())
-      .then((data) => {
+      .then(async (data) => {
         comment.id = data.id;
         comment.text = data.text;
         comment.replys = data.replys ? data.replys : [];
+        /*comment.first_name  = data
+        comment.last_name  = data
+        comment.photo  = data*/
+        //await   this.getUserInfoFromApi(data.user)
+        console.log(data)
+       
+       
       });
   };
+
+  getUserInfoFromApi = async (data)=> {
+    console.log("user data  :" , data)
+  }
 
   // this fucntion will create a comment  but we need to add this comment to a specific restaurant
   PostComment = (text, type = "new", comment_id = undefined) => {
     let form = new FormData();
     form.append("text", text);
 
-    //form.append("user", `http://localhost:8000/api/users/${1}/`)
+    form.append("user", `http://localhost:8000/api/users/${getUserInfo('id')}/`)
     let id = undefined;
     fetch("http://localhost:8000/api/comments/", {
       method: "POST",
@@ -207,8 +217,9 @@ class CommentList extends React.Component {
           tempCommentList.unshift({
             id: data.id,
             text: data.text,
-            username: current_username,
-            photo: current_userimage,
+            first_name: getUserInfo('first_name'),
+            last_name : getUserInfo('last_name'),
+            photo: SERVER_URL  + getUserInfo('profile_pic'),
             review: current_review,
             replys: data.replys,
           });
@@ -330,9 +341,9 @@ class CommentList extends React.Component {
     if (can_reply(main_comment_replys)) {
       let comment_element = `
         <div class="bg-white container comment reply-exisiting-comment-container">
-        <div class="row"><div class="col-md-1 col-sm-4"><img class="rounded-circle" src="${current_userimage}">
+        <div class="row"><div class="col-md-1 col-sm-4"><img class="rounded-circle" src="${ SERVER_URL  + getUserInfo('profile_pic')}">
         </div><div class=" col-md-11 col-sm-8"><header class="d-md-flex">
-        <h5 class="font-weight-bold mr-4">${current_username}</h5></header>
+        <h5 class="font-weight-bold mr-4">${getFirstLastName()}</h5></header>
         <div contentEditable="true" class="font-weight-light m-2 comment-text">add your comment here</div>
         <div class="comment-utils d-flex flex-row align-items-center mt-3">
         <button  class="d-block btn btn-link text-black reply-btn">share</button>
@@ -372,7 +383,7 @@ class CommentList extends React.Component {
  
     console.log("total pages ", this.state.total_pages)
     let pages = Array.from({length:this.state.total_pages}, Number.call, i => i + 1)
-    console.log(pages)
+    
       return (
         <>
           <nav aria-label="Page navigation example">
@@ -427,7 +438,8 @@ class CommentList extends React.Component {
                       handleAddReply={this.handleAddReply}
                       classPlus="main-exisiting-comment-container"
                       text={element.text}
-                      username={element.username}
+                      first_name={element.first_name}
+                      last_name={element.last_name}
                       photo={element.photo}
                       review={element.review}
                       ups={element.ups}
