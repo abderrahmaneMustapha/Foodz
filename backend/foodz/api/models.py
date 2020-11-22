@@ -35,6 +35,7 @@ class CustomUser(AbstractUser):
     last_name = models.CharField(_("last name"), max_length=150)
     date_birth = models.DateField(_("date of birth"), auto_now=False, auto_now_add=False, null=True, blank=True)
     email = models.EmailField(_('email adress'), unique=True)
+    profile_pic = models.ImageField('user profile pic', upload_to='picture_profile/',default='default-96.png' , null=True,blank=True)
     adress = models.CharField(_("adress"), max_length=500, default="", null=True, blank=True)
     wilayas = models.CharField( verbose_name=_("Wilaya in algeria"),  max_length=500)
     current_location = models.ForeignKey(Locations, verbose_name=_('user current location'), related_name="user_current_location", on_delete=models.CASCADE, null=True, blank=True)
