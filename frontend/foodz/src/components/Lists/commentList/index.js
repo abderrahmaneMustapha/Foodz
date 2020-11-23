@@ -35,11 +35,13 @@ class ReplyList extends React.Component {
       await fetch(element)
         .then((response) => response.json())
         .then(async (data) => {
+          await this.props.getUser(data.user, data)
           await replys.push({
             id: data.id,
-            username: data.user,
+            first_name: data.first_name,
+            last_name: data.last_name,
             text: data.text,
-            photo: data.profile_pic,
+            photo: data.photo,
           });
           await this.setState({
             replysList: replys,
@@ -49,9 +51,11 @@ class ReplyList extends React.Component {
     await this.setState({
       loading: false,
     });
+   
   };
 
   render() {
+    console.log( console.log(this.state.replysList))
     if (this.state.loading === true) return <div>loading</div>;
     return (
       <ul
@@ -67,7 +71,9 @@ class ReplyList extends React.Component {
                 <ExistingComment
                   classPlus="reply-exisiting-comment-container"
                   text={subelement.text}
-                  username={subelement.username}
+                
+                  first_name={subelement.first_name}
+                  last_name={subelement.last_name}
                   photo={subelement.photo}
                 />
               </li>
@@ -180,7 +186,7 @@ class CommentList extends React.Component {
         comment.text = data.text;
         comment.replys = data.replys ? data.replys : [];
         await this.getUserInfoFromApi(data.user, comment)
-        console.log(comment)
+        
       });
   };
 
@@ -201,7 +207,7 @@ class CommentList extends React.Component {
     form.append("text", text);
 
     form.append("user", `http://localhost:8000/api/users/${getUserInfo('id')}/`)
-     alert(authHeader())
+    
     
     fetch("http://localhost:8000/api/comments/", {
       method: "POST",
@@ -309,7 +315,7 @@ class CommentList extends React.Component {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("my reply return data", data);
+        
           });
       });
   };
@@ -387,8 +393,7 @@ class CommentList extends React.Component {
         let comment_text = li_comment_container.getElementsByClassName(
           "comment-text"
         )[0].innerText;
-        // call the fucntion to update replys by id
-        console.log("comment data key is ", data_key);
+      
         await this.PostComment(comment_text, "reply", data_key);
         li_comment_container.parentElement.removeChild(li_comment_container);
       });
@@ -398,7 +403,6 @@ class CommentList extends React.Component {
   render() {
    
  
-    console.log("total pages ", this.state.total_pages)
     let pages = Array.from({length:this.state.total_pages}, Number.call, i => i + 1)
     
       return (
@@ -461,12 +465,14 @@ class CommentList extends React.Component {
                       review={element.review}
                       ups={element.ups}
                       downs={element.downs}
+                      getUser={this.getUserInfoFromApi}
                       type="comment"
                     />
 
                     <ReplyList
                       data_key={element.id}
                       replysList={element.replys}
+                      getUser={this.getUserInfoFromApi}
                       type="reply"
                     />
                   </li>

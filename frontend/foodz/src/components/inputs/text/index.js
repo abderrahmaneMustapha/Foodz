@@ -1,8 +1,8 @@
 import React from "react";
 import "./comment.css";
 import StarRatings from "react-star-ratings";
-import {getFirstLastName, checkUserExist} from "../../../utilities/userInfo/index"
-
+import {getFirstLastName, checkUserExist, getUserInfo} from "../../../utilities/userInfo/index"
+import {authHeader} from "../../../utilities/authHeader/index"
 class NewComment extends React.Component {
     constructor(props) {
         super(props);
@@ -77,7 +77,7 @@ class ExistingComment extends React.Component {
         const restaurant_comment_id = this.props.restaurant_comment_key;
 
         let form = new FormData();
-        form.append("user", `http://127.0.0.1:8000/api/users/${1}/`);
+        form.append("user", `http://127.0.0.1:8000/api/users/${getUserInfo('id')}/`);
         form.append(
             "restaurant_comments",
             `http://127.0.0.1:8000/api/restaurant-comment/${restaurant_comment_id}/`
@@ -86,6 +86,9 @@ class ExistingComment extends React.Component {
         fetch(`http://127.0.0.1:8000/api/${params}/`, {
             method: "POST",
             body: form,
+            headers : {
+                ... authHeader()
+            }
         })
             .then((response) => {
                 console.log(response);
