@@ -179,18 +179,20 @@ class CommentList extends React.Component {
         comment.id = data.id;
         comment.text = data.text;
         comment.replys = data.replys ? data.replys : [];
-        /*comment.first_name  = data
-        comment.last_name  = data
-        comment.photo  = data*/
-        //await   this.getUserInfoFromApi(data.user)
-        console.log(data)
-       
+        await this.getUserInfoFromApi(data.user, comment)
        
       });
   };
 
-  getUserInfoFromApi = async (data)=> {
-    console.log("user data  :" , data)
+  getUserInfoFromApi = async (data, comment) => {
+    fetch(data)
+      .then(response => response.json())
+      .then(async (data) => {
+        
+        comment.first_name = data.last_name;
+        comment.last_name = data.first_name;
+        comment.photo = data.profile_pic;
+      });
   }
 
   // this fucntion will create a comment  but we need to add this comment to a specific restaurant
