@@ -18,7 +18,7 @@ import Restaurant from './domain/restaurant/index'
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
-import {SignupPageConnect , SigninPageConnect}  from "./domain/registration/index"
+import {SignupPageConnect , SigninPageConnect, Signout}  from "./domain/registration/index"
 const history = createBrowserHistory();
 
 
@@ -35,6 +35,7 @@ ReactDOM.render(
         <Route  exact path='/' component={Home} />
         <Route  exact path='/signup' component={SignupPageConnect}  />
         <Route exact  path='/login' component={SigninPageConnect}  />
+        <Route exact path='/logout' component={Signout} />
 
       </Switch>
     

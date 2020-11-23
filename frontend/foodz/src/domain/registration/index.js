@@ -24,7 +24,20 @@ import {
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Redirect } from "react-router-dom";
 
+export class Signout extends React.Component{
+
+    render(){
+        localStorage.removeItem("user")
+        return(
+            <>
+            <div> Login out .... good by</div>
+            <Redirect to="/"></Redirect>
+            </>
+        )
+        }
+}
 class SignupPage extends React.Component {
     componentDidMount() {
         console.log(this.props);

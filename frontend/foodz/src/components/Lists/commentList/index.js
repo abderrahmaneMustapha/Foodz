@@ -7,6 +7,8 @@ import {
   NewComment,
 } from "../../inputs/text/index";
 import {authHeader} from "../../../utilities/authHeader/index"
+import {checkUserExist} from "../../../utilities/userInfo/index"
+
 class ReplyList extends React.Component {
   constructor(props) {
     super(props);
@@ -55,7 +57,7 @@ class ReplyList extends React.Component {
   };
 
   render() {
-    console.log( console.log(this.state.replysList))
+ 
     if (this.state.loading === true) return <div>loading</div>;
     return (
       <ul
@@ -438,8 +440,8 @@ class CommentList extends React.Component {
             </ul>
           </nav>
           
+          { checkUserExist() &&
          
-
           <ul id="comment-list" className="list-group">
             <NewComment
               handleRatingChange={this.handleStarsInNewComment}
@@ -481,7 +483,7 @@ class CommentList extends React.Component {
             ) : (
               <div>Loading</div>
             )}
-          </ul>
+          </ul> }
         </>
       );
   }
