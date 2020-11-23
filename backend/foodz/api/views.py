@@ -1,18 +1,30 @@
+#django
 from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model 
+from django.contrib.auth.decorators import login_required 
+from django.utils.decorators import method_decorator 
 
+#django rest 
 from rest_framework import viewsets, generics, filters as rest_filters
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import *
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
+
+#django filters
+from django_filters import rest_framework as filters
+
+#me
+from .serializers import *
 from .models import (Locations, Restaurant,Reviews, RestaurantCalendar, RestaurantPromotion,
                     Food, RestaurantService,RestaurantType, RestaurantComments, Comment,ReastaurantCommentsDown,
-                    ReastaurantCommentsUp )
+                    ReastaurantCommentsUp )                  
 from .filters import RestaurantFilters, RestaurantCommentsFilters,RestaurantCommentsDown, RestaurantCommentsUp
-from django_filters import rest_framework as filters
+
+
+
 
 
 class UserCreateViewSet(APIView):
@@ -133,6 +145,11 @@ class CommentsViewsSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentsSerializer
     permission_classes = [permissions.AllowAny]
+    
+    def create(self,request, *args, **kwargs):
+        if not request.user.is_authenticated :
+            return Response(status=status.HTTP_401_UNAUTHORIZED)   
+        return super( CommentsViewsSet, self).create(request,*args, **kwargs)
 
 class RestaurantCommentsViewsSet(viewsets.ModelViewSet):
     queryset = RestaurantComments.objects.all()
@@ -141,6 +158,11 @@ class RestaurantCommentsViewsSet(viewsets.ModelViewSet):
     ordering_fields = ['created_at', 'total_review']
     filter_class = RestaurantCommentsFilters
     permission_classes = [permissions.AllowAny]
+  
+    def create(self, request,  *args, **kwargs):
+        if not request.user.is_authenticated :
+            return Response(status=status.HTTP_401_UNAUTHORIZED)  
+        return super( RestaurantCommentsViewsSet, self).create(request, *args, **kwargs)
 
 class ReastaurantCommentsUpViewsSet(viewsets.ModelViewSet):
     queryset = ReastaurantCommentsUp.objects.all()
@@ -149,6 +171,11 @@ class ReastaurantCommentsUpViewsSet(viewsets.ModelViewSet):
     ordering_fields = ['created_at', 'pk']
     permission_classes = [permissions.AllowAny]
     filter_class = RestaurantCommentsUp
+  
+    def create(self, request, *args, **kwargs):
+        if not request.user.is_authenticated :
+            return Response(status=status.HTTP_401_UNAUTHORIZED)  
+        return super( ReastaurantCommentsUpViewsSet, self).create(request, *args, **kwargs)
 
 
 class ReastaurantCommentsDownViewsSet(viewsets.ModelViewSet):
@@ -158,6 +185,11 @@ class ReastaurantCommentsDownViewsSet(viewsets.ModelViewSet):
     ordering_fields = ['created_at', 'pk']
     permission_classes = [permissions.AllowAny]
     filter_class = RestaurantCommentsDown
+  
+    def create(self, request,  *args, **kwargs):
+        if not request.user.is_authenticated :
+            return Response(status=status.HTTP_401_UNAUTHORIZED)  
+        return super( ReastaurantCommentsDownViewsSet, self).create(request, *args, **kwargs)
 
 class FoodViewsSet(viewsets.ModelViewSet):
         queryset = Food.objects.all()
