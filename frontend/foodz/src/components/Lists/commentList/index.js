@@ -6,7 +6,7 @@ import {
   ExistingComment,
   NewComment,
 } from "../../inputs/text/index";
-
+import {authHeader} from "../../../utilities/authHeader/index"
 class ReplyList extends React.Component {
   constructor(props) {
     super(props);
@@ -162,7 +162,7 @@ class CommentList extends React.Component {
           await this.getComment(element.comment, comment);
 
           // add the comment to the results
-          await result.push(comment);
+          result.push(comment);
           // update the state
           this.setState({
             commentList: result,
@@ -180,14 +180,14 @@ class CommentList extends React.Component {
         comment.text = data.text;
         comment.replys = data.replys ? data.replys : [];
         await this.getUserInfoFromApi(data.user, comment)
-       
+        console.log(comment)
       });
   };
 
   getUserInfoFromApi = async (data, comment) => {
-    fetch(data)
+    await fetch(data)
       .then(response => response.json())
-      .then(async (data) => {
+      .then((data) => {
         
         comment.first_name = data.last_name;
         comment.last_name = data.first_name;
@@ -201,10 +201,15 @@ class CommentList extends React.Component {
     form.append("text", text);
 
     form.append("user", `http://localhost:8000/api/users/${getUserInfo('id')}/`)
-    let id = undefined;
+     alert(authHeader())
+    
     fetch("http://localhost:8000/api/comments/", {
       method: "POST",
       body: form,
+      headers : {
+        ... authHeader()
+      }
+     
     })
       .then((response) => response.json())
       .then(async (data) => {
@@ -249,6 +254,9 @@ class CommentList extends React.Component {
     fetch("http://localhost:8000/api/restaurant-comment/", {
       method: "POST",
       body: form,
+      headers : {
+        ... authHeader()
+      }
     })
       .then((response) => response.json())
       .then((data) => {});
@@ -266,7 +274,11 @@ class CommentList extends React.Component {
   };
 
   PostReply = (comment_id, new_comment_id) => {
-    fetch("http://localhost:8000/api/comments/" + comment_id + "/")
+    fetch("http://localhost:8000/api/comments/" + comment_id + "/", {
+      headers : {
+        ... authHeader()
+      }
+    })
       .then((response) => response.json())
       .then(async (data) => {
         let replys = data.replys;
@@ -291,6 +303,9 @@ class CommentList extends React.Component {
         await fetch("http://localhost:8000/api/comments/" + comment_id + "/", {
           method: "PUT",
           body: form,
+          headers : {
+            ... authHeader()
+          }
         })
           .then((response) => response.json())
           .then((data) => {
